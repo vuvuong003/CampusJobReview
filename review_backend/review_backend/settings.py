@@ -118,22 +118,23 @@ WSGI_APPLICATION = 'review_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': env('DB_NAME'),
+        'CLIENT': {
+            'host': "mongodb+srv://"+env('DB_USERNAME')+":"+env("DB_PASSWORD")+"@hkcluster.hhaivqy.mongodb.net/?retryWrites=true&w=majority&appName=HKCluster"
+        }
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': env('DB_NAME'),
-#         'CLIENT': {
-#             'host': "mongodb+srv://"+env('DB_USERNAME')+":"+env("DB_PASSWORD")+"@hkcluster.hhaivqy.mongodb.net/?retryWrites=true&w=majority&appName=HKCluster"
-#         }
-#     }
-# }
 
 
 # Password validation
