@@ -15,6 +15,8 @@ from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+from dotenv import load_dotenv
+import os
 
 
 # Quick-start development settings - unsuitable for production
@@ -124,13 +126,13 @@ WSGI_APPLICATION = 'review_backend.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
+load_dotenv()
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': env('DB_NAME'),
+        'NAME': os.getenv('DB_NAME'),
         'CLIENT': {
-            'host': "mongodb+srv://"+env('DB_USERNAME')+":"+env("DB_PASSWORD")+"@hkcluster.hhaivqy.mongodb.net/?retryWrites=true&w=majority&appName=HKCluster"
+            'host': "mongodb+srv://"+os.getenv('DB_USERNAME')+":"+os.getenv("DB_PASSWORD")+"@cluster0.ohnr0.mongodb.net/"
         }
     }
 }
