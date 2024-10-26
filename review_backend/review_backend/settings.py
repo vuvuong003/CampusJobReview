@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt'
 ]
 
+AUTH_USER_MODEL = "auth_review.Client"
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -132,7 +134,8 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': os.getenv('DB_NAME'),
         'CLIENT': {
-            'host': "mongodb+srv://"+os.getenv('DB_USERNAME')+":"+os.getenv("DB_PASSWORD")+"@cluster0.ohnr0.mongodb.net/"
+            # 'host': "mongodb+srv://"+os.getenv('DB_USERNAME')+":"+os.getenv("DB_PASSWORD")+"@cluster0.ohnr0.mongodb.net/"
+            'host': "mongodb+srv://" + os.getenv('DB_USERNAME')+":"+os.getenv("DB_PASSWORD")+"@cluster0.falr3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
         }
     }
 }
