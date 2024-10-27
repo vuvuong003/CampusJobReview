@@ -2,10 +2,9 @@ name: Autopep8 Check
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "project-resources" ]
   pull_request:
-    branches: [ "main" ]
-
+    branches: [ "main", "project-resources" ]
 permissions:
   contents: write
 
