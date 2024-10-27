@@ -10,6 +10,7 @@ from django.contrib.auth.models import AbstractUser
 #     def __str__(self):
 #         return self.username
 
+
 # Reviews Model
 class Reviews(models.Model):
     """Model which stores the information of the reviews submitted"""
@@ -31,6 +32,7 @@ class Reviews(models.Model):
 
     class Meta:
         verbose_name_plural = "Reviews"
+
 
 # Vacancies Model
 

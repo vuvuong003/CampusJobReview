@@ -20,7 +20,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # add custom claims to the token. adds username claim to the token which allows
         # client to receive the username when a token is generated
-        token['username'] = user.username
+        token["username"] = user.username
         return token
 
 
@@ -39,16 +39,14 @@ class RegisterSerializer(serializers.ModelSerializer):
         # password is required field
         required=True,
         # password is validated to ensure it meets security claims
-        validators=[validate_password]
+        validators=[validate_password],
     )
 
     # called when creating an user.
     def create(self, validated_data):
 
         # creates a user object with the provided username
-        user = User.objects.create(
-            username=validated_data["username"]
-        )
+        user = User.objects.create(username=validated_data["username"])
         # user can log in
         user.is_active = True
         # grant admin privileges
@@ -62,4 +60,4 @@ class RegisterSerializer(serializers.ModelSerializer):
     # defines how the serializer interacts with the model
     class Meta:
         model = User
-        fields = ['username', 'password']
+        fields = ["username", "password"]

@@ -30,9 +30,10 @@ class RegisterView(APIView):
         # return with an 400 BAD REQUEST
         user = User.objects.filter(username=request.data["username"])
         if len(user) > 0:
-            return Response({"data": {"val": False,
-                                      "detail": "Username Exists"}},
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"data": {"val": False, "detail": "Username Exists"}},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         # if username is unique, the serializer is instantiated with the
         # request data.
         serializer = RegisterSerializer(data=request.data)
@@ -41,12 +42,14 @@ class RegisterView(APIView):
             serializer.save()
             # if valid a new user is created with a success response. If not,
             # then return a BAD REQUEST
-            return Response({"data": {"val": True,
-                                      "detail": "Registration Successful"}},
-                            status=status.HTTP_200_OK)
-        return Response({"data": {"val": False,
-                                  "detail": serializer.errors}},
-                        status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"data": {"val": True, "detail": "Registration Successful"}},
+                status=status.HTTP_200_OK,
+            )
+        return Response(
+            {"data": {"val": False, "detail": serializer.errors}},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
 
 # view to authenticate
@@ -59,7 +62,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
     # get requests not allowed for this endpoint
     def get(self, requests, format=None):
-        return (Response({"msg": "Get not allowed"}))
+        return Response({"msg": "Get not allowed"})
 
     def post(self, requests, format=None):
         r = super().post(requests, format)
@@ -78,6 +81,14 @@ class MyTokenObtainPairView(TokenObtainPairView):
             # client = User.objects.get(username=obj["username"])
             # obj["username"] = client.username
 
-            return Response({"data": {"val": True, "tokens": r.data, "details": {
-                            "tenant_id": tenant_id}}}, status=status.HTTP_200_OK)
+            return Response(
+                {
+                    "data": {
+                        "val": True,
+                        "tokens": r.data,
+                        "details": {"tenant_id": tenant_id},
+                    }
+                },
+                status=status.HTTP_200_OK,
+            )
         return r

@@ -1,5 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 
 # Create your models here.
 # Customer manager class for the Client model. This class defines methods for creating regular
@@ -10,7 +14,7 @@ class ClientManager(BaseUserManager):
     # create a regular user with optional password?
     def create_user(self, username, password=None, **extra_fields):
         if username is None:
-            raise TypeError('User should have a username')
+            raise TypeError("User should have a username")
         user = self.model(username=username)
         # hashes the password before saving the user
         user.set_password(password)
@@ -21,7 +25,7 @@ class ClientManager(BaseUserManager):
     # creates a superuser. Passwords is enforced for superuser accounts
     def create_superuser(self, username, password=None, **extra_fields):
         if password is None:
-            raise TypeError('Password should not be none')
+            raise TypeError("Password should not be none")
         user = self.create_user(username, password)
         user.is_active = True
         user.is_superuser = True
@@ -31,6 +35,7 @@ class ClientManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 # client class allows for customization of user fields and permissions
 
 
@@ -39,10 +44,8 @@ class Client(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     # character field that serves as a primary key and has to be unique
     username = models.CharField(
-        max_length=50,
-        primary_key=True,
-        unique=True,
-        blank=False)
+        max_length=50, primary_key=True, unique=True, blank=False
+    )
 
     # role = models.CharField(choices=ROLE, default=ROLE[0], max_length=50)
     # indication of whether the user has admin privileges
@@ -51,7 +54,7 @@ class Client(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
     # username should be used to identify users during the login
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = "username"
     # allows custom methods for creating users and superusers
     objects = ClientManager()
 
