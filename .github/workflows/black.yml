@@ -1,4 +1,4 @@
-name: Python CI
+name: Black
 
 on: [push, pull_request]
 
