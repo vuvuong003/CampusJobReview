@@ -15,7 +15,6 @@ class Reviews(models.Model):
     """Model which stores the information of the reviews submitted"""
     
     # Unique identifier for each review
-    id = models.AutoField(primary_key=True)  # Use AutoField for unique IDs
     department = models.CharField(max_length=64, db_index=True)
     locations = models.CharField(max_length=120, db_index=True)
     job_title = models.CharField(max_length=64, db_index=True)
