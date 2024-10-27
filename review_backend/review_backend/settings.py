@@ -10,13 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
+from dotenv import load_dotenv
 from pathlib import Path
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-from dotenv import load_dotenv
-import os
 
 
 # Quick-start development settings - unsuitable for production
@@ -135,11 +135,10 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME'),
         'CLIENT': {
             # 'host': "mongodb+srv://"+os.getenv('DB_USERNAME')+":"+os.getenv("DB_PASSWORD")+"@cluster0.ohnr0.mongodb.net/"
-            'host': "mongodb+srv://" + os.getenv('DB_USERNAME')+":"+os.getenv("DB_PASSWORD")+"@cluster0.falr3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+            'host': "mongodb+srv://" + os.getenv('DB_USERNAME') + ":" + os.getenv("DB_PASSWORD") + "@cluster0.falr3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
         }
     }
 }
-
 
 
 # Password validation

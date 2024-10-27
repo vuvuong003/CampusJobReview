@@ -13,7 +13,7 @@ from django.contrib.auth.models import AbstractUser
 # Reviews Model
 class Reviews(models.Model):
     """Model which stores the information of the reviews submitted"""
-    
+
     # Unique identifier for each review
     id = models.AutoField(primary_key=True)  # Use AutoField for unique IDs
     department = models.CharField(max_length=64, db_index=True)
@@ -25,18 +25,21 @@ class Reviews(models.Model):
     review = models.CharField(max_length=120, db_index=True)
     rating = models.IntegerField()
     recommendation = models.IntegerField()
-    
+
     # Reference to the User model using ForeignKey
-    #user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
 
     class Meta:
         verbose_name_plural = "Reviews"
 
 # Vacancies Model
+
+
 class Vacancies(models.Model):
     """Model which stores the information of the job vacancies"""
-    
-    #vacancyId = models.AutoField(primary_key=True)  # Unique ID for each vacancy
+
+    # vacancyId = models.AutoField(primary_key=True)  # Unique ID for each
+    # vacancy
     jobTitle = models.CharField(max_length=500, db_index=True)
     jobDescription = models.CharField(max_length=1000, db_index=True)
     jobLocation = models.CharField(max_length=500, db_index=True)
