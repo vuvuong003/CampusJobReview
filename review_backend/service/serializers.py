@@ -6,6 +6,15 @@ class ReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reviews
         fields = '__all__'  # This will include all fields from the Reviews model
+        extra_kwargs = {
+            'department': {'required': True},  # Enforces non-null constraint
+            'job_title': {'required': True},  # Enforces non-null constraint
+            'hourly_pay': {'required': True},  # Enforces non-null constraint
+            'review': {'required': True},  # Enforces non-null constraint
+            'rating': {'required': True},  # Enforces non-null constraint
+            'locations': {'required': False},  # Optional field
+            'job_description': {'required': False},  # Optional field
+        }
 
     def validate(self, attrs):
         # Add custom validation logic here if needed

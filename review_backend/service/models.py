@@ -1,5 +1,6 @@
 from djongo import models
-from django.contrib.auth.models import AbstractUser
+
+from django.core.exceptions import ValidationError
 
 
 # User Model
@@ -24,6 +25,18 @@ class Reviews(models.Model):
     review = models.CharField(max_length=120, db_index=True)
     rating = models.IntegerField()
     recommendation = models.IntegerField()
+    
+    def clean(self):
+        if not self.department:
+            raise ValidationError("Department cannot be null.")
+        if not self.job_title:
+            raise ValidationError("Job Title cannot be null.")
+        if not self.hourly_pay:
+            raise ValidationError("Hourly Pay cannot be null.")
+        if not self.review:
+            raise ValidationError("Review cannot be null.")
+        if not self.rating:
+            raise ValidationError("Rating Pay cannot be null.")
     
     # Reference to the User model using ForeignKey
     #user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
