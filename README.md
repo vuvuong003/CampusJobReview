@@ -26,6 +26,8 @@ After visiting our website, students will leave with a fresh perspective, reassu
 
 Explore our platform and take the first step towards finding the right on-campus job for you!
 
+
+[![DOI](https://zenodo.org/badge/876539766.svg)](https://doi.org/10.5281/zenodo.14007974)
 ![Python Badge](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)                             ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=white)      ![MongoDB](https://img.shields.io/badge/MongoDB-brightgreen?logo=mongodb&logoColor=white)       ![Django](https://img.shields.io/badge/Django-darkgreen?logo=django&logoColor=white)        ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
 [![Autopep8 Check](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml)     [![Pylint Check](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml)     [![Black](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml)      [![Bandit](https://github.com/SAT510/CampusJobReview/actions/workflows/bandit.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/bandit.yml) 
