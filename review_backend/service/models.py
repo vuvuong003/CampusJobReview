@@ -11,10 +11,11 @@ from django.core.exceptions import ValidationError
 #     def __str__(self):
 #         return self.username
 
+
 # Reviews Model
 class Reviews(models.Model):
     """Model which stores the information of the reviews submitted"""
-    
+
     # Unique identifier for each review
     department = models.CharField(max_length=64, db_index=True)
     locations = models.CharField(max_length=120, db_index=True)
@@ -39,16 +40,20 @@ class Reviews(models.Model):
             raise ValidationError("Rating Pay cannot be null.")
     
     # Reference to the User model using ForeignKey
-    #user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
 
     class Meta:
         verbose_name_plural = "Reviews"
 
+
 # Vacancies Model
+
+
 class Vacancies(models.Model):
     """Model which stores the information of the job vacancies"""
-    
-    #vacancyId = models.AutoField(primary_key=True)  # Unique ID for each vacancy
+
+    # vacancyId = models.AutoField(primary_key=True)  # Unique ID for each
+    # vacancy
     jobTitle = models.CharField(max_length=500, db_index=True)
     jobDescription = models.CharField(max_length=1000, db_index=True)
     jobLocation = models.CharField(max_length=500, db_index=True)

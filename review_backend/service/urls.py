@@ -12,7 +12,7 @@ router.register(r'vacancies', VacanciesViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('reviews/filter/', FilterReviewsView.as_view(), name='filter-reviews'),
+    path('filter/', FilterReviewsView.as_view(), name='filter-reviews'),
 ]
 
 

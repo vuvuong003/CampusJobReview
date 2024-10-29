@@ -1,0 +1,27 @@
+name: Pylint Check
+
+on:
+  push:
+    branches: [ "main", "project-resources" ]
+  pull_request:
+    branches: [ "main", "project-resources" ]
+
+permissions:
+  contents: write
+
+jobs:
+  autopep:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.12.1"
+
+    - name: pylint
+      run: | 
+       pip install pylint
+       pylint $(git ls-files '*.py') 
