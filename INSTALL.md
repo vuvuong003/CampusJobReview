@@ -85,7 +85,10 @@ pip install django
 ```
 - Create Migrations:
 ```bash
-python manage.py makemigrations
+python manage.py makemigrations auth_review
+```
+```bash
+python manage.py makemigrations service
 ```
 - Apply Migrations: 
 ```bash
