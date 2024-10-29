@@ -6,16 +6,16 @@
 # NC STATE JOBS RATING AND REVIEW SYSTEM 
 ## Table of contents
 - [Introduction](#Introduction)
-- [Demo Video](#Demo Video)
-- [Newly Enhanched Features] (#Newly Enhanched Features)
-- [Future Scope] (#Future Scope)
-- [Installation] (#Installation)
-- [Licence] (#License)
-- [Contributions] (#Contributions)
-- [CODE-OF-CONDUCT] (#CODE-OF-CONDUCT)
-- [Technology Stack] (#Technology Stack)
-- [Team Members] (#Team Members)
-- [Documentation] (#Documentation)
+- [Demo Video](#demo-video)
+- [Newly Enhanched Features](#newly-enhanched-features)
+- [Future Scope](#future-scope)
+- [Installation](#installation)
+- [Licence](#License)
+- [Contributions](#contributions)
+- [CODE-OF-CONDUCT](#CODE-OF-CONDUCT)
+- [Technology Stack](#technology-stack)
+- [Team Members](#team-members)
+- [Documentation](#documentation)
 
 ### Introduction
 Are you considering an on-campus job but unsure what to expect? Or have you worked or are currently working in one and want to share your experience to help your peers in their job search?
