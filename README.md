@@ -65,7 +65,7 @@ For detailed installation steps tailored to your operating system, please refer 
 This project is licensed under the Apache License. For further details, please refer to the [License](https://github.com/SAT510/CampusJobReview/blob/test/LICENSE.md).
 
 ### Contributions 
-We invite you to check our [CONTRIBUTING.md] () for guidelines on contributing to the repository and helping us enhance the project. We encourage and apprecite collaboration and would love to hear new ideas and any suggestions. We appreciate all types of collaboration whether you are a developer, a designer, or someone wih new ideas. Join our community and help us make this project even better for everyone! 
+We invite you to check our [CONTRIBUTING.md](https://github.com/SAT510/CampusJobReview/blob/project-resources/CONTRIBUTING.md) for guidelines on contributing to the repository and helping us enhance the project. We encourage and apprecite collaboration and would love to hear new ideas and any suggestions. We appreciate all types of collaboration whether you are a developer, a designer, or someone wih new ideas. Join our community and help us make this project even better for everyone! 
 
 ### CODE-OF-CONDUCT
 We encourage any contributions, but please make sure that these steps are taken in a respectful manner,in accordance with our [CODE-OF-CONDUCT](https://github.com/SAT510/CampusJobReview/blob/test/CODE-OF-CONDUCT.md). We strive to make this project a good experience for everyone and we value an inclusive environment as a paramount in our project. 
