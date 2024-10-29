@@ -5,6 +5,7 @@ from .serializers import RegisterSerializer, MyTokenObtainPairSerializer
 
 User = get_user_model()
 
+
 class RegisterSerializerTest(TestCase):
     def test_valid_registration_data(self):
         data = {
@@ -36,7 +37,9 @@ class RegisterSerializerTest(TestCase):
         self.assertIn('password', serializer.errors)
 
     def test_registration_duplicate_username(self):
-        User.objects.create_user(username="existinguser", password="StrongPassword123!")
+        User.objects.create_user(
+            username="existinguser",
+            password="StrongPassword123!")
         data = {
             "username": "existinguser",
             "password": "AnotherStrongPassword456!"
@@ -45,12 +48,14 @@ class RegisterSerializerTest(TestCase):
         self.assertFalse(serializer.is_valid())
         self.assertIn('username', serializer.errors)
 
+
 class MyTokenObtainPairSerializerTest(TestCase):
     def test_get_token_with_valid_user(self):
-        user = User.objects.create_user(username="testuser", password="securepassword")
+        user = User.objects.create_user(
+            username="testuser", password="securepassword")
         serializer = MyTokenObtainPairSerializer()
         token = serializer.get_token(user)
-        
+
         self.assertIn("username", token)
         self.assertEqual(token["username"], user.username)
 
