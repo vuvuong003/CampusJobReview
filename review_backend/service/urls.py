@@ -22,6 +22,3 @@ urlpatterns = [
     path('', include(router.urls)),
     path('filter/', FilterReviewsView.as_view(), name='filter-reviews'),
 ]
-
-
-

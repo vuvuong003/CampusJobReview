@@ -38,7 +38,7 @@ class Reviews(models.Model):
     review = models.CharField(max_length=120, db_index=True, null=False)
     rating = models.IntegerField(null=False, blank=False)
     recommendation = models.IntegerField()
-    
+
     def clean(self):
         super().clean()
         if not self.department:
@@ -53,7 +53,7 @@ class Reviews(models.Model):
             raise ValidationError("Rating cannot be null.")
         if self.rating < 1 or self.rating > 5:  # Check for valid range
             raise ValidationError("Rating must be between 1 and 5.")
-    
+
     # Reference to the User model using ForeignKey
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
     class Meta:
