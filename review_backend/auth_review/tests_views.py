@@ -28,7 +28,7 @@ class AuthTests(APITestCase):
         self.token_refresh_url = None
         self.inactive_user = None
 
-    def set_up(self):
+    def setUp(self):
         """Set up the test environment before each test case.
 
         This method creates a test user and sets up the URLs for the
