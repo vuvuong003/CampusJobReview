@@ -1,12 +1,14 @@
 import * as React from 'react';
 import NavBar from './Navbar';
 import { useNavigate } from 'react-router-dom';
+import { login_url, unprotected_api_call } from '../api/api';
+
 
 class Login extends React.Component {
 
     state = {
         formData: {
-            email: "",
+            username: "",
             password: ""
         },
     }
@@ -20,7 +22,19 @@ class Login extends React.Component {
         })
     };
 
-    handleSubmit = (e) => {}
+    handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(this.state.formData)
+        let response = await unprotected_api_call(login_url, this.state.formData);
+        if(response.status === 200){
+            let data = await response.json();
+            localStorage.setItem("user_data", JSON.stringify(data));
+            localStorage.setItem("login", "true");
+            this.props.navigate("/");
+        }else{
+            alert("Invalid Credentials");
+        }
+    }
     
     render() {
         const myStyle = {
@@ -53,11 +67,11 @@ class Login extends React.Component {
                         <div className="bg-white w-[40vw] h-[40vh] shadow-lg flex items-center justify-center p-10 overflow-y-auto">
                             <form onSubmit={this.handleSubmit}>
                                 <div className="mb-6">
-                                    <label className="block text-gray-700">Email</label>
+                                    <label className="block text-gray-700">Username</label>
                                     <input
                                         type="text"
-                                        name="email"
-                                        value={this.state.formData.email}
+                                        name="username"
+                                        value={this.state.formData.username}
                                         onChange={this.handleChange}
                                         className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                     />
@@ -66,7 +80,7 @@ class Login extends React.Component {
                                 <div className="mb-6">
                                     <label className="block text-gray-700">Password</label>
                                     <input
-                                        type="text"
+                                        type="password"
                                         name="password"
                                         value={this.state.formData.password}
                                         password={true}

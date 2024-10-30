@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from .models import Reviews
 from .serializers import ReviewsSerializer
 
@@ -10,10 +11,13 @@ from .serializers import VacanciesSerializer
 
 
 class ReviewsViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Reviews.objects.all()  # Get all reviews
     serializer_class = ReviewsSerializer  # Use the ReviewsSerializer
 
     def create(self, request, *args, **kwargs):
+        user = request.user
+        request.data['reviewed_by'] = user.username
         serializer = self.get_serializer(data=request.data)  # Get data from the request
         if serializer.is_valid():  # Validate the data
             serializer.save()  # Save the valid data to the database
@@ -21,6 +25,7 @@ class ReviewsViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # Return error response
     
 class FilterReviewsView(generics.ListAPIView):
+    # permission_classes = (IsAuthenticated)
     serializer_class = ReviewsSerializer
 
     def get_queryset(self):

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import NavBar from './Navbar';
 import { useNavigate } from 'react-router-dom';
+import { register_url, unprotected_api_call } from '../api/api';
 
 class Signup extends React.Component {
 
     state = {
         formData: {
-            email: "",
             password: "",
             username: ""
         },
@@ -21,7 +21,17 @@ class Signup extends React.Component {
         })
     };
 
-    handleSubmit = (e) => {}
+    handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(this.state.formData)
+        let response = await unprotected_api_call(register_url, this.state.formData);
+        if(response.status === 200){
+            alert("Registration successful");
+            this.props.navigate("/login");
+        }else{
+            alert("User Exists");
+        }
+    }
     
     render() {
         const myStyle = {
@@ -58,18 +68,7 @@ class Signup extends React.Component {
                                     <input
                                         type="text"
                                         name="username"
-                                        value={this.state.formData.email}
-                                        onChange={this.handleChange}
-                                        className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    />
-                                </div>
-
-                                <div className="mb-6">
-                                    <label className="block text-gray-700">Email</label>
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        value={this.state.formData.email}
+                                        value={this.state.formData.username}
                                         onChange={this.handleChange}
                                         className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                     />
@@ -78,7 +77,7 @@ class Signup extends React.Component {
                                 <div className="mb-6">
                                     <label className="block text-gray-700">Password</label>
                                     <input
-                                        type="text"
+                                        type="password"
                                         name="password"
                                         value={this.state.formData.password}
                                         password={true}

@@ -1,16 +1,17 @@
 import * as React from 'react';
 import NavBar from './Navbar';
 import { useNavigate } from 'react-router-dom';
+import { protected_api_call, review_url } from '../api/api';
 
 class AddReview extends React.Component {
 
     state = {
         formData: {
-            jobTitle: "",
+            job_title: "",
             department: "",
-            location: "",
-            jobDescription: "",
-            hourlyPay: "",
+            locations: "",
+            job_description: "",
+            hourly_pay: "",
             benefits: "",
             rating: "",
             recommendation: "",
@@ -27,7 +28,15 @@ class AddReview extends React.Component {
         })
     };
 
-    handleSubmit = (e) => {}
+    handleSubmit = async (e) => {
+        e.preventDefault();
+        let response = await protected_api_call(review_url, this.state.formData);
+        if(response.status === 201){
+            alert("Review Submitted Successfully");
+        }else{
+            alert("There was an error submitting your review");
+        }
+    }
     
     render() {
         const myStyle = {
@@ -57,14 +66,14 @@ class AddReview extends React.Component {
                         <h1 className="text-gray-500 text-xl md:text-5xl font-bold mb-8">
                             Add a review
                         </h1>
-                        <div className="bg-white w-[40vw] h-[80vh] shadow-lg flex items-center justify-center p-10 overflow-y-auto">
+                        <div className="bg-white w-[40vw] h-[100vh] shadow-lg items-center justify-center p-10 overflow-y-auto">
                             <form onSubmit={this.handleSubmit}>
                                 <div className="mb-6">
                                     <label className="block text-gray-700">Job Title</label>
                                     <input
                                         type="text"
-                                        name="jobTitle"
-                                        value={this.state.formData.jobTitle}
+                                        name="job_title"
+                                        value={this.state.formData.job_title}
                                         onChange={this.handleChange}
                                         className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                     />
@@ -85,8 +94,8 @@ class AddReview extends React.Component {
                                     <label className="block text-gray-700">Location</label>
                                     <input
                                         type="text"
-                                        name="location"
-                                        value={this.state.formData.location}
+                                        name="locations"
+                                        value={this.state.formData.locations}
                                         onChange={this.handleChange}
                                         className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                     />
@@ -96,8 +105,8 @@ class AddReview extends React.Component {
                                     <label className="block text-gray-700">Job Description</label>
                                     <input
                                         type="text"
-                                        name="jobDescription"
-                                        value={this.state.formData.jobDescription}
+                                        name="job_description"
+                                        value={this.state.formData.job_description}
                                         onChange={this.handleChange}
                                         className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                     />
@@ -107,8 +116,8 @@ class AddReview extends React.Component {
                                     <label className="block text-gray-700">Hourly Pay</label>
                                     <input
                                         type="text"
-                                        name="hourlyPay"
-                                        value={this.state.formData.hourlyPay}
+                                        name="hourly_pay"
+                                        value={this.state.formData.hourly_pay}
                                         onChange={this.handleChange}
                                         className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                     />

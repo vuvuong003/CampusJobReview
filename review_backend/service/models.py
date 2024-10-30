@@ -23,8 +23,9 @@ class Reviews(models.Model):
     job_description = models.CharField(max_length=120, db_index=True)
     hourly_pay = models.CharField(max_length=10, null=False)
     benefits = models.CharField(max_length=120, db_index=True, null=False)
-    review = models.CharField(max_length=120, db_index=True, null=False)
+    review = models.CharField(max_length=120, db_index=True, null=True, blank=True)
     rating = models.IntegerField(null=False, blank=False)
+    reviewed_by = models.CharField(max_length=120, db_index=True, null=False)
     recommendation = models.IntegerField()
     
     def clean(self):
@@ -35,8 +36,6 @@ class Reviews(models.Model):
             raise ValidationError("Job Title cannot be null.")
         if not self.hourly_pay:
             raise ValidationError("Hourly Pay cannot be null.")
-        if not self.review:
-            raise ValidationError("Review cannot be null.")
         if self.rating is None:  # Check if rating is null
             raise ValidationError("Rating cannot be null.")
         if self.rating < 1 or self.rating > 5:  # Check for valid range
