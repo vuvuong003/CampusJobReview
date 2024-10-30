@@ -9,17 +9,7 @@ vacancy information in the database.
 from djongo import models  # pylint: disable=E0401
 # from django.contrib.auth.models import AbstractUser
 
-# User Model
-# class User(AbstractUser):
-#     # Inherits from AbstractUser for Django's built-in user model features
-#     image_file = models.CharField(max_length=20, default="default.jpg")
-
-#     def __str__(self):
-#         return self.username
-
-# pylint: disable=R0903
-
-
+#pylint: disable=R0903
 class Reviews(models.Model):
     """Model that stores information about submitted reviews.
 
@@ -50,17 +40,11 @@ class Reviews(models.Model):
 
     # Reference to the User model using ForeignKey
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
-    # pylint: disable=R0903
     class Meta:
+        #pylint: disable=R0903
         """Meta options for the Reviews model."""
         verbose_name_plural = "Reviews"
-
-
-# Vacancies Model
-
-# Disable the "too-few-public-methods" warning for this class
-# since AppConfig subclasses typically require only one or no methods.
-# pylint: disable=R0903
+#pylint: disable=R0903
 class Vacancies(models.Model):
     """Model that stores information about job vacancies.
 
@@ -87,7 +71,7 @@ class Vacancies(models.Model):
     #     self.jobLocation = jobLocation
     #     self.jobPayRate = jobPayRate
     #     self.maxHoursAllowed = maxHoursAllowed
-    # pylint: disable=R0903
+
     class Meta:
         """Meta options for the Vacancies model."""
         verbose_name_plural = "Vacancies"
