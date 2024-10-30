@@ -9,10 +9,10 @@ of the authentication process, ensuring that the implementation
 meets the expected behavior.
 """
 
-from django.contrib.auth import get_user_model
-from django.urls import reverse
-from rest_framework import status
-from rest_framework.test import APITestCase
+from django.contrib.auth import get_user_model #pylint: disable=E0401
+from django.urls import reverse #pylint: disable=E0401
+from rest_framework import status #pylint: disable=E0401
+from rest_framework.test import APITestCase #pylint: disable=E0401
 
 User = get_user_model()
 

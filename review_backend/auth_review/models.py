@@ -7,8 +7,8 @@ creating regular users and superusers. The `Client` model is based on
 Django's AbstractBaseUser and PermissionsMixin, allowing for flexibility
 in user authentication and management.
 """
-from django.db import models
-from django.contrib.auth.models import (
+from django.db import models #pylint: disable=E0401
+from django.contrib.auth.models import ( #pylint: disable=E0401
     AbstractBaseUser,
     BaseUserManager,
     PermissionsMixin,
@@ -90,6 +90,7 @@ class ClientManager(BaseUserManager):
 
 # Disable the "too-few-public-methods" warning for this class
 # since AppConfig subclasses typically require only one or no methods.
+#pylint: disable=R0903
 class Client(AbstractBaseUser, PermissionsMixin):
     """
     Custom user model for the application.

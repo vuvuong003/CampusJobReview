@@ -5,11 +5,11 @@ This module contains serializers that handle the generation of JWT tokens for
 user authentication and the registration of new users, including custom
 validation and user attribute management.
 """
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer #pylint: disable=E0401
+from rest_framework import serializers #pylint: disable=E0401
 # from rest_framework.validators import UniqueValidator
-from django.contrib.auth import get_user_model
-from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth import get_user_model #pylint: disable=E0401
+from django.contrib.auth.password_validation import validate_password #pylint: disable=E0401
 
 User = get_user_model()
 # This class defines a custom token serializer and a registration serializer for user authentication
@@ -20,7 +20,7 @@ User = get_user_model()
 # Disable the "too-few-public-methods" warning for this class
 # since AppConfig subclasses typically require only one or no methods.
 
-
+#pylint: disable=R0903
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     """Serializer for obtaining a JSON Web Token (JWT) for user authentication.
 

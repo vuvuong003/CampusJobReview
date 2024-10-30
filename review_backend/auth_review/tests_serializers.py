@@ -9,9 +9,9 @@ handle user registration and token generation
 
 """
 
-from django.test import TestCase
-from django.contrib.auth import get_user_model
-from rest_framework.exceptions import ValidationError
+from django.test import TestCase #pylint: disable=E0401
+from django.contrib.auth import get_user_model #pylint: disable=E0401
+from rest_framework.exceptions import ValidationError #pylint: disable=E0401
 from .serializers import RegisterSerializer, MyTokenObtainPairSerializer
 
 User = get_user_model()
