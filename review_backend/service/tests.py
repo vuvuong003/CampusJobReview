@@ -463,7 +463,7 @@ class ReviewsTests(TestCase):
 #         except ValidationError:
 #             self.fail("Review raised ValidationError unexpectedly for null recommendation field!")
 
-#     @classmethod
-#     def tearDownClass(cls):
-#         Reviews.objects.all().delete()
-#         super().tearDownClass()
+    @classmethod
+    def tearDownClass(cls):
+        Reviews.objects.all().delete()
+        super().tearDownClass()
