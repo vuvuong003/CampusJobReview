@@ -13,6 +13,7 @@ APIView and serializers for managing request and response data.
 from rest_framework.views import APIView  # pylint: disable=E0401
 from rest_framework.permissions import AllowAny  # pylint: disable=E0401
 from rest_framework.response import Response  # pylint: disable=E0401
+from rest_framework.exceptions import MethodNotAllowed
 from rest_framework import status  # pylint: disable=E0401
 from rest_framework_simplejwt.views import TokenObtainPairView  # pylint: disable=E0401
 # from django.shortcuts import render
@@ -133,7 +134,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
         Returns:
             Response: A response object containing an error message.
         """
-        return Response({"msg": "Get not allowed"})
+        raise MethodNotAllowed("GET", detail={"msg": "Get not allowed"})
 
     def post(self, requests):
         """

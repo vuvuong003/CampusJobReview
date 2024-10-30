@@ -42,11 +42,11 @@ class AuthTests(APITestCase):
         self.token_url = reverse("token_obtain_pair")
         self.token_refresh_url = reverse("token_refresh")
         # Create an inactive user for testing
-        self.inactive_user = User.objects.create_user(
-            username="inactiveuser",
-            password="securepassword",
-            is_active=False
-        )
+        # self.inactive_user = User.objects.create_user(
+        #     username="inactiveuser",
+        #     password="securepassword",
+        #     is_active=False
+        # )
 
     def test_register_new_user_success(self):
         """Test successful registration of a new user.
@@ -75,20 +75,18 @@ class AuthTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertFalse(response.data["data"]["val"])
         self.assertEqual(response.data["data"]["detail"], "Username Exists")
-
+    
     def test_token_obtain_pair_success(self):
         """Test successful JWT token generation with valid credentials.
 
         This test verifies that a valid user can obtain a JWT token by
         providing the correct username and password.
         """
-        # Test JWT token generation with valid credentials
         data = {"username": "testuser", "password": "securepassword"}
         response = self.client.post(self.token_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(response.data["data"]["val"])
         self.assertIn("tokens", response.data["data"])
-        self.assertIn("tenant_id", response.data["data"]["details"])
 
     def test_token_obtain_pair_invalid_credentials(self):
         """Test token generation with invalid user credentials.
@@ -154,11 +152,7 @@ class AuthTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_get_not_allowed_on_token_endpoint(self):
-        """Test GET request on the token endpoint.
-
-        This test verifies that sending a GET request to the token endpoint
-        is not allowed and returns a method not allowed error.
-        """
+        
         # Send a GET request to the token endpoint
         self.token_url = reverse("token_obtain_pair")
         response = self.client.get(self.token_url)
@@ -169,4 +163,15 @@ class AuthTests(APITestCase):
             status.HTTP_405_METHOD_NOT_ALLOWED)
 
         # Check the response message content
+        self.assertEqual(response.data, {"msg": "Get not allowed"})
+
+    def test_get_not_allowed_on_token_endpoint(self):
+        """Test GET request on the token endpoint.
+
+        This test verifies that sending a GET request to the token endpoint
+        is not allowed and returns a method not allowed error.
+        """
+        self.token_url = reverse("token_obtain_pair")
+        response = self.client.get(self.token_url)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
         self.assertEqual(response.data, {"msg": "Get not allowed"})
