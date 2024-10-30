@@ -4,11 +4,25 @@ import NavBar from './Navbar';
 
 class Home extends React.Component {
     add_review = () => {
-        this.props.navigate('/add-review')
+        // check if login is true in local storage
+        let login = localStorage.getItem("login")
+        if (login === "true") {
+            this.props.navigate('/add-review')
+        } else {
+            alert("Please login to add reviews")
+            // this.props.navigate('/login')
+        }
     }
 
     view_reviews = () => {
-        this.props.navigate('/view-reviews')
+        // check if login is true in local storage
+        let login = localStorage.getItem("login")
+        if (login !== "true") {
+            alert("Please login to view reviews")
+            // this.props.navigate('/login')
+        }else{
+            this.props.navigate('/view-reviews')
+        }
     }
     
     render() {
