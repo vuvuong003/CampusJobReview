@@ -6,3 +6,4 @@ review_backend/auth_review/__pycache__
 review_backend/review_backend/__pycache__
 review_backend/auth_review/migrations
 myenv/
+newenv/

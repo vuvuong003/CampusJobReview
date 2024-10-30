@@ -1,3 +1,11 @@
+"""
+Test module for the User model in the 'auth_review' application.
+
+This module contains unit tests for the User model, verifying
+the functionality of user creation methods and ensuring proper
+handling of various scenarios, including regular users, superusers,
+and error cases for invalid input.
+"""
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
@@ -6,7 +14,7 @@ User = get_user_model()
 
 
 class ClientModelTests(TestCase):
-
+    """Unit tests for the User model."""
     def test_create_regular_user(self):
         """Test creating a regular user and verifying default attributes"""
         user = User.objects.create_user(
