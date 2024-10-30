@@ -7,9 +7,11 @@ validation and user attribute management.
 """
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer  # pylint: disable=E0401
 from rest_framework import serializers  # pylint: disable=E0401
-# from rest_framework.validators import UniqueValidator
+from rest_framework.validators import UniqueValidator  # pylint: disable=E0401
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
+from rest_framework.exceptions import ValidationError  # Use this for consistency
 from django.contrib.auth.password_validation import validate_password  # pylint: disable=E0401
+
 
 User = get_user_model()
 # This class defines a custom token serializer and a registration serializer for user authentication
@@ -43,13 +45,13 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         Returns:
             An instance of the token with added custom claims.
         """
+       
+        if user is None:
+            raise ValidationError("User does not exist.")
+            
         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
-
-        # add custom claims to the token. adds username claim to the token which allows
-        # client to receive the username when a token is generated
-        token["username"] = user.username
+        token["username"] = user.username  # Custom claim
         return token
-
 
 # responsible for serializing user registration data
 # Disable the "too-few-public-methods" warning for this class
@@ -70,6 +72,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     # serializer field for the username, which is required for registration
     username = serializers.CharField(
         required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
     )
 
     # serializer field for the password.

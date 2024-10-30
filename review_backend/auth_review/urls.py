@@ -22,7 +22,7 @@ urlpatterns = [
     path("token/", MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
     # This endpoint is for refreshing a JWT token by handling the login for refreshing an
     # expired token and returning a new one.
-    path("token/refresh/", TokenRefreshView.as_view, name="token_refresh"),
+    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     # Handles registration, allowing new users to sign up and create an account
     path("register/", RegisterView.as_view(), name="register"),
 ]
