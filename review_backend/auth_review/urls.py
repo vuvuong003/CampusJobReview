@@ -6,9 +6,9 @@ handling user authentication, registration, and token management.
 It leverages Django REST Framework's URL routing capabilities to
 create clean and manageable endpoints for the API.
 """
-from rest_framework.urlpatterns import format_suffix_patterns #pylint: disable=E0401
-from rest_framework_simplejwt.views import TokenRefreshView #pylint: disable=E0401
-from django.urls import path #pylint: disable=E0401
+from rest_framework.urlpatterns import format_suffix_patterns  # pylint: disable=E0401
+from rest_framework_simplejwt.views import TokenRefreshView  # pylint: disable=E0401
+from django.urls import path  # pylint: disable=E0401
 from .views import MyTokenObtainPairView, RegisterView
 
 

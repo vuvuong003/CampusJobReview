@@ -5,12 +5,14 @@ This module contains the configuration for the 'service' application, which
 is part of the Django project. It sets up the application name and default
 primary key field type.
 """
-from django.apps import AppConfig #pylint: disable=E0401
+from django.apps import AppConfig  # pylint: disable=E0401
 
 # Disable the "too-few-public-methods" warning for this class
 # since AppConfig subclasses typically require only one or no methods.
 
-#pylint: disable=R0903
+# pylint: disable=R0903
+
+
 class ServiceConfig(AppConfig):
     """
     Django application configuration for the 'service' app.

@@ -6,9 +6,9 @@ the functionality of user creation methods and ensuring proper
 handling of various scenarios, including regular users, superusers,
 and error cases for invalid input.
 """
-from django.test import TestCase #pylint: disable=E0401
-from django.contrib.auth import get_user_model #pylint: disable=E0401
-from django.db.utils import IntegrityError #pylint: disable=E0401
+from django.test import TestCase  # pylint: disable=E0401
+from django.contrib.auth import get_user_model  # pylint: disable=E0401
+from django.db.utils import IntegrityError  # pylint: disable=E0401
 
 User = get_user_model()
 

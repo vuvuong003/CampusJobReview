@@ -6,7 +6,7 @@ service application, including the Reviews and Vacancies models.
 These models represent the data structures for storing review and job
 vacancy information in the database.
 """
-from djongo import models #pylint: disable=E0401
+from djongo import models  # pylint: disable=E0401
 # from django.contrib.auth.models import AbstractUser
 
 # User Model
@@ -17,7 +17,9 @@ from djongo import models #pylint: disable=E0401
 #     def __str__(self):
 #         return self.username
 
-#pylint: disable=R0903
+# pylint: disable=R0903
+
+
 class Reviews(models.Model):
     """Model that stores information about submitted reviews.
 
@@ -48,7 +50,7 @@ class Reviews(models.Model):
 
     # Reference to the User model using ForeignKey
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
-    #pylint: disable=R0903
+    # pylint: disable=R0903
     class Meta:
         """Meta options for the Reviews model."""
         verbose_name_plural = "Reviews"
@@ -58,7 +60,7 @@ class Reviews(models.Model):
 
 # Disable the "too-few-public-methods" warning for this class
 # since AppConfig subclasses typically require only one or no methods.
-#pylint: disable=R0903
+# pylint: disable=R0903
 class Vacancies(models.Model):
     """Model that stores information about job vacancies.
 
@@ -85,7 +87,7 @@ class Vacancies(models.Model):
     #     self.jobLocation = jobLocation
     #     self.jobPayRate = jobPayRate
     #     self.maxHoursAllowed = maxHoursAllowed
-    #pylint: disable=R0903
+    # pylint: disable=R0903
     class Meta:
         """Meta options for the Vacancies model."""
         verbose_name_plural = "Vacancies"

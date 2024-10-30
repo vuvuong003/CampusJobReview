@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
-from dotenv import load_dotenv #pylint: disable=E0401
+from dotenv import load_dotenv  # pylint: disable=E0401
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

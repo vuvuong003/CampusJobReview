@@ -10,13 +10,13 @@ APIView and serializers for managing request and response data.
 
 
 # Create your views here.
-from rest_framework.views import APIView #pylint: disable=E0401
-from rest_framework.permissions import AllowAny #pylint: disable=E0401
-from rest_framework.response import Response #pylint: disable=E0401
-from rest_framework import status #pylint: disable=E0401
-from rest_framework_simplejwt.views import TokenObtainPairView #pylint: disable=E0401
+from rest_framework.views import APIView  # pylint: disable=E0401
+from rest_framework.permissions import AllowAny  # pylint: disable=E0401
+from rest_framework.response import Response  # pylint: disable=E0401
+from rest_framework import status  # pylint: disable=E0401
+from rest_framework_simplejwt.views import TokenObtainPairView  # pylint: disable=E0401
 # from django.shortcuts import render
-from django.contrib.auth import get_user_model #pylint: disable=E0401
+from django.contrib.auth import get_user_model  # pylint: disable=E0401
 from .serializers import MyTokenObtainPairSerializer, RegisterSerializer
 
 # This class is responsible for handling essential functionality for user
@@ -30,7 +30,9 @@ User = get_user_model()
 # Disable the "too-few-public-methods" warning for this class
 # since AppConfig subclasses typically require only one or no methods.
 
-#pylint: disable=R0903
+# pylint: disable=R0903
+
+
 class RegisterView(APIView):
     """
     View for user registration.

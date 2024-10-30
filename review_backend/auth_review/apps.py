@@ -6,12 +6,14 @@ which is responsible for handling user authentication, registration, and
 review management. It sets the default primary key field type and provides
 metadata for the app.
 """
-from django.apps import AppConfig #pylint: disable=E0401
+from django.apps import AppConfig  # pylint: disable=E0401
 
 # Disable the "too-few-public-methods" warning for this class
 # since AppConfig subclasses typically require only one or no methods.
 
-#pylint: disable=R0903
+# pylint: disable=R0903
+
+
 class AuthReviewConfig(AppConfig):
     """Django application configuration for the 'auth_review' app.
 
