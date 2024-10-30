@@ -13,7 +13,8 @@ class ReviewsSerializer(serializers.ModelSerializer):
             'review': {'required': True},  # Enforces non-null constraint
             'rating': {'required': True},  # Enforces non-null constraint
             'locations': {'required': False},  # Optional field
-            'job_description': {'required': False},  # Optional field
+            'job_description': {'required': False},  # Optional field,
+            'reviewed_by': {'required': False},  # Optional field,
         }
 
     def validate(self, attrs):

@@ -11,9 +11,15 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 // import { useNavigate } from 'react-router-dom';
 
-const pages = ['Home', 'Login', 'Signup'];
-
 function NavBar(props) {
+
+  let pages = ['Home', 'Login', 'Signup'];
+
+  // check if localstorage has login key
+  if(localStorage.getItem('login') === 'true'){
+    pages = ['Home', 'Add Review', 'View Reviews', 'Logout'];
+  }
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -31,6 +37,13 @@ function NavBar(props) {
         props.navigation('/login')
     }else if(page === "Signup"){
         props.navigation('/signup')
+    }else if(page === "Logout") {
+        localStorage.setItem("login", "false");
+        props.navigation('/')
+    }else if (page === "Add Review"){
+        props.navigation('/add-review')
+    }else if (page === "View Reviews"){
+        props.navigation('/view-reviews')
     }
   }
 
