@@ -11,9 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
-from dotenv import load_dotenv
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv  # pylint: disable=E0401
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -142,7 +142,8 @@ DATABASES = {
         "ENGINE": "djongo",
         "NAME": os.getenv("DB_NAME"),
         "CLIENT": {
-            # 'host': "mongodb+srv://"+os.getenv('DB_USERNAME')+":"+os.getenv("DB_PASSWORD")+"@cluster0.ohnr0.mongodb.net/"
+            # 'host': "mongodb+srv://"+os.getenv('DB_USERNAME')+":"
+            # +os.getenv("DB_PASSWORD")+"@cluster0.ohnr0.mongodb.net/"
             "host": "mongodb+srv://"
             + os.getenv("DB_USERNAME")
             + ":"

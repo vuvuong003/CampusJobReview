@@ -1,3 +1,13 @@
+"""
+Tests for the 'service' application.
+
+This module contains test cases for the views, models, and serializers
+within the 'service' app. It uses Django's testing framework and the
+REST framework's testing tools to ensure the application's components
+function as expected.
+"""
+
+# from django.test import TestCase
 from django.test import TestCase
 from .models import Reviews
 from django.core.exceptions import ValidationError
@@ -41,63 +51,130 @@ class ReviewsTests(TestCase):
             recommendation=1
         )
 
-    ### Basic Field Validation: 8 tests
+    # Basic Field Validation: 8 tests
 
     def test_department_not_empty(self):
         """Test that department cannot be empty."""
         with self.assertRaises(ValidationError):
-            review = Reviews(department="", job_title="Engineer", hourly_pay="30", review="Nice", rating=4, recommendation=1)
+            review = Reviews(
+                department="",
+                job_title="Engineer",
+                hourly_pay="30",
+                review="Nice",
+                rating=4,
+                recommendation=1)
             review.full_clean()
 
     def test_locations_not_empty(self):
         """Test that locations cannot be empty."""
         with self.assertRaises(ValidationError):
-            review = Reviews(department="IT", locations="", job_title="Engineer", hourly_pay="30", review="Nice", rating=4, recommendation=1)
+            review = Reviews(
+                department="IT",
+                locations="",
+                job_title="Engineer",
+                hourly_pay="30",
+                review="Nice",
+                rating=4,
+                recommendation=1)
             review.full_clean()
 
     def test_job_title_not_empty(self):
         """Test that job_title cannot be empty."""
         with self.assertRaises(ValidationError):
-            review = Reviews(department="IT", job_title="", locations="Remote", hourly_pay="30", review="Nice", rating=4, recommendation=1)
+            review = Reviews(
+                department="IT",
+                job_title="",
+                locations="Remote",
+                hourly_pay="30",
+                review="Nice",
+                rating=4,
+                recommendation=1)
             review.full_clean()
 
     def test_hourly_pay_not_empty(self):
         """Test that hourly_pay cannot be empty."""
         with self.assertRaises(ValidationError):
-            review = Reviews(department="IT", job_title="Engineer", locations="Remote", hourly_pay="", review="Nice", rating=4, recommendation=1)
+            review = Reviews(
+                department="IT",
+                job_title="Engineer",
+                locations="Remote",
+                hourly_pay="",
+                review="Nice",
+                rating=4,
+                recommendation=1)
             review.full_clean()
 
     def test_benefits_not_empty(self):
         """Test that benefits cannot be empty."""
         with self.assertRaises(ValidationError):
-            review = Reviews(department="IT", job_title="Engineer", locations="Remote", hourly_pay="30", benefits="", review="Nice", rating=4, recommendation=1)
+            review = Reviews(
+                department="IT",
+                job_title="Engineer",
+                locations="Remote",
+                hourly_pay="30",
+                benefits="",
+                review="Nice",
+                rating=4,
+                recommendation=1)
             review.full_clean()
 
     def test_review_not_empty(self):
         """Test that review cannot be empty."""
         with self.assertRaises(ValidationError):
-            review = Reviews(department="IT", job_title="Engineer", locations="Remote", hourly_pay="30", benefits="Health Insurance", review="", rating=4, recommendation=1)
+            review = Reviews(
+                department="IT",
+                job_title="Engineer",
+                locations="Remote",
+                hourly_pay="30",
+                benefits="Health Insurance",
+                review="",
+                rating=4,
+                recommendation=1)
             review.full_clean()
 
     def test_rating_not_null(self):
         """Test that rating cannot be null."""
         with self.assertRaises(ValidationError):
-            review = Reviews(department="IT", job_title="Engineer", locations="Remote", hourly_pay="30", benefits="Health Insurance", review="Nice", rating=None, recommendation=1)
+            review = Reviews(
+                department="IT",
+                job_title="Engineer",
+                locations="Remote",
+                hourly_pay="30",
+                benefits="Health Insurance",
+                review="Nice",
+                rating=None,
+                recommendation=1)
             review.full_clean()
 
     def test_invalid_rating_above_max(self):
         """Test that rating cannot exceed 5."""
         with self.assertRaises(ValidationError):
-            review = Reviews(department="IT", job_title="Engineer", locations="Remote", hourly_pay="30", benefits="Health Insurance", review="Nice", rating=6, recommendation=1)
+            review = Reviews(
+                department="IT",
+                job_title="Engineer",
+                locations="Remote",
+                hourly_pay="30",
+                benefits="Health Insurance",
+                review="Nice",
+                rating=6,
+                recommendation=1)
             review.full_clean()
 
     def test_invalid_rating_below_min(self):
         """Test that rating cannot be less than 1."""
         with self.assertRaises(ValidationError):
-            review = Reviews(department="IT", job_title="Engineer", locations="Remote", hourly_pay="30", benefits="Health Insurance", review="Nice", rating=0, recommendation=1)
+            review = Reviews(
+                department="IT",
+                job_title="Engineer",
+                locations="Remote",
+                hourly_pay="30",
+                benefits="Health Insurance",
+                review="Nice",
+                rating=0,
+                recommendation=1)
             review.full_clean()
 
-    ### Data Integrity and Creation Tests: 3 tests
+    # Data Integrity and Creation Tests: 3 tests
 
     def test_create_review(self):
         """Test that a review can be created successfully."""
@@ -132,7 +209,7 @@ class ReviewsTests(TestCase):
         self.assertEqual(self.review_1.rating, 5)
         self.assertEqual(self.review_1.recommendation, 1)
 
-    ### Filtering/Query Tests: 7 tests
+    # Filtering/Query Tests: 7 tests
 
     def test_filter_by_location(self):
         """Test filtering reviews by location."""
@@ -160,19 +237,21 @@ class ReviewsTests(TestCase):
     def test_filter_by_benefits(self):
         """Test filtering reviews by benefits."""
         insurance_reviews = Reviews.objects.filter(benefits="Health Insurance")
-        self.assertEqual(insurance_reviews.count(), 2)  # Two reviews with Health Insurance
+        # Two reviews with Health Insurance
+        self.assertEqual(insurance_reviews.count(), 2)
 
     def test_filter_by_job_title(self):
         """Test filtering reviews by job title."""
         engineer_reviews = Reviews.objects.filter(job_title="Engineer")
-        self.assertEqual(engineer_reviews.count(), 1)  # Assuming both review_1 and review_3 have job titles with "Engineer"
+        # Assuming both review_1 and review_3 have job titles with "Engineer"
+        self.assertEqual(engineer_reviews.count(), 1)
 
     def test_filter_by_recommendation(self):
         """Test filtering reviews by recommendation."""
         recommended_reviews = Reviews.objects.filter(recommendation=1)
         self.assertEqual(recommended_reviews.count(), 3)
 
-    ### Edge Cases: 5 tests
+    # Edge Cases: 5 tests
 
     def test_empty_string_department(self):
         """Test that department cannot be an empty string."""

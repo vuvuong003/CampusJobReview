@@ -20,11 +20,13 @@ class ReviewsSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         # Add custom validation logic here if needed
         if attrs['rating'] < 1 or attrs['rating'] > 5:
-            raise serializers.ValidationError("Rating must be between 1 and 5.")
+            raise serializers.ValidationError(
+                "Rating must be between 1 and 5.")
         if not attrs['review']:
             raise serializers.ValidationError("Review cannot be empty.")
         # Add more validation as needed
         return attrs
+
 
 class VacanciesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,8 +38,10 @@ class VacanciesSerializer(serializers.ModelSerializer):
         if not attrs['jobTitle']:
             raise serializers.ValidationError("Job title cannot be empty.")
         if not attrs['jobDescription']:
-            raise serializers.ValidationError("Job description cannot be empty.")
+            raise serializers.ValidationError(
+                "Job description cannot be empty.")
         if attrs['maxHoursAllowed'] <= 0:
-            raise serializers.ValidationError("Max hours allowed must be greater than 0.")
+            raise serializers.ValidationError(
+                "Max hours allowed must be greater than 0.")
         # Add more validation as needed
         return attrs

@@ -1,7 +1,16 @@
+"""
+Module for defining URL routing for the 'auth_review' application.
+
+This module contains the URL patterns that map to specific views
+handling user authentication, registration, and token management.
+It leverages Django REST Framework's URL routing capabilities to
+create clean and manageable endpoints for the API.
+"""
+from rest_framework.urlpatterns import format_suffix_patterns  # pylint: disable=E0401
+from rest_framework_simplejwt.views import TokenRefreshView  # pylint: disable=E0401
+from django.urls import path  # pylint: disable=E0401
 from .views import MyTokenObtainPairView, RegisterView
-from rest_framework.urlpatterns import format_suffix_patterns
-from rest_framework_simplejwt.views import TokenRefreshView
-from django.urls import path
+
 
 # This class defines the URL rouring. Defines the endpoints that the application will respond
 # to, linking them to appropriate views that handle requests and return
@@ -13,7 +22,7 @@ urlpatterns = [
     path("token/", MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
     # This endpoint is for refreshing a JWT token by handling the login for refreshing an
     # expired token and returning a new one.
-    path("token/refresh/", TokenRefreshView.as_view, name="token_refresh"),
+    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     # Handles registration, allowing new users to sign up and create an account
     path("register/", RegisterView.as_view(), name="register"),
 ]

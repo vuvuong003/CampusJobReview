@@ -1,3 +1,12 @@
+"""
+Views for the 'service' application.
+
+This module contains the view functions and classes that handle
+HTTP requests and responses for the 'service' app. These views
+interact with the models and serializers to implement the business
+logic and provide the appropriate responses to the client.
+"""
+# from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import generics
 from rest_framework.response import Response
@@ -21,9 +30,14 @@ class ReviewsViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)  # Get data from the request
         if serializer.is_valid():  # Validate the data
             serializer.save()  # Save the valid data to the database
-            return Response(serializer.data, status=status.HTTP_201_CREATED)  # Return created response
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # Return error response
-    
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED)  # Return created response
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST)  # Return error response
+
+
 class FilterReviewsView(generics.ListAPIView):
     # permission_classes = (IsAuthenticated)
     serializer_class = ReviewsSerializer
@@ -47,7 +61,7 @@ class FilterReviewsView(generics.ListAPIView):
         if max_rating:
             queryset = queryset.filter(rating__lte=max_rating)
 
-        return queryset    
+        return queryset
 
 
 class VacanciesViewSet(viewsets.ModelViewSet):
@@ -55,8 +69,13 @@ class VacanciesViewSet(viewsets.ModelViewSet):
     serializer_class = VacanciesSerializer  # Use the VacanciesSerializer
 
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)  # Get data from the request
+        serializer = self.get_serializer(
+            data=request.data)  # Get data from the request
         if serializer.is_valid():  # Validate the data
             serializer.save()  # Save the valid data to the database
-            return Response(serializer.data, status=status.HTTP_201_CREATED)  # Return created response
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # Return error response
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED)  # Return created response
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST)  # Return error response

@@ -34,7 +34,7 @@ Explore our platform and take the first step towards finding the right on-campus
 
 ![GitHub open issues](https://img.shields.io/github/issues-raw/SAT510/CampusJobReview)  ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/SAT510/CampusJobReview)
 
-[![Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/pytest.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/pytest.yml)     [![codecov](https://codecov.io/gh/shaziamuckram/SAT510/project-resources/main/graph/badge.svg)](https://codecov.io/gh/yourusername/yourrepo)
+[![Django Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml)     [![codecov](https://codecov.io/gh/shaziamuckram/SAT510/project-resources/main/graph/badge.svg)](https://codecov.io/gh/yourusername/yourrepo)
 
 <p align="center"><img width="700" src="./resources/Intro_to_CampusJobReview.gif"></p>
 
