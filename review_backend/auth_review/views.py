@@ -119,7 +119,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
     # get requests not allowed for this endpoint
-    #pylint: disable=W0613
+    # pylint: disable=W0613
     def get(self, request):
         """
         Handle GET requests to the token endpoint.
