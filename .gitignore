@@ -1,6 +1,6 @@
-review_frontend/node_modules
-review_backend/service/__pycache__
-review_backend/service/migrations
+review_frontend/node_modules/
+review_backend/service/__pycache__/
+review_backend/service/migrations/
 review_backend/service/.env
 review_backend/auth_review/__pycache__
 review_backend/review_backend/__pycache__

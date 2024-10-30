@@ -157,23 +157,12 @@ class MyTokenObtainPairView(TokenObtainPairView):
         # user's index in the database.
         # If the token generation fails, return the original response
         if r.status_code == 200:
-            tenant_username = requests.data["username"]
-            all_users = User.objects.all()
-            tenant_id = 0
-            for i in all_users:
-                if i.username == tenant_username:
-                    break
-                tenant_id += 1
-
-            # client = User.objects.get(username=obj["username"])
-            # obj["username"] = client.username
 
             return Response(
                 {
                     "data": {
                         "val": True,
                         "tokens": r.data,
-                        "details": {"tenant_id": tenant_id},
                     }
                 },
                 status=status.HTTP_200_OK,
