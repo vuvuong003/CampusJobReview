@@ -19,6 +19,7 @@ User = get_user_model()
 
 class AuthTests(APITestCase):
     """Test cases for user authentication and registration."""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.test_user = None
@@ -58,7 +59,9 @@ class AuthTests(APITestCase):
         response = self.client.post(self.register_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(response.data["data"]["val"])
-        self.assertEqual(response.data["data"]["detail"], "Registration Successful")
+        self.assertEqual(
+            response.data["data"]["detail"],
+            "Registration Successful")
 
     def test_register_existing_user_error(self):
         """Test registration with an existing username.
@@ -161,7 +164,9 @@ class AuthTests(APITestCase):
         response = self.client.get(self.token_url)
 
         # Check that the response status code is 405 Method Not Allowed
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_405_METHOD_NOT_ALLOWED)
 
         # Check the response message content
         self.assertEqual(response.data, {"msg": "Get not allowed"})

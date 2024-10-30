@@ -3,7 +3,7 @@ Module for defining URL routing for the 'auth_review' application.
 
 This module contains the URL patterns that map to specific views
 handling user authentication, registration, and token management.
-It leverages Django REST Framework's URL routing capabilities to 
+It leverages Django REST Framework's URL routing capabilities to
 create clean and manageable endpoints for the API.
 """
 from rest_framework.urlpatterns import format_suffix_patterns

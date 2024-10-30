@@ -1,10 +1,10 @@
 """
 Module for defining custom user models and their management for the application.
 
-This module contains the `Client` model, which customizes user fields and 
-permissions. It also includes a custom manager, `ClientManager`, for 
-creating regular users and superusers. The `Client` model is based on 
-Django's AbstractBaseUser and PermissionsMixin, allowing for flexibility 
+This module contains the `Client` model, which customizes user fields and
+permissions. It also includes a custom manager, `ClientManager`, for
+creating regular users and superusers. The `Client` model is based on
+Django's AbstractBaseUser and PermissionsMixin, allowing for flexibility
 in user authentication and management.
 """
 from django.db import models
@@ -24,16 +24,17 @@ class ClientManager(BaseUserManager):
     Custom manager for the Client model.
 
     This class defines methods for creating regular users and superusers,
-    ensuring that the necessary fields are validated and set during 
+    ensuring that the necessary fields are validated and set during
     user creation.
 
     Methods:
-        create_user(username, password=None, **extra_fields): Creates 
+        create_user(username, password=None, **extra_fields): Creates
                     a regular user with a username and optional password.
-        create_superuser(username, password=None, **extra_fields): Creates 
+        create_superuser(username, password=None, **extra_fields): Creates
                     a superuser with admin privileges and required password.
     """
     # create a regular user with optional password?
+
     def create_user(self, username, password=None):
         """
         Create and return a regular user with an encrypted password.
@@ -93,7 +94,7 @@ class Client(AbstractBaseUser, PermissionsMixin):
     """
     Custom user model for the application.
 
-    This model allows for customization of user fields and permissions, 
+    This model allows for customization of user fields and permissions,
     including unique usernames and various role attributes.
 
     Attributes:
@@ -106,7 +107,7 @@ class Client(AbstractBaseUser, PermissionsMixin):
     objects: The custom manager for creating users and superusers.
 
     Methods:
-        __str__(): Returns the username as the string representation of 
+        __str__(): Returns the username as the string representation of
                     the Client instance.
     """
 

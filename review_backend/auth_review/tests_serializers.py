@@ -23,6 +23,7 @@ class RegisterSerializerTest(TestCase):
     This class contains tests to validate the behavior of the RegisterSerializer,
     including successful registrations and various edge cases.
     """
+
     def test_valid_registration_data(self):
         """Test that valid registration data creates a user successfully.
 
@@ -91,6 +92,7 @@ class MyTokenObtainPairSerializerTest(TestCase):
     This class contains tests to validate the behavior of the MyTokenObtainPairSerializer,
     including successful token generation and handling of nonexistent users.
     """
+
     def test_get_token_with_valid_user(self):
         """Test that a token can be obtained for a valid user.
 

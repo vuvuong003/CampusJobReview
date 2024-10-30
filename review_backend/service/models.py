@@ -1,9 +1,9 @@
 """
 Module for defining database models for the 'service' application.
 
-This module contains the definitions of the database models used in the 
-service application, including the Reviews and Vacancies models. 
-These models represent the data structures for storing review and job 
+This module contains the definitions of the database models used in the
+service application, including the Reviews and Vacancies models.
+These models represent the data structures for storing review and job
 vacancy information in the database.
 """
 from djongo import models

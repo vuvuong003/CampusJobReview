@@ -15,6 +15,7 @@ User = get_user_model()
 
 class ClientModelTests(TestCase):
     """Unit tests for the User model."""
+
     def test_create_regular_user(self):
         """Test creating a regular user and verifying default attributes"""
         user = User.objects.create_user(

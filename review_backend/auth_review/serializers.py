@@ -1,8 +1,8 @@
 """
 Module for defining custom serializers for user authentication and registration.
 
-This module contains serializers that handle the generation of JWT tokens for 
-user authentication and the registration of new users, including custom 
+This module contains serializers that handle the generation of JWT tokens for
+user authentication and the registration of new users, including custom
 validation and user attribute management.
 """
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -19,10 +19,12 @@ User = get_user_model()
 
 # Disable the "too-few-public-methods" warning for this class
 # since AppConfig subclasses typically require only one or no methods.
+
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     """Serializer for obtaining a JSON Web Token (JWT) for user authentication.
 
-        This serializer extends the default TokenObtainPairSerializer to add 
+        This serializer extends the default TokenObtainPairSerializer to add
         custom claims to the JWT, such as the username.
 
     Methods:
@@ -53,13 +55,13 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
     """Serializer for registering new users.
 
-    This serializer handles the validation and creation of new user accounts, 
+    This serializer handles the validation and creation of new user accounts,
     enforcing password validation and ensuring required fields are filled.
 
     Attributes:
         username (str): The username of the user, required for registration.
         password (str): The password for the user account, validated for security.
-    
+
     Methods:
         create(validated_data): Creates a new user instance with the validated data.
     """
@@ -103,7 +105,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     # defines how the serializer interacts with the model
     class Meta:
         """
-        This class provides metadata options for the RegisterSerializer, 
+        This class provides metadata options for the RegisterSerializer,
         defining how the serializer interacts with the User model.
 
         Attributes:
