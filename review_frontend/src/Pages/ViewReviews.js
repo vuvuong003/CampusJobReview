@@ -59,6 +59,7 @@ class Reviews extends React.Component {
         if (response.status === 200) {
             let data = await response.json();
             this.setState({ jobs: data });
+            console.log("Data: ", data);
         } else {
             alert("Server Error");
         }
