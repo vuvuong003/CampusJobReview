@@ -17,17 +17,18 @@ class Reviews(models.Model):
     """Model which stores the information of the reviews submitted"""
 
     # Unique identifier for each review
-    department = models.CharField(max_length=64, db_index=True)
+    department = models.CharField(max_length=100, blank=False, null=False)
     locations = models.CharField(max_length=120, db_index=True)
-    job_title = models.CharField(max_length=64, db_index=True)
+    job_title = models.CharField(max_length=64, db_index=True, null=False)
     job_description = models.CharField(max_length=120, db_index=True)
-    hourly_pay = models.CharField(max_length=10)
-    benefits = models.CharField(max_length=120, db_index=True)
-    review = models.CharField(max_length=120, db_index=True)
-    rating = models.IntegerField()
+    hourly_pay = models.CharField(max_length=10, null=False)
+    benefits = models.CharField(max_length=120, db_index=True, null=False)
+    review = models.CharField(max_length=120, db_index=True, null=False)
+    rating = models.IntegerField(null=False, blank=False)
     recommendation = models.IntegerField()
     
     def clean(self):
+        super().clean()
         if not self.department:
             raise ValidationError("Department cannot be null.")
         if not self.job_title:
@@ -36,8 +37,10 @@ class Reviews(models.Model):
             raise ValidationError("Hourly Pay cannot be null.")
         if not self.review:
             raise ValidationError("Review cannot be null.")
-        if not self.rating:
-            raise ValidationError("Rating Pay cannot be null.")
+        if self.rating is None:  # Check if rating is null
+            raise ValidationError("Rating cannot be null.")
+        if self.rating < 1 or self.rating > 5:  # Check for valid range
+            raise ValidationError("Rating must be between 1 and 5.")
     
     # Reference to the User model using ForeignKey
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
