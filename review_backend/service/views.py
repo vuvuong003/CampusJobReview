@@ -18,7 +18,7 @@ from .serializers import ReviewsSerializer
 from .models import Vacancies
 from .serializers import VacanciesSerializer
 
-
+# pylint: disable=R0903
 class ReviewsViewSet(viewsets.ModelViewSet):
     """
     A view set for handling Reviews.
@@ -58,7 +58,7 @@ class ReviewsViewSet(viewsets.ModelViewSet):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST)  # Return error response
 
-
+# pylint: disable=R0903
 class FilterReviewsView(generics.ListAPIView):
     """
     A view for filtering Reviews.
@@ -99,7 +99,7 @@ class FilterReviewsView(generics.ListAPIView):
 
         return queryset
 
-# pylint: disable=W0613,R0903
+# pylint: disable=R0903
 class VacanciesViewSet(viewsets.ModelViewSet):
     """
     A view set for handling Vacancies.
