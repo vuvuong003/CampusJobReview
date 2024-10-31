@@ -17,7 +17,7 @@ from .serializers import ReviewsSerializer
 
 from .models import Vacancies
 from .serializers import VacanciesSerializer
-#pylint
+# pylint: diable=R0903
 class ReviewsViewSet(viewsets.ModelViewSet):
     """
     A view set for handling Reviews.
@@ -97,6 +97,7 @@ class FilterReviewsView(generics.ListAPIView):
             queryset = queryset.filter(rating__lte=max_rating)
 
         return queryset
+
 
 # pylint: disable=R0903
 class VacanciesViewSet(viewsets.ModelViewSet):
