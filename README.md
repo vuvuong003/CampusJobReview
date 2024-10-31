@@ -1,8 +1,3 @@
-# Backend
-- python manage.py makemigrations
-- python manage.py migrate
-- python manage.py runserver 
-
 # NC STATE JOBS RATING AND REVIEW SYSTEM 
 ## Table of contents
 - [Introduction](#Introduction)
