@@ -17,7 +17,7 @@ from .serializers import ReviewsSerializer
 
 from .models import Vacancies
 from .serializers import VacanciesSerializer
-# pylint: disable=R0903
+# pylint: disable=too-few-public-methods
 class ReviewsViewSet(viewsets.ModelViewSet):
     """
     A view set for handling Reviews.
@@ -99,7 +99,7 @@ class FilterReviewsView(generics.ListAPIView):
         return queryset
 
 
-# pylint: disable=R0903
+# pylint: disable=too-few-public-methods
 class VacanciesViewSet(viewsets.ModelViewSet):
     """
     A view set for handling Vacancies.
