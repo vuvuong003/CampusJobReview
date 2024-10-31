@@ -22,5 +22,8 @@ jobs:
 
       - name: Run Pylint
         run: |
-          pylint --ignore=node_modules --load-plugins=pylint_django --disable=import-error .
+          env:
+            DJANGO_SETTINGS_MODULE: review_backend.review_backend.settings
+          run: |
+            pylint --ignore=node_modules --disable=import-error .
 
