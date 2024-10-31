@@ -32,7 +32,8 @@ Explore our platform and take the first step towards finding the right on-campus
 
 [![Autopep8 Check](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml)     [![Pylint Check](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml)     [![Black](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml)      [![Bandit](https://github.com/SAT510/CampusJobReview/actions/workflows/bandit.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/bandit.yml) 
 
-![GitHub open issues](https://img.shields.io/github/issues-raw/SAT510/CampusJobReview)  ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/SAT510/CampusJobReview)
+[![GitHub open issues](https://img.shields.io/github/issues-raw/SAT510/CampusJobReview)](https://github.com/SAT510/CampusJobReview/issues?q=is%3Aopen)  
+[![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/SAT510/CampusJobReview)](https://github.com/SAT510/CampusJobReview/issues?q=is%3Aclosed)
 
 [![Django Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml)     [![codecov](https://codecov.io/gh/shaziamuckram/SAT510/project-resources/main/graph/badge.svg)](https://codecov.io/gh/yourusername/yourrepo)
 
