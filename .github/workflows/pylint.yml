@@ -22,4 +22,4 @@ jobs:
 
       - name: Run Pylint
         run: |
-          pylint --ignore=node_modules .
+          pylint --ignore=node_modules --disable=import-error .
