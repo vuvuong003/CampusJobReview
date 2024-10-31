@@ -5,12 +5,15 @@ This module contains serializers that handle the generation of JWT tokens for
 user authentication and the registration of new users, including custom
 validation and user attribute management.
 """
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer  # pylint: disable=E0401
-from rest_framework import serializers  # pylint: disable=E0401
-from rest_framework.validators import UniqueValidator  # pylint: disable=E0401
+# Django imports
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
-from rest_framework.exceptions import ValidationError  # Use this for consistency
 from django.contrib.auth.password_validation import validate_password  # pylint: disable=E0401
+
+# Third-party imports
+from rest_framework import serializers  # pylint: disable=E0401
+from rest_framework.exceptions import ValidationError
+from rest_framework.validators import UniqueValidator  # pylint: disable=E0401
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer  # pylint: disable=E0401
 
 
 User = get_user_model()
@@ -45,10 +48,10 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         Returns:
             An instance of the token with added custom claims.
         """
-       
+
         if user is None:
             raise ValidationError("User does not exist.")
-            
+
         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
         token["username"] = user.username  # Custom claim
         return token

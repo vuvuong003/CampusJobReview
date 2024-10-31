@@ -75,7 +75,7 @@ class AuthTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertFalse(response.data["data"]["val"])
         self.assertEqual(response.data["data"]["detail"], "Username Exists")
-    
+
     def test_token_obtain_pair_success(self):
         """Test successful JWT token generation with valid credentials.
 
@@ -152,7 +152,15 @@ class AuthTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_get_not_allowed_on_token_endpoint(self):
-        
+        """
+        Test case to ensure that a GET request to the token endpoint 
+        returns a 405 Method Not Allowed status.
+
+        This test verifies that the token endpoint, which is meant to 
+        handle authentication via POST requests only, correctly 
+        responds with a 405 status code and an appropriate message 
+        when a GET request is made.
+        """
         # Send a GET request to the token endpoint
         self.token_url = reverse("token_obtain_pair")
         response = self.client.get(self.token_url)
@@ -165,13 +173,13 @@ class AuthTests(APITestCase):
         # Check the response message content
         self.assertEqual(response.data, {"msg": "Get not allowed"})
 
-    def test_get_not_allowed_on_token_endpoint(self):
-        """Test GET request on the token endpoint.
+    # def test_get_not_allowed_on_token_endpoint(self):
+    #     """Test GET request on the token endpoint.
 
-        This test verifies that sending a GET request to the token endpoint
-        is not allowed and returns a method not allowed error.
-        """
-        self.token_url = reverse("token_obtain_pair")
-        response = self.client.get(self.token_url)
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-        self.assertEqual(response.data, {"msg": "Get not allowed"})
+    #     This test verifies that sending a GET request to the token endpoint
+    #     is not allowed and returns a method not allowed error.
+    #     """
+    #     self.token_url = reverse("token_obtain_pair")
+    #     response = self.client.get(self.token_url)
+    #     self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+    #     self.assertEqual(response.data, {"msg": "Get not allowed"})

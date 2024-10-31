@@ -7,6 +7,7 @@ These models represent the data structures for storing review and job
 vacancy information in the database.
 """
 from djongo import models  # pylint: disable=E0401
+from django.core.exceptions import ValidationError
 # from django.contrib.auth.models import AbstractUser
 
 # pylint: disable=R0903
@@ -41,6 +42,11 @@ class Reviews(models.Model):
     recommendation = models.IntegerField()
 
     def clean(self):
+        """Validate the model attributes before saving.
+
+        Raises:
+            ValidationError: If any required field is missing or invalid.
+        """
         super().clean()
         if not self.department:
             raise ValidationError("Department cannot be null.")

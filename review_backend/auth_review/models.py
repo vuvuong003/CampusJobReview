@@ -141,4 +141,4 @@ class Client(AbstractBaseUser, PermissionsMixin):
         Returns:
             str: The username of the client.
         """
-        return self.username
+        return self.username  # pylint: disable=E0307

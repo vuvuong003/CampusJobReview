@@ -13,16 +13,8 @@ from django.core.exceptions import ValidationError # pylint: disable=E0401
 from .models import Reviews
 
 
-"""
-Tests for the 'service' application.
-
-This module contains test cases for the views, models, and serializers
-within the 'service' app. It uses Django's testing framework and the
-REST framework's testing tools to ensure the application's components
-function as expected.
-"""
 class ReviewsTests(TestCase):
-
+    """Test suite for the Reviews model."""
     def setUp(self):
         """Setup data for each test to ensure isolation."""
         self.review_1 = Reviews.objects.create(
@@ -530,7 +522,7 @@ class ReviewsTests(TestCase):
 #             try:
 #                 review.full_clean()
 #             except ValidationError:
-#                 self.fail("Review raised ValidationError unexpectedly for boundary 
+#                 self.fail("Review raised ValidationError unexpectedly for boundary
 #                 rating values.")
 
 #     def test_large_numeric_hourly_pay(self):
@@ -553,13 +545,13 @@ class ReviewsTests(TestCase):
 
     @classmethod
     def tearDownClass(cls):
-    """
-    Clean up after all tests in the class have run.
+        """
+        Clean up after all tests in the class have run.
 
-    This method deletes all instances of the Reviews model to ensure that 
-    no test data persists between test runs. It calls the superclass's 
-    tearDownClass method to ensure any additional cleanup defined there 
-    is also executed.
-    """
+        This method deletes all instances of the Reviews model to ensure that 
+        no test data persists between test runs. It calls the superclass's 
+        tearDownClass method to ensure any additional cleanup defined there 
+        is also executed.
+        """
         Reviews.objects.all().delete()
         super().tearDownClass()
