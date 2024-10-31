@@ -15,7 +15,7 @@ jobs:
         image: mongo:latest
         ports:
           - 27017:27017
-        options: --health-cmd "mongosh --eval 'db.adminCommand('ping')'" --health-interval=10s --health-timeout=5s --health-retries=5
+        options: --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")'" --health-interval=10s --health-timeout=5s --health-retries=5
 
     steps:
       - name: Checkout code
@@ -32,8 +32,12 @@ jobs:
           pip install -r requirements.txt
           pip install django
 
+      - name: Wait for MongoDB to start
+        run: |
+          until mongosh --eval 'db.adminCommand("ping")'; do sleep 1; done
+
       - name: Run Tests
         env:
-          MONGO_URI: "mongodb://localhost:27017"
+          MONGO_URI: "mongodb://db:27017"
         run: |
           python manage.py test
