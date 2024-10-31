@@ -2,9 +2,9 @@ name: Django Testing
 
 on:
   push:
-    branches: [ "main", "project-resources" ]
+    branches: [ "main", "project-resources", "shazia_testing" ]
   pull_request:
-    branches: [ "main", "project-resources" ]
+    branches: [ "main", "project-resources", "shazia_testing" ]
 
 jobs:
   test:
