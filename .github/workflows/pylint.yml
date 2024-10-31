@@ -22,4 +22,5 @@ jobs:
 
       - name: Run Pylint
         run: |
-          pylint --ignore=node_modules --disable=import-error .
+          pylint --ignore=node_modules --load-plugins=pylint_django --disable=import-error .
+

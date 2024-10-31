@@ -17,7 +17,7 @@ from .serializers import ReviewsSerializer
 
 from .models import Vacancies
 from .serializers import VacanciesSerializer
-# pylint: disable=R0903
+#pylint
 class ReviewsViewSet(viewsets.ModelViewSet):
     """
     A view set for handling Reviews.
