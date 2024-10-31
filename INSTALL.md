@@ -1,3 +1,5 @@
+# Backend - Server
+
 ## Installing Python
 
 Below are the instructions to install python based on your operating system.
@@ -69,10 +71,6 @@ cd CampusJobReview/
     ```bash
     myenv\Scripts\activate
     ```
-- Upgrade pip:
-```bash
-pip install --upgrade pip
-```
 - Install Dependencies: 
 ```bash
 cd review_backend
@@ -99,4 +97,33 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+#### ================================================================================================================================================================================
+
+# Frontend
+
+## Enter the frontend directory
+```
+cd review_frontend
+```
+
+## Install dependencies
+```
+npm install
+```
+
+## Run the application
+```
+npm start
+```
+#### ================================================================================================================================================================================
+
+
+# Browser Extension
+
+## Enter any chromium browser
+## Click on the extensions tab
+## Click on "manage extensions"
+## Turn on developer mode
+## Click on "Load Unpacked"
+## Select the "extension" folder in the code base
 
