@@ -37,7 +37,11 @@ Explore our platform and take the first step towards finding the right on-campus
 
 [![Django Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml)     [![codecov](https://codecov.io/gh/shaziamuckram/SAT510/project-resources/main/graph/badge.svg)](https://codecov.io/gh/yourusername/yourrepo)
 
-<p align="center"><img width="700" src="./resources/animation.mp4"></p>
+<p align="center"><img width="700" src="./resources/Intro_to_CampusJobReview.gif"></p>
+
+### Animation Video About Project 
+[Click Here to Watch the Video!](https://drive.google.com/file/d/1cmAgHYnGPp1LA3F_dimup3XeC6HHNplY/view?usp=sharing)
+
 
 ### Demo Video 
 TODO
