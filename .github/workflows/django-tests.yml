@@ -25,14 +25,6 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-
-      - name: Install MongoDB Shell (mongosh)
-        run: |
-          curl -fsSL https://www.mongodb.org/static/pgp/server-6.0.asc | sudo gpg --dearmor -o /usr/share/keyrings/mongodb.gpg
-          echo "deb [signed-by=/usr/share/keyrings/mongodb.gpg] https://deb.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-          sudo apt-get update
-          sudo apt-get install -y mongodb-org-shell
-
   
       - name: Install dependencies
         run: |
