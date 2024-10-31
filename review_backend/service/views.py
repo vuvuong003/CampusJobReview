@@ -17,6 +17,7 @@ from .serializers import ReviewsSerializer
 
 from .models import Vacancies
 from .serializers import VacanciesSerializer
+
 # pylint: disable=too-few-public-methods
 class ReviewsViewSet(viewsets.ModelViewSet):
     """
@@ -97,6 +98,7 @@ class FilterReviewsView(generics.ListAPIView):
             queryset = queryset.filter(rating__lte=max_rating)
 
         return queryset
+
 
 
 # pylint: disable=too-few-public-methods
