@@ -7,6 +7,8 @@ These models represent the data structures for storing review and job
 vacancy information in the database.
 """
 from djongo import models  # pylint: disable=E0401
+from rest_framework.exceptions import ValidationError
+
 # from django.contrib.auth.models import AbstractUser
 
 # pylint: disable=R0903
@@ -30,15 +32,14 @@ class Reviews(models.Model):
 
     # Unique identifier for each review
     department = models.CharField(max_length=100, blank=False, null=False)
-    locations = models.CharField(max_length=120, db_index=True)
+    locations = models.CharField(max_length=120, db_index=True, blank=True)
     job_title = models.CharField(max_length=64, db_index=True, null=False)
-    job_description = models.CharField(max_length=120, db_index=True)
-    hourly_pay = models.CharField(max_length=10, null=False)
-    benefits = models.CharField(max_length=120, db_index=True, null=False)
+    job_description = models.CharField(max_length=120, db_index=True, blank=True, null=True)
+    hourly_pay = models.CharField(max_length=10, null=False, blank=False)
+    benefits = models.CharField(max_length=120, db_index=True, null=False, blank=True)
     review = models.CharField(max_length=120, db_index=True, null=True, blank=True)
     rating = models.IntegerField(null=False, blank=False)
-    reviewed_by = models.CharField(max_length=120, db_index=True, null=False)
-    recommendation = models.IntegerField()
+    recommendation = models.IntegerField(null=True, blank=True)
 
     def clean(self):
         super().clean()
@@ -52,7 +53,12 @@ class Reviews(models.Model):
             raise ValidationError("Rating cannot be null.")
         if self.rating < 1 or self.rating > 5:  # Check for valid range
             raise ValidationError("Rating must be between 1 and 5.")
-
+        if not isinstance(self.hourly_pay, str):
+            raise ValidationError("Hourly Pay must be a string.")
+        if self.review is None:
+            raise ValidationError("Review cannot be null.")
+        if not isinstance(self.review, str):
+            raise ValidationError("Review must be a string.")
     # Reference to the User model using ForeignKey
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
     class Meta:
