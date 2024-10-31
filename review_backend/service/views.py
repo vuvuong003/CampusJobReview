@@ -30,7 +30,7 @@ class ReviewsViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     queryset = Reviews.objects.all()  # Get all reviews
     serializer_class = ReviewsSerializer  # Use the ReviewsSerializer
-
+    # pylint: disable=W0613,R0903
     def create(self, request, *args, **kwargs):
         """
         Create a new Review instance.
@@ -99,7 +99,7 @@ class FilterReviewsView(generics.ListAPIView):
 
         return queryset
 
-
+# pylint: disable=W0613,R0903
 class VacanciesViewSet(viewsets.ModelViewSet):
     """
     A view set for handling Vacancies.
@@ -109,7 +109,7 @@ class VacanciesViewSet(viewsets.ModelViewSet):
     """
     queryset = Vacancies.objects.all()  # Get all vacancies
     serializer_class = VacanciesSerializer  # Use the VacanciesSerializer
-
+    # pylint: disable=W0613,R0903
     def create(self, request, *args, **kwargs):
         """
         Create a new Vacancy instance.

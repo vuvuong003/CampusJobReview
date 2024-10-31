@@ -12,9 +12,10 @@ from django.test import TestCase # pylint: disable=E0401
 from django.core.exceptions import ValidationError # pylint: disable=E0401
 from .models import Reviews
 
-
+# pylint: disable=R0904
 class ReviewsTests(TestCase):
     """Test suite for the Reviews model."""
+    # pylint: disable=C0103
     def setUp(self):
         """Setup data for each test to ensure isolation."""
         self.review_1 = Reviews.objects.create(
@@ -544,6 +545,7 @@ class ReviewsTests(TestCase):
 #             self.fail("Review raised ValidationError unexpectedly for null recommendation field!")
 
     @classmethod
+    # pylint: disable=C0103
     def tearDownClass(cls):
         """
         Clean up after all tests in the class have run.

@@ -64,7 +64,7 @@ class RegisterSerializerTest(TestCase):
         serializer = RegisterSerializer(data=data)
         self.assertFalse(serializer.is_valid())
         self.assertIn('password', serializer.errors)
-
+# pylint: disable=R0903
 class MyTokenObtainPairSerializerTest(TestCase):
     """Test case for the MyTokenObtainPairSerializer class.
 
