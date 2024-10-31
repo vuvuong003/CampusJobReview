@@ -18,7 +18,6 @@ describe('NavBar Component', () => {
 
   it('renders NavBar with default pages when not logged in', () => {
     renderNavBar(false);
-
   });
 
   it('renders NavBar with logged-in pages when logged in', () => {
