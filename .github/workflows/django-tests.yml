@@ -34,7 +34,7 @@ jobs:
 
       - name: Wait for MongoDB to start
         run: |
-          until mongosh --eval 'db.adminCommand("ping")'; do sleep 1; done
+          until mongo --eval 'db.adminCommand("ping")'; do sleep 1; done
 
       - name: Run Tests
         env:
