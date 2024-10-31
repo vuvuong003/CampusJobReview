@@ -80,8 +80,10 @@ We encourage any contributions, but please make sure that these steps are taken 
 - <img src="https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=white" alt="React" width="120"/>
 
 ### Documentation
-TO DO: 
-1. add pictures and explain step by step.
+Explore our methodologies in developing the Campus Job Review application through this comprehensive guide.
+
+1. Use Case Mini Tutorial: Discover the enhanced features of the application by following along with engaging use cases illustrated through various images. [Click here to get started!](https://github.com/SAT510/CampusJobReview/blob/shazia_testing/UseCase_Documentation.md)
+
 2. Add API Endpoints and give brief description
 3. add main function or classes and give their purpose
 
