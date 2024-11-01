@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Job Review Extension",
+  "version": "1.0",
+  "description": "Display job reviews on campusenterprises.ncsu.edu",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["https://campusenterprises.ncsu.edu/*", "https://your-django-api-url.com/*"],
+  "action": {
+    "default_popup": "extension.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://campusenterprises.ncsu.edu/dept/hr/opportunities/student/view/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

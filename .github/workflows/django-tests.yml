@@ -1,0 +1,33 @@
+name: Django Testing
+
+on:
+  push:
+    branches: [ "test"]
+  pull_request:
+    branches: [ "test" ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: my-action-group
+      cancel-in-progress: false
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13'
+        cache: 'pip'
+
+    - name: Install dependencies
+      working-directory: ./review_backend
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Tests
+      working-directory: ./review_backend
+      run: |
+        python manage.py test --keepdb

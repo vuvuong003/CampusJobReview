@@ -1,0 +1,12 @@
+coverage:
+  status:
+    project:
+      default:
+        target: 10%
+    patch:
+      default:
+        target: 10%
+
+ignore:
+  - "tests/**/*"
+  - "**/*.test.js"
