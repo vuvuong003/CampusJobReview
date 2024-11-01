@@ -1,10 +1,33 @@
+/**
+ * @fileoverview Reviews display and filtering components
+ * Contains components for displaying job reviews in a table format with filtering capabilities
+ */
+
 import * as React from 'react';
 import NavBar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 import { review_url, filter_url, unprotected_api_call } from '../api/api';
 
+/**
+ * @class JobRow
+ * @extends React.Component
+ * @description Renders a single job review entry in the reviews table
+ * 
+ * @property {Object} props
+ * @property {string} props.jobTitle - Title of the job position
+ * @property {string} props.jobDescription - Description of the job responsibilities
+ * @property {string} props.department - Department where job is located
+ * @property {string} props.location - Physical location of the job
+ * @property {string} props.hourlyPay - Hourly compensation
+ * @property {string} props.benefits - Employee benefits package
+ * @property {string} props.review - Written review content
+ * @property {number} props.rating - Numerical rating (1-5)
+ * @property {number} props.recommendation - Recommendation score
+ * @property {string} props.reviewedBy - Username of reviewer
+ */
 class JobRow extends React.Component {
     render() {
+        // Destructure props for cleaner access
         const {
             jobTitle,
             jobDescription,
@@ -32,6 +55,7 @@ class JobRow extends React.Component {
                     <td>{recommendation}</td>
                     <td>{reviewedBy}</td>
                 </tr>
+                {/* Separator line between rows */}
                 <tr>
                     <td colSpan="10">
                         <hr style={{ borderTop: '1px solid #ccc' }} />
@@ -42,7 +66,25 @@ class JobRow extends React.Component {
     }
 }
 
+/**
+ * @class Reviews
+ * @extends React.Component
+ * @description Main component for displaying and filtering job reviews
+ * 
+ * @property {Object} props
+ * @property {Function} props.navigate - React Router navigation function
+ */
 class Reviews extends React.Component {
+    /**
+     * @state
+     * @property {Array<Object>} jobs - Array of job review objects
+     * @property {Object} formData - Filter criteria for reviews
+     * @property {string} formData.department - Filter by department name
+     * @property {string} formData.locations - Filter by job location
+     * @property {string} formData.job_title - Filter by job title
+     * @property {string} formData.min_rating - Minimum rating filter
+     * @property {string} formData.max_rating - Maximum rating filter
+     */
     state = {
         jobs: [],
         formData: {
@@ -54,6 +96,11 @@ class Reviews extends React.Component {
         }
     };
 
+    /**
+     * Fetches initial job reviews data when component mounts
+     * @method
+     * @async
+     */
     componentDidMount = async () => {
         let response = await unprotected_api_call(filter_url+"/", {}, "GET");
         if (response.status === 200) {
@@ -65,6 +112,13 @@ class Reviews extends React.Component {
         }
     };
 
+    /**
+     * Handles changes to filter form inputs
+     * @method
+     * @param {Object} e - Input change event
+     * @param {string} e.target.name - Name of the changed input field
+     * @param {string} e.target.value - New value of the input field
+     */
     handleChange = (e) => {
         this.setState({
             formData: {
@@ -74,10 +128,18 @@ class Reviews extends React.Component {
         });
     };
 
+    /**
+     * Handles filter form submission and updates job listings
+     * @method
+     * @async
+     * @param {Object} e - Form submission event
+     * @description Constructs URL with filter parameters and fetches filtered results
+     */
     handleSubmit = async (e) => {
         e.preventDefault();
         //update the url to have filter parameters
         let fu = filter_url+"/?";
+        // Add non-empty filter parameters to URL
         for (let key in this.state.formData) {
             if (this.state.formData[key] !== "") {
                 fu += key + "=" + this.state.formData[key] + "&";
@@ -95,6 +157,7 @@ class Reviews extends React.Component {
   }
 
     render() {
+        // Background image styles
         const myStyle = {
             backgroundImage: `url(${process.env.PUBLIC_URL + "/WolfPlaza.jpg"})`,
             height: "92.5vh",
@@ -115,15 +178,16 @@ class Reviews extends React.Component {
                     {/* Background image with opacity */}
                     <div style={myStyle} className="absolute inset-0 opacity-40 bg-black"></div>
 
-                    {/* Main content */}
+                    {/* Main content container */}
                     <div className="fixed inset-0 flex flex-col items-center justify-center mt-20">
                         <h1 className="text-gray-500 text-xl md:text-5xl font-bold mb-4">
                             Reviews
                         </h1>
 
-                        {/* Filtering Form */}
+                        {/* Filter form section */}
                         <div className="bg-white w-[70vw] p-4 mb-6 rounded-lg shadow-md justify-">
                             <form onSubmit={this.handleSubmit} className="flex flex-wrap gap-4 items-center">
+                                {/* Department filter */}
                                 <input
                                     type="text"
                                     name="department"
@@ -131,7 +195,9 @@ class Reviews extends React.Component {
                                     value={this.state.formData.department}
                                     onChange={this.handleChange}
                                     className="px-4 py-2 border rounded-md w-[18%]"
+                                    aria-label="Filter by department"
                                 />
+                                {/* Location filter */}
                                 <input
                                     type="text"
                                     name="locations"
@@ -139,7 +205,9 @@ class Reviews extends React.Component {
                                     value={this.state.formData.locations}
                                     onChange={this.handleChange}
                                     className="px-4 py-2 border rounded-md w-[18%]"
+                                    aria-label="Filter by location"
                                 />
+                                {/* Job title filter */}
                                 <input
                                     type="text"
                                     name="job_title"
@@ -147,45 +215,52 @@ class Reviews extends React.Component {
                                     value={this.state.formData.job_title}
                                     onChange={this.handleChange}
                                     className="px-4 py-2 border rounded-md w-[18%]"
+                                    aria-label="Filter by job title"
                                 />
+                                {/* Minimum rating filter */}
                                 <select
                                     name="min_rating"
                                     value={this.state.formData.min_rating}
                                     onChange={this.handleChange}
                                     className="px-4 py-2 border rounded-md w-[18%]"
+                                    aria-label="Filter by minimum rating"
                                 >
                                     <option value="">Min Rating</option>
                                     {[1, 2, 3, 4, 5].map((rating) => (
                                         <option key={rating} value={rating}>{rating}</option>
                                     ))}
                                 </select>
+                                {/* Maximum rating filter */}
                                 <select
                                     name="max_rating"
                                     value={this.state.formData.max_rating}
                                     onChange={this.handleChange}
                                     className="px-4 py-2 border rounded-md w-[18%]"
+                                    aria-label="Filter by maximum rating"
                                 >
                                     <option value="">Max Rating</option>
                                     {[1, 2, 3, 4, 5].map((rating) => (
                                         <option key={rating} value={rating}>{rating}</option>
                                     ))}
                                 </select>
+                                {/* Filter button */}
                                 <div className="w-full flex justify-center mt-4">
-                                  <button
-                                      type="submit"
-                                      className="px-4 py-2 bg-blue-500 text-white rounded-md"
-                                      onClick={this.handleSubmit}
-                                  >
-                                      Filter
-                                  </button>
-                              </div>
+                                    <button
+                                        type="submit"
+                                        className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                                        onClick={this.handleSubmit}
+                                        aria-label="Apply filters"
+                                    >
+                                        Filter
+                                    </button>
+                                </div>
                             </form>
                         </div>
 
-                        {/* Review Table */}
+                        {/* Reviews table section */}
                         <div className="bg-white w-[70vw] h-[40vh] shadow-lg items-center justify-center p-10 overflow-y-auto">
                             <div className="overflow-x-auto">
-                                <table className="min-w-full table-auto border-collapse">
+                                <table className="min-w-full table-auto border-collapse" role="table" aria-label="Job Reviews">
                                     <thead className="bg-gray-200">
                                         <tr>
                                             <th className="px-4 py-2 w-1/5 border">Job Title</th>
@@ -227,6 +302,12 @@ class Reviews extends React.Component {
     }
 }
 
+/**
+ * Higher-order component that wraps Reviews with navigation capabilities
+ * @function ReviewsWithNavigate
+ * @param {Object} props - Component props
+ * @returns {JSX.Element} Reviews component with navigation prop
+ */
 function ReviewsWithNavigate(props) {
     const navigate = useNavigate();
     return <Reviews {...props} navigate={navigate} />;

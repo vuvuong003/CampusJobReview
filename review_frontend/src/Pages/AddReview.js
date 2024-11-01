@@ -1,23 +1,49 @@
+/**
+ * @fileoverview Component for adding job reviews with a form interface
+ * Includes fields for job details, ratings, and written review
+ */
+
 import * as React from 'react';
 import NavBar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 import { protected_api_call, review_url } from '../api/api';
 
+/**
+ * @class AddReview
+ * @extends React.Component
+ * @description A form component that allows users to submit job reviews
+ * including details about position, compensation, and experience
+ * 
+ * @property {Object} props
+ * @property {Function} props.navigate - React Router navigation function
+ */
 class AddReview extends React.Component {
+    /**
+     * @state
+     * @description Maintains form data for the review submission
+     * @property {Object} formData - Contains all form field values
+     */
     state = {
         formData: {
-            job_title: "",
-            department: "",
-            locations: "",
-            job_description: "",
-            hourly_pay: "",
-            benefits: "",
-            rating: "",
-            recommendation: "",
-            review: "",
+            job_title: "",       // Title of the job position
+            department: "",      // Department within the organization
+            locations: "",       // Location of the job
+            job_description: "", // Description of job responsibilities
+            hourly_pay: "",      // Hourly compensation
+            benefits: "",        // Benefits offered
+            rating: "",         // Overall rating (1-5)
+            recommendation: "",  // Recommendation score (1-10)
+            review: "",         // Detailed written review
         },
     }
 
+    /**
+     * Handles changes to form input fields
+     * @method
+     * @param {Object} e - Event object from form input change
+     * @param {string} e.target.name - Name of the form field
+     * @param {string} e.target.value - New value of the form field
+     */
     handleChange = (e) => {
         this.setState({
             formData: {
@@ -27,6 +53,13 @@ class AddReview extends React.Component {
         })
     };
 
+    /**
+     * Handles form submission and sends review data to server
+     * @method
+     * @async
+     * @param {Object} e - Form submission event
+     * @throws {Error} Displays alert if submission fails
+     */
     handleSubmit = async (e) => {
         e.preventDefault();
         let response = await protected_api_call(review_url, this.state.formData);
@@ -37,7 +70,13 @@ class AddReview extends React.Component {
         }
     }
     
+    /**
+     * Renders the review form component
+     * @method
+     * @returns {JSX.Element} Rendered component
+     */
     render() {
+        // Styles for the background image
         const myStyle = {
             backgroundImage: `url(${
                 process.env.PUBLIC_URL + "/WolfPlaza.jpg"
@@ -65,8 +104,10 @@ class AddReview extends React.Component {
                         <h1 className="text-gray-500 text-xl md:text-5xl font-bold mb-8">
                             Add a review
                         </h1>
+                        {/* Form container with scroll */}
                         <div className="bg-white w-[40vw] h-[100vh] shadow-lg items-center justify-center p-10 overflow-y-auto">
                             <form onSubmit={this.handleSubmit}>
+                                {/* Job Title Input */}
                                 <div className="mb-6">
                                     <label htmlFor="job_title" className="block text-gray-700">Job Title</label>
                                     <input
@@ -80,6 +121,7 @@ class AddReview extends React.Component {
                                     />
                                 </div>
 
+                                {/* Department Input */}
                                 <div className="mb-6">
                                     <label htmlFor="department" className="block text-gray-700">Department</label>
                                     <input
@@ -93,6 +135,7 @@ class AddReview extends React.Component {
                                     />
                                 </div>
 
+                                {/* Location Input */}
                                 <div className="mb-6">
                                     <label htmlFor="locations" className="block text-gray-700">Location</label>
                                     <input
@@ -106,6 +149,7 @@ class AddReview extends React.Component {
                                     />
                                 </div>
 
+                                {/* Job Description Input */}
                                 <div className="mb-6">
                                     <label htmlFor="job_description" className="block text-gray-700">Job Description</label>
                                     <input
@@ -119,6 +163,7 @@ class AddReview extends React.Component {
                                     />
                                 </div>
 
+                                {/* Hourly Pay Input */}
                                 <div className="mb-6">
                                     <label htmlFor="hourly_pay" className="block text-gray-700">Hourly Pay</label>
                                     <input
@@ -132,6 +177,7 @@ class AddReview extends React.Component {
                                     />
                                 </div>
 
+                                {/* Benefits Input */}
                                 <div className="mb-6">
                                     <label htmlFor="benefits" className="block text-gray-700">Benefits</label>
                                     <input
@@ -145,6 +191,7 @@ class AddReview extends React.Component {
                                     />
                                 </div>
 
+                                {/* Rating Radio Buttons */}
                                 <div className="mb-6">
                                     <fieldset>
                                         <legend className="block text-gray-700 mb-2">Rating</legend>
@@ -167,6 +214,7 @@ class AddReview extends React.Component {
                                     </fieldset>
                                 </div>
 
+                                {/* Recommendation Radio Buttons */}
                                 <div className="mb-6">
                                     <fieldset>
                                         <legend className="block text-gray-700 mb-2">Recommendation</legend>
@@ -189,6 +237,7 @@ class AddReview extends React.Component {
                                     </fieldset>
                                 </div>
 
+                                {/* Review Text Area */}
                                 <div className="mb-6">
                                     <label htmlFor="review" className="block text-gray-700">Review</label>
                                     <textarea
@@ -201,6 +250,7 @@ class AddReview extends React.Component {
                                     />
                                 </div>
 
+                                {/* Submit Button */}
                                 <div className="flex justify-center">
                                     <button
                                         type="submit"
@@ -219,6 +269,12 @@ class AddReview extends React.Component {
     }
 }
 
+/**
+ * Higher-order component that wraps AddReview with navigation capabilities
+ * @function
+ * @param {Object} props - Component props
+ * @returns {JSX.Element} AddReview component with navigation prop
+ */
 function AddReviewWithNavigate(props) {
     const navigate = useNavigate();
     return <AddReview {...props} navigate={navigate} />;
