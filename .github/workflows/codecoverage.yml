@@ -22,7 +22,7 @@ jobs:
 
       - name: Run tests
         working-directory: ./review_frontend
-        run: npx jest --coverage
+        run: npm test -- --coverage
 
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v4
