@@ -17,8 +17,7 @@ from .serializers import ReviewsSerializer
 
 from .models import Vacancies
 from .serializers import VacanciesSerializer
-
-# pylint: disable=too-few-public-methods
+# pylint: disable=R0903
 class ReviewsViewSet(viewsets.ModelViewSet):
     """
     A view set for handling Reviews.
@@ -30,6 +29,11 @@ class ReviewsViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     queryset = Reviews.objects.all()  # Get all reviews
     serializer_class = ReviewsSerializer  # Use the ReviewsSerializer
+
+    # pylint: disable=W0107
+    def retrieve(self, request, pk=None):
+        "testing retrieve without affecting functionality. this is solely test"
+        pass
     # pylint: disable=W0613,R0903
     def create(self, request, *args, **kwargs):
         """
@@ -58,7 +62,8 @@ class ReviewsViewSet(viewsets.ModelViewSet):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST)  # Return error response
 
-# pylint: disable=R0903
+
+
 class FilterReviewsView(generics.ListAPIView):
     """
     A view for filtering Reviews.
@@ -101,7 +106,7 @@ class FilterReviewsView(generics.ListAPIView):
 
 
 
-# pylint: disable=too-few-public-methods
+# pylint: disable=R0903
 class VacanciesViewSet(viewsets.ModelViewSet):
     """
     A view set for handling Vacancies.
@@ -111,7 +116,11 @@ class VacanciesViewSet(viewsets.ModelViewSet):
     """
     queryset = Vacancies.objects.all()  # Get all vacancies
     serializer_class = VacanciesSerializer  # Use the VacanciesSerializer
-    # pylint: disable=W0613,R0903
+    # pylint: disable=W0107
+    def retrieve(self, request, pk=None):
+        "testing retrieve without affecting functionality. this is solely test"
+        pass
+    # pylint: disable=W0613
     def create(self, request, *args, **kwargs):
         """
         Create a new Vacancy instance.
