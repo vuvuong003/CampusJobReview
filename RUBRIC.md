@@ -31,7 +31,7 @@ Sum of our Self-Assessment Scores: Amay: 105, Shazia: 105, Tahreem: 105
 | The file CODE-OF-CONDUCT.md lists rules of behavior for this repo |3 |  3 | 3| https://github.com/SAT510/CampusJobReview/blob/test/CODE-OF-CONDUCT.md|
 | The file CONTRIBUTING.md lists coding standards and lots of tips on how to extend the system without screwing things up |3 | 3 | 3| https://github.com/SAT510/CampusJobReview/blob/project-resources/CONTRIBUTING.md|
 | The file README.md contains all the following	 |3 |  3 | 3| https://github.com/SAT510/CampusJobReview/blob/test/README.md|
-| Video	 |3 |  3 | 3| Both the animation and the demo video exist in the [README](https://drive.google.com/file/d/1cmAgHYnGPp1LA3F_dimup3XeC6HHNplY/view?usp=sharing) (TODO Demo link)|
+| Video	 |3 |  3 | 3| Both the animation and the demo video exist in the README. [Animation Video](https://drive.google.com/file/d/1cmAgHYnGPp1LA3F_dimup3XeC6HHNplY/view?usp=sharing) [Demo Video](https://drive.google.com/file/d/1u1iyAw3LeA0d42yTTJDXIi-HXPxxlzvG/view?usp=sharing)|
 | DOI badge: exists |3 | 3 | 3| DOI badge exists in the Readme: https://github.com/SAT510/CampusJobReview/blob/test/README.md and explore more about our releases here: https://zenodo.org/records/14020963|
 | Badges showing your style checkers |3 | 3 | 3| We have embedded pylint and black badge in the README. [Pylint Github Actions](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml) and [Black Github Action](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml) |
 | Badges showing your code formatters |3 | 3 | 3| We have embedded autopep badge in the Readme. [Autopep Github Action](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml)|
