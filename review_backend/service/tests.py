@@ -46,6 +46,7 @@ class ReviewsModelTests(TestCase):
     This class tests various validations and constraints for the Reviews model,
     ensuring data integrity and correct behavior of the associated serializer.
     """
+    # pylint: disable=C0103
     def setUp(self):
         """Set up common valid data for testing various fields and constraints in each test case."""
         # Set valid initial data for use in multiple tests
@@ -250,9 +251,10 @@ class ReviewsModelTests(TestCase):
         with self.assertRaises(ValidationError):# Expect a validation error
             ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-    # pylint: disable=C0202
+    # pylint: disable=C0202,C0103
     @classmethod
     def tearDownClass(self):
+        """Clean up the database by deleting all review instances after tests have run."""
         # pylint: disable=E1101
         Reviews.objects.all().delete()
         super().tearDownClass()

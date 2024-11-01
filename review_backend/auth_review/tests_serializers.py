@@ -99,4 +99,4 @@ class MyTokenObtainPairSerializerTest(TestCase):
 
         self.assertIn("username", token) # Check for custom claim in token
         self.assertEqual(token["username"], user.username) # Verify token username
-        
+ 

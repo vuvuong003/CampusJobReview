@@ -38,6 +38,20 @@ class ReviewsViewSet(viewsets.ModelViewSet):
         pass
     # pylint: disable=W0613,R0903
     def create(self, request, *args, **kwargs):
+        """
+        Create a new Review instance.
+
+        This method overrides the default create method to include 
+        the user who created the review.
+
+        Args:
+            request (Request): The HTTP request containing the review data.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            Response: A response containing the created review data or errors.
+        """
         user = request.user # Get the user making the request
         request.data['reviewed_by'] = user.username # Add username to the review data
         serializer = self.get_serializer(data=request.data)  # Serialize incoming data
@@ -62,6 +76,15 @@ class FilterReviewsView(generics.ListAPIView):
     serializer_class = ReviewsSerializer # Use the Reviews serializer for data representation
 
     def get_queryset(self):
+        """
+        Retrieve a filtered list of Review instances.
+
+        This method applies filters based on query parameters provided 
+        in the request.
+
+        Returns:
+            QuerySet: A queryset of filtered Review instances.
+        """
         # pylint: disable=E1101
         queryset = Reviews.objects.all() # Start with all reviews
         department = self.request.query_params.get('department', None) # Get 'department' param
@@ -96,7 +119,7 @@ class VacanciesViewSet(viewsets.ModelViewSet):
     # pylint: disable=E1101
     queryset = Vacancies.objects.all()  # Get all Vacancy objects from the database
     serializer_class = VacanciesSerializer   # Specify the serializer for data conversion
-
+    # pylint: disable=W0613
     def create(self, request, *args, **kwargs):
         """
         Create a new Vacancy instance.
