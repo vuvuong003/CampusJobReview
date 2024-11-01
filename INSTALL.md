@@ -101,7 +101,7 @@ python manage.py runserver
 ```
 ngrok http 8000
 ```
-- Copy the link and paste it in review_frontend/src/api/api.js
+- Copy the link and replace the link at the top of review_frontend/src/api/api.js
 
 #### ========================================================================================================================================================
 
@@ -126,10 +126,10 @@ npm start
 
 # Browser Extension
 
-## Enter any chromium browser
-## Click on the extensions tab
-## Click on "manage extensions"
-## Turn on developer mode
-## Click on "Load Unpacked"
-## Select the "extension" folder in the code base
+### Enter any Chromium browser
+### Click on the extensions tab
+### Click on "manage extensions"
+### Turn on developer mode
+### Click on "Load Unpacked"
+### Select the "extension" folder in the code base
 
