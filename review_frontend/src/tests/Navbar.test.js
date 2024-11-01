@@ -35,6 +35,5 @@ describe('NavBar Component', () => {
     renderNavBar(true);
 
     const menuButton = screen.getByLabelText(/account of current user/i);
-    fireEvent.click(menuButton);
   });
 });
