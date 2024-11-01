@@ -1,4 +1,4 @@
-name: Format Code with Prettier
+name: Prettier for frontend
 
 on:
   push:
