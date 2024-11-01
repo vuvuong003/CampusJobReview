@@ -2,9 +2,9 @@ name: Django Testing
 
 on:
   push:
-    branches: [ "amay/badge", "test" ]
+    branches: [ "amay/badge", "test", "prod" ]
   pull_request:
-    branches: [ "amay/badge", "test" ]
+    branches: [ "amay/badge", "test", "prod" ]
 jobs:
   test:
     runs-on: ubuntu-latest
