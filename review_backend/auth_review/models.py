@@ -48,7 +48,6 @@ class ClientManager(BaseUserManager):
         if username is None:
             raise TypeError("User should have a username")
         user = self.model(username=username) # Instantiate user with username
-
         user.set_password(password) # Encrypt and set password
 
         user.save(using=self._db) # Save user to the database
@@ -58,14 +57,11 @@ class ClientManager(BaseUserManager):
     def create_superuser(self, username, password=None):
         """
         Create and return a superuser with an encrypted password.
-
         Args:
             username (str): The username for the superuser.
             password (str, optional): The password for the superuser.
-
         Raises:
             TypeError: If password is None.
-
         Returns:
             Client: The created superuser instance.
         """
