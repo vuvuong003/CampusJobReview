@@ -26,7 +26,7 @@ jobs:
         #   pythonLocation: /opt/hostedtoolcache/Python/3.12.1/x64
         #   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.1/x64/lib
         run: |
-          # pylint --ignore=node_modules --disable=import-error,too-few-public-methods .
-          pylint .
+          pylint --ignore=node_modules --disable=import-error,too-few-public-methods .
+          # pylint .
 
 
