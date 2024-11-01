@@ -31,6 +31,7 @@ class AuthTests(APITestCase):
         self.token_refresh_url = None # Placeholder for the token refresh URL
         self.inactive_user = None # Placeholder for an inactive test user
 
+    # pylint: disable=C0103
     def setUp(self):
         """Set up the test environment before each test case.
 
