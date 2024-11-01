@@ -1,4 +1,4 @@
-let base_url = "https://fe0e-2405-201-17-f0cf-d385-7e24-cb91-c75f.ngrok-free.app"
+let base_url = "https://2e36-2405-201-17-f0cf-8663-5a65-cde3-65a1.ngrok-free.app/"
 
 export let login_url = base_url + "auth/token/";
 export let register_url = base_url + "auth/register/";
