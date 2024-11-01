@@ -54,7 +54,7 @@ Explore our platform and take the first step towards finding the right on-campus
 
 
 ### Demo Video 
-TODO
+Explore a demo of our application [here!](https://drive.google.com/file/d/1u1iyAw3LeA0d42yTTJDXIi-HXPxxlzvG/view?usp=sharing)
 
 ### Newly Enhanced Features
 We have made lots of changes to ensure that our app is feasible, maintainable, extendable, and can be used by a broad audience. Throughout this process, we have extended various features and fixed bugs. Our enhancements and bug fixes include:
