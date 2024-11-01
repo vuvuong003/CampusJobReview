@@ -7,8 +7,7 @@ The original authors of this project are
 - [Madiha Mansoori](https://github.com/madiha2001)
 - [Anagha Patil](https://github.com/Anagha-2000)
 
-Please refer to the original repository [here!](https://github.com/ashishjoshi2605/ncsu-campus-jobs-review-system)
-The project we cloned was not working, requiring us to start from the foundation. The intended repository to work with is linked [here!](https://github.com/akshat22/campus-job-review-system)
+Please refer to the original repository [here!](https://github.com/akshat22/campus-job-review-system)
 
 To gain a deeper understanding of the changes and improvements from the original project to the newly enhanced version, please watch the demo video. This video showcases the new functionalities and highlights the enhancements made throughout the project
 
