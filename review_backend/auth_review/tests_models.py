@@ -39,29 +39,29 @@ class ClientModelTests(TestCase):
         self.assertTrue(superuser.is_admin)
         self.assertTrue(superuser.is_superuser)
 
-    # def test_create_user_without_username(self):
-    #     """Test that creating a user without a username raises an error"""
-    #     with self.assertRaises(TypeError):
-    #         User.objects.create_user(username=None, password="password123")
+    def test_create_user_without_username(self):
+        """Test that creating a user without a username raises an error"""
+        with self.assertRaises(TypeError):
+            User.objects.create_user(username=None, password="password123")
 
-    # def test_create_superuser_without_password(self):
-    #     """Test that creating a superuser without a password raises an error."""
-    #     with self.assertRaises(TypeError):
-    #         User.objects.create_superuser(username="adminuser", password=None)
+    def test_create_superuser_without_password(self):
+        """Test that creating a superuser without a password raises an error."""
+        with self.assertRaises(TypeError):
+            User.objects.create_superuser(username="adminuser", password=None)
    
-    # def test_user_activation(self):
-    #     """Test that a user can be deactivated."""
-    #     user = User.objects.create_user(
-    #         username="activeuser", password="password123"
-    #     )
-    #     user.is_active = False
-    #     user.save()
+    def test_user_activation(self):
+        """Test that a user can be deactivated."""
+        user = User.objects.create_user(
+            username="activeuser", password="password123"
+        )
+        user.is_active = False
+        user.save()
 
-    #     self.assertFalse(user.is_active)  
+        self.assertFalse(user.is_active)  
     
-    # def test_user_string_representation(self):
-    #     """Test the string representation of the user."""
-    #     user = User.objects.create_user(
-    #         username="stringuser", password="password123"
-    #     )
-    #     self.assertEqual(str(user), "stringuser")
+    def test_user_string_representation(self):
+        """Test the string representation of the user."""
+        user = User.objects.create_user(
+            username="stringuser", password="password123"
+        )
+        self.assertEqual(str(user), "stringuser")

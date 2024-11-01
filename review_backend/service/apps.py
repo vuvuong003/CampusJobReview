@@ -12,7 +12,6 @@ from django.apps import AppConfig  # pylint: disable=E0401
 
 # pylint: disable=R0903
 
-
 class ServiceConfig(AppConfig):
     """
     Django application configuration for the 'service' app.
@@ -27,5 +26,6 @@ class ServiceConfig(AppConfig):
         name (str): The name of the application, used for referring to the
         app in other parts of Django.
     """
-    default_auto_field = "django.db.models.BigAutoField"
-    name = "service"
+    default_auto_field = "django.db.models.BigAutoField"  # Set default PK
+    # field type to BigAutoField
+    name = "service" # Define the app name used by Django

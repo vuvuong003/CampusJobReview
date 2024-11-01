@@ -6,6 +6,7 @@ which is responsible for handling user authentication, registration, and
 review management. It sets the default primary key field type and provides
 metadata for the app.
 """
+# Import Django's base AppConfig for app configuration settings
 from django.apps import AppConfig  # pylint: disable=E0401
 
 # Disable the "too-few-public-methods" warning for this class
@@ -23,9 +24,10 @@ class AuthReviewConfig(AppConfig):
 
     Attributes:
         default_auto_field (str): The type of field to use for auto-created
-        primary keys. Default is 'BigAutoField'.
+            primary keys. Default is 'BigAutoField'.
         name (str): The name of the application, used for referring to the
-        app in other parts of Django.
+            app in other parts of Django.
     """
-    default_auto_field = "django.db.models.BigAutoField"
-    name = "auth_review"
+    default_auto_field = "django.db.models.BigAutoField" # Set BigAutoField
+    # as default for primary key fields
+    name = "auth_review" # Define the name of the app as 'auth_review'

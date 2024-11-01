@@ -1,2 +1,5 @@
-# [MESSAGES CONTROL]
-# disable=E0401, R0903, W0613
+[MASTER]
+load-plugins=pylint_django
+
+[MESSAGES CONTROL]
+disable=import-error

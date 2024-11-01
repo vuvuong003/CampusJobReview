@@ -1,13 +1,22 @@
-# Backend
-- python manage.py makemigrations
-- python manage.py migrate
-- python manage.py runserver 
-
 # NC STATE JOBS RATING AND REVIEW SYSTEM 
+
+The original authors of this project are 
+- [Mohit Soni](https://github.com/mohitsoni2111)
+- [Tilak Satra](https://github.com/tilaksatra)
+- [Akshat Savla](https://github.com/akshat22)
+- [Madiha Mansoori](https://github.com/madiha2001)
+- [Anagha Patil](https://github.com/Anagha-2000)
+
+Please refer to the original repository [here!](https://github.com/ashishjoshi2605/ncsu-campus-jobs-review-system)
+The project we cloned was not working, requiring us to start from the foundation. The intended repository to work with is linked [here!](https://github.com/akshat22/campus-job-review-system)
+
+To gain a deeper understanding of the changes and improvements from the original project to the newly enhanced version, please watch the demo video. This video showcases the new functionalities and highlights the enhancements made throughout the project
+
 ## Table of contents
+
 - [Introduction](#Introduction)
 - [Demo Video](#demo-video)
-- [Newly Enhanched Features](#newly-enhanched-features)
+- [Newly Enhanced Features](#newly-enhanced-features)
 - [Future Scope](#future-scope)
 - [Installation](#installation)
 - [Licence](#License)
@@ -30,7 +39,7 @@ Explore our platform and take the first step towards finding the right on-campus
 [![DOI](https://zenodo.org/badge/876539766.svg)](https://doi.org/10.5281/zenodo.14007974)
 ![Python Badge](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)                             ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=white)      ![MongoDB](https://img.shields.io/badge/MongoDB-brightgreen?logo=mongodb&logoColor=white)       ![Django](https://img.shields.io/badge/Django-darkgreen?logo=django&logoColor=white)        ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
-[![Autopep8 Check](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml)     [![Pylint Check](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml)     [![Black](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml)      [![Bandit](https://github.com/SAT510/CampusJobReview/actions/workflows/bandit.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/bandit.yml) 
+[![Autopep8 Check](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml)     [![Pylint Check](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml)     [![Black](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml)     
 
 [![GitHub open issues](https://img.shields.io/github/issues-raw/SAT510/CampusJobReview)](https://github.com/SAT510/CampusJobReview/issues?q=is%3Aopen)  
 [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/SAT510/CampusJobReview)](https://github.com/SAT510/CampusJobReview/issues?q=is%3Aclosed)
@@ -39,10 +48,14 @@ Explore our platform and take the first step towards finding the right on-campus
 
 <p align="center"><img width="700" src="./resources/Intro_to_CampusJobReview.gif"></p>
 
+### Animation Video About Project 
+[Click Here to Watch the Video!](https://drive.google.com/file/d/1cmAgHYnGPp1LA3F_dimup3XeC6HHNplY/view?usp=sharing)
+
+
 ### Demo Video 
 TODO
 
-### Newly Enhanched Features
+### Newly Enhanced Features
 We have made lots of changes to ensure that our app is feasible, maintainable, extendable, and can be used by a broad audience. Throughout this process, we have extended various features and fixed bugs. Our enhancements and bug fixes include:
 
 1. Database Migration: We have migrated the current minimal SQL to MongoDB. This ensures enhanced performance, particularly with faster queries for dynamic filtering, while also improving scalability.
