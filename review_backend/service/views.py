@@ -56,6 +56,7 @@ class ReviewsViewSet(viewsets.ModelViewSet):
         request.data['reviewed_by'] = user.username # Add username to the review data
         serializer = self.get_serializer(data=request.data)  # Serialize incoming data
         if serializer.is_valid():  # Check if the serialized data is valid
+            # print(serializer.data)
             serializer.save()  # Save data to the database if valid
             return Response(
                 serializer.data,
@@ -103,7 +104,7 @@ class FilterReviewsView(generics.ListAPIView):
             queryset = queryset.filter(rating__gte=min_rating)
         if max_rating:
             queryset = queryset.filter(rating__lte=max_rating)
-
+        print(list(queryset)[0].reviewed_by)
         return queryset
 
 

@@ -43,6 +43,7 @@ class Reviews(models.Model):
     review = models.CharField(max_length=120, db_index=True, null=True, blank=True) # Review text
     rating = models.IntegerField(null=False, blank=False) # Rating out of 5
     recommendation = models.IntegerField(null=True, blank=True) # Recommendation flag
+    reviewed_by = models.CharField(max_length=120, db_index=True, null=True, blank=True) # User who
 
     def clean(self):
         """Custom validation logic for the Reviews model.
