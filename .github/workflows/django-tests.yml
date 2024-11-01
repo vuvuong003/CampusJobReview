@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "amay/badge"]
   pull_request:
-    branches: [ "amay/badge"2]
+    branches: [ "amay/badge" ]
 jobs:
   test:
     runs-on: ubuntu-latest
