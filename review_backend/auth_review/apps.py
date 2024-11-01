@@ -28,5 +28,6 @@ class AuthReviewConfig(AppConfig):
         name (str): The name of the application, used for referring to the
             app in other parts of Django.
     """
-    default_auto_field = "django.db.models.BigAutoField" # Set BigAutoField as default for primary key fields
+    default_auto_field = "django.db.models.BigAutoField" # Set BigAutoField
+    # as default for primary key fields
     name = "auth_review" # Define the name of the app as 'auth_review'

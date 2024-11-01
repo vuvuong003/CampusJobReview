@@ -66,11 +66,11 @@ class AuthTests(APITestCase):
         existing username fails and returns the appropriate error message.
         """
         data = {"username": "testuser", "password": "newpassword123"} # Reuse existing username
-        response = self.client.post(self.register_url, data, format="json") 
+        response = self.client.post(self.register_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)# Expect error status
         self.assertFalse(response.data["data"]["val"]) # Confirm failure flag
         self.assertEqual(response.data["data"]["detail"], "Username Exists") # Check error message
-    
+
     def test_token_obtain_pair_success(self):
         """Test successful JWT token generation with valid credentials.
 
@@ -78,7 +78,7 @@ class AuthTests(APITestCase):
         providing the correct username and password.
         """
         data = {"username": "testuser", "password": "securepassword"} # Valid login credentials
-        response = self.client.post(self.token_url, data, format="json") 
+        response = self.client.post(self.token_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)  # Verify success status
         self.assertTrue(response.data["data"]["val"]) # Confirm token request flag
         self.assertIn("tokens", response.data["data"]) # Check that tokens are in the response
@@ -118,7 +118,7 @@ class AuthTests(APITestCase):
         """
         # Test Registration with invalid password
         data = {"username": "user_with_invalid_pass", "password": "123"} # Weak password
-        response = self.client.post(self.register_url, data, format="json") 
+        response = self.client.post(self.register_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST) # Expect error status
         self.assertFalse(response.data["data"]["val"]) # Confirm failure flag
         self.assertIn("password", response.data["data"]["detail"]) # Check password error message
@@ -130,7 +130,8 @@ class AuthTests(APITestCase):
         and receives an unauthorized error.
         """
         # Test Token Generation for Inactive User
-        data = {"username": "inactiveuser", "password": "securepassword"} # Inactive user credentials
+        data = {"username": "inactiveuser", "password": "securepassword"} # Inactive
+        # user credentials
         response = self.client.post(self.token_url, data, format="json")
 
         # Assert that the response status is unauthorized
@@ -153,7 +154,7 @@ class AuthTests(APITestCase):
         is not allowed and returns a method not allowed error.
         """
         self.token_url = reverse("token_obtain_pair") # GET request to token endpoint
-        response = self.client.get(self.token_url) 
+        response = self.client.get(self.token_url)
 
         # Check that the response status code is 405 Method Not Allowed
         self.assertEqual(
@@ -163,13 +164,14 @@ class AuthTests(APITestCase):
         # Check the response message content
         self.assertEqual(response.data, {"msg": "Get not allowed"}) # Confirm error message
 
-    def test_get_not_allowed_on_token_endpoint(self):
-        """Test GET request on the token endpoint.
+    # def test_get_not_allowed_on_token_endpoint(self):
+    #     """Test GET request on the token endpoint.
 
-        This test verifies that sending a GET request to the token endpoint
-        is not allowed and returns a method not allowed error.
-        """
-        self.token_url = reverse("token_obtain_pair") # GET request to token endpoint
-        response = self.client.get(self.token_url) 
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED) # Method not allowed status
-        self.assertEqual(response.data, {"msg": "Get not allowed"}) # Confirm error message
+    #     This test verifies that sending a GET request to the token endpoint
+    #     is not allowed and returns a method not allowed error.
+    #     """
+    #     self.token_url = reverse("token_obtain_pair") # GET request to token endpoint
+    #     response = self.client.get(self.token_url)
+    #     self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+    #     Method not allowed status
+    #     self.assertEqual(response.data, {"msg": "Get not allowed"}) # Confirm error message

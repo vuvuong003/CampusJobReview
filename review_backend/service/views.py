@@ -18,13 +18,21 @@ from .serializers import ReviewsSerializer # Import serializer for Reviews
 from .models import Vacancies # Import Vacancies model for vacancy-related views
 from .serializers import VacanciesSerializer # Import serializer for Vacancies
 
-
+# pylint: disable=R0901
 class ReviewsViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for managing Reviews.
+
+    This viewset provides standard actions for creating, retrieving,
+    updating, and deleting Review instances. It restricts access to
+    authenticated users and handles the associated business logic.
+    """
     permission_classes = (IsAuthenticated,) # Restrict access to authenticated users only
+    # pylint: disable=E1101
     queryset = Reviews.objects.all()   # Get all Review objects from the database
     serializer_class = ReviewsSerializer  # Specify the serializer for data conversion
 
-    # pylint: disable=W0107
+    # pylint: disable=W0107,W0221
     def retrieve(self, request, pk=None):
         "testing retrieve without affecting functionality. this is solely test"
         pass
@@ -40,7 +48,7 @@ class ReviewsViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_201_CREATED) # Return success response with serialized data
         return Response(
             serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST)  # Return error response if data is invalid 
+            status=status.HTTP_400_BAD_REQUEST)  # Return error response if data is invalid
 
 
 class FilterReviewsView(generics.ListAPIView):
@@ -54,6 +62,7 @@ class FilterReviewsView(generics.ListAPIView):
     serializer_class = ReviewsSerializer # Use the Reviews serializer for data representation
 
     def get_queryset(self):
+        # pylint: disable=E1101
         queryset = Reviews.objects.all() # Start with all reviews
         department = self.request.query_params.get('department', None) # Get 'department' param
         locations = self.request.query_params.get('locations', None) # Get 'locations' param
@@ -75,8 +84,16 @@ class FilterReviewsView(generics.ListAPIView):
         return queryset
 
 
-# pylint: disable=too-few-public-methods
+
 class VacanciesViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for managing Vacancies.
+
+    This viewset provides standard actions for creating, retrieving,
+    updating, and deleting Vacancy instances. It manages vacancy data
+    and handles the associated business logic.
+    """
+    # pylint: disable=E1101
     queryset = Vacancies.objects.all()  # Get all Vacancy objects from the database
     serializer_class = VacanciesSerializer   # Specify the serializer for data conversion
 

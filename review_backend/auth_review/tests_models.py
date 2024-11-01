@@ -7,13 +7,13 @@ handling of various scenarios, including regular users, superusers,
 and error cases for invalid input.
 """
 # Import Django's built-in test case class for unit testing
-from django.test import TestCase  # pylint: disable=E0401 
+from django.test import TestCase  # pylint: disable=E0401
 # Import the function to get the active user model
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
 # Import IntegrityError for handling database constraint errors
-from django.db.utils import IntegrityError  # pylint: disable=E0401
+# from django.db.utils import IntegrityError  # pylint: disable=E0401
 # Import the Client model from the local 'auth_review' models
-from .models import Client # Import Client model for testing
+# from .models import Client # Import Client model for testing
 
 User = get_user_model() # Set the User variable to reference the active user model
 
@@ -84,8 +84,8 @@ class ClientModelTests(TestCase):
         user.is_active = False # Deactivate the user
         user.save() # Save the user with updated attributes
 
-        self.assertFalse(user.is_active) # Check if the user is inactive  
-    
+        self.assertFalse(user.is_active) # Check if the user is inactive
+
     def test_user_string_representation(self):
         """Test the string representation of the user.
 

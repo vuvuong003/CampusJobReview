@@ -169,16 +169,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator", # Validate password similarity
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        # Validate password similarity
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", # Validate minimum password length
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        # Validate minimum password length
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", # Check for common passwords
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        # Check for common passwords
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", # Check for numeric passwords
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        # Check for numeric passwords
     },
 ]
 
@@ -203,4 +207,5 @@ STATIC_URL = "static/" # Set the URL for serving static files
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField" # Use BigAutoField as the default primary key field
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField" # Use BigAutoField as
+# the default primary key field

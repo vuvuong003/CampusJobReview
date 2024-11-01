@@ -5,29 +5,26 @@ This module contains serializers that handle the generation of JWT tokens for
 user authentication and the registration of new users, including custom
 validation and user attribute management.
 """
-# Import JWT serializer
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer  # pylint: disable=E0401
-# Import base serializers from Django REST framework
 from rest_framework import serializers  # pylint: disable=E0401
-# Ensure unique username validation
 from rest_framework.validators import UniqueValidator  # pylint: disable=E0401
-# Get user model dynamically
-from django.contrib.auth import get_user_model  # pylint: disable=E0401
-# Import for raising validation errors
 from rest_framework.exceptions import ValidationError  # Use this for consistency
-# For enforcing strong passwords
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer  # pylint: disable=E0401
+
+# Import for enforcing strong passwords
 from django.contrib.auth.password_validation import validate_password  # pylint: disable=E0401
+# Get user model dynamically
+from django.contrib.auth import get_user_model
 
 # Third-party imports
-from rest_framework import serializers  # pylint: disable=E0401
-from rest_framework.exceptions import ValidationError
-from rest_framework.validators import UniqueValidator  # pylint: disable=E0401
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer  # pylint: disable=E0401
+# from rest_framework import serializers  # pylint: disable=E0401
+# from rest_framework.exceptions import ValidationError
+# from rest_framework.validators import UniqueValidator  # pylint: disable=E0401
+# from rest_framework_simplejwt.serializers import TokenObtainPairSerializer  # pylint: disable=E0401
 
 User = get_user_model() # Retrieve the User model
 # pylint: disable=R0903
 
-
+# pylint: disable=W0223
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     """
     Serializer for obtaining a JSON Web Token (JWT) for user authentication.
@@ -56,7 +53,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         if user is None:
             raise ValidationError("User does not exist.")
-            
+
         token = super(MyTokenObtainPairSerializer, cls).get_token(user) # Generate token
         token["username"] = user.username  # Add custom claim for username
         return token
@@ -114,6 +111,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         Attributes:
             model (Model): The model associated with the serializer.
             fields (list): Fields included in the serialized output.
-        """ 
+        """
         model = User # Link serializer to the User model
         fields = ["username", "password"] # Specify fields to include in output
