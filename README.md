@@ -98,7 +98,7 @@ Explore our methodologies in developing the Campus Job Review application throug
 1. Use Case Mini Tutorial: Discover the enhanced features of the application by following along with engaging use cases illustrated through various images. [Click here to get started!](https://github.com/SAT510/CampusJobReview/blob/shazia_testing/UseCase_Documentation.md)
 
 2. Add API Endpoints and give brief description
-3. add main function or classes and give their purpose
+3. Outline of the development and specifications of the CampusJobReview project including technical details, project goals, architecture, feature implementations, and potential areas for future development. This document includes the point description of all the classes and methods of the system. [SystemSpecDoc](https://github.com/SAT510/CampusJobReview/blob/test/project_docs/CSC-510.pdf)]
 
 ### Team Members
 - Amay Gada
