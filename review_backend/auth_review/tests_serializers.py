@@ -11,7 +11,7 @@ handle user registration and token generation.
 
 from django.test import TestCase  # pylint: disable=E0401
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
-from rest_framework.exceptions import ValidationError  # pylint: disable=E0401
+# from rest_framework.exceptions import ValidationError  # pylint: disable=E0401
 from .serializers import RegisterSerializer, MyTokenObtainPairSerializer
 
 User = get_user_model()
@@ -54,7 +54,7 @@ class RegisterSerializerTest(TestCase):
         serializer = RegisterSerializer(data=data)
         self.assertFalse(serializer.is_valid())
         self.assertIn('password', serializer.errors)
-    
+
     def test_registration_weak_password(self):
         """Test that registration fails when the password does not meet validation criteria."""
         data = {
@@ -86,10 +86,10 @@ class MyTokenObtainPairSerializerTest(TestCase):
     # def test_get_token_for_nonexistent_user(self):
     #     """Test that an error is raised when attempting to get a token for a nonexistent user."""
     #     serializer = MyTokenObtainPairSerializer()
-    
+
     #     # Attempt to get a token for a nonexistent user (None)
     #     with self.assertRaises(ValidationError) as context:
     #         serializer.get_token(None)
-        
+
     #     # Check that the error message is as expected
     #     self.assertEqual(str(context.exception), "User does not exist.")

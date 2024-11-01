@@ -8,8 +8,6 @@ and error cases for invalid input.
 """
 from django.test import TestCase  # pylint: disable=E0401
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
-from django.db.utils import IntegrityError  # pylint: disable=E0401
-from .models import Client
 
 User = get_user_model()
 
@@ -48,7 +46,7 @@ class ClientModelTests(TestCase):
         """Test that creating a superuser without a password raises an error."""
         with self.assertRaises(TypeError):
             User.objects.create_superuser(username="adminuser", password=None)
-   
+
     def test_user_activation(self):
         """Test that a user can be deactivated."""
         user = User.objects.create_user(
@@ -57,8 +55,8 @@ class ClientModelTests(TestCase):
         user.is_active = False
         user.save()
 
-        self.assertFalse(user.is_active)  
-    
+        self.assertFalse(user.is_active)
+
     def test_user_string_representation(self):
         """Test the string representation of the user."""
         user = User.objects.create_user(
