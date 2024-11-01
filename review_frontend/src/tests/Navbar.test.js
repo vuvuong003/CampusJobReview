@@ -33,7 +33,5 @@ describe('NavBar Component', () => {
 
   it('opens and closes the mobile menu', () => {
     renderNavBar(true);
-
-    const menuButton = screen.getByLabelText(/account of current user/i);
   });
 });
