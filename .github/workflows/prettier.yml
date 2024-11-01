@@ -1,12 +1,12 @@
-name: Format Code with Prettier
+name: Prettier for frontend
 
 on:
   push:
     branches:
-      - main  # Change this to your default branch if necessary
+      - '*' 
   pull_request:
     branches:
-      - main  # Change this to your default branch if necessary
+      - test 
 
 jobs:
   prettier:
@@ -19,10 +19,10 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14'  # Use the version of Node.js you prefer
+        node-version: '14'
 
     - name: Install dependencies
       run: npm install
 
     - name: Run Prettier
-      run: npx prettier --check .
+      run: npx prettier --check review_frontend/**/*.{js,json,css,html}

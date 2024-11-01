@@ -8,7 +8,8 @@
  * Base URL for the API endpoints
  * @constant {string}
  */
-let base_url = "https://2e36-2405-201-17-f0cf-8663-5a65-cde3-65a1.ngrok-free.app/"
+let base_url =
+  "https://2e36-2405-201-17-f0cf-8663-5a65-cde3-65a1.ngrok-free.app/";
 
 /**
  * URL endpoint for user authentication
@@ -43,41 +44,41 @@ export let filter_url = base_url + "service/filter";
  * @returns {Promise<Response>} The fetch response object
  * @throws {Error} Logs error and shows alert on server error
  */
-export let unprotected_api_call = async (url, data={}, type="POST") => {
-    try{
-        // Initialize headers with content type and ngrok skip
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("ngrok-skip-browser-warning", true)
+export let unprotected_api_call = async (url, data = {}, type = "POST") => {
+  try {
+    // Initialize headers with content type and ngrok skip
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("ngrok-skip-browser-warning", true);
 
-        let raw
-        let requestOptions
+    let raw;
+    let requestOptions;
 
-        // Configure request options based on HTTP method
-        if(type === "GET"){
-            requestOptions = {
-                method: 'GET',
-                redirect: 'follow',
-                headers: myHeaders
-            };
-        }else{
-            // For non-GET requests, stringify the data and include in body
-            raw = JSON.stringify(data);
-            requestOptions = {
-                method: type,
-                headers: myHeaders,
-                body: raw,
-                redirect: "follow"
-            };    
-        }
-        
-        let response = await fetch(url, requestOptions);
-        return response;
-    }catch(e){
-        console.log(e);
-        alert("Server Error")
+    // Configure request options based on HTTP method
+    if (type === "GET") {
+      requestOptions = {
+        method: "GET",
+        redirect: "follow",
+        headers: myHeaders,
+      };
+    } else {
+      // For non-GET requests, stringify the data and include in body
+      raw = JSON.stringify(data);
+      requestOptions = {
+        method: type,
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
     }
-}
+
+    let response = await fetch(url, requestOptions);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("Server Error");
+  }
+};
 
 /**
  * Makes an API call that requires authentication token
@@ -88,44 +89,44 @@ export let unprotected_api_call = async (url, data={}, type="POST") => {
  * @returns {Promise<Response>} The fetch response object
  * @throws {Error} Logs error and shows alert on server error
  */
-export let protected_api_call = async (url, data={}, type="POST") => {
-    try{
-        // Retrieve and parse authentication token from localStorage
-        let token = localStorage.getItem("user_data");
-        token = JSON.parse(token)["data"]["tokens"]["access"];
+export let protected_api_call = async (url, data = {}, type = "POST") => {
+  try {
+    // Retrieve and parse authentication token from localStorage
+    let token = localStorage.getItem("user_data");
+    token = JSON.parse(token)["data"]["tokens"]["access"];
 
-        // Initialize headers with authentication token
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + token);
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("ngrok-skip-browser-warning", true)
+    // Initialize headers with authentication token
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + token);
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("ngrok-skip-browser-warning", true);
 
-        let raw
-        let requestOptions
+    let raw;
+    let requestOptions;
 
-        // Configure request options based on HTTP method
-        if(type === "GET"){
-            requestOptions = {
-                method: 'GET',
-                redirect: 'follow',
-                headers: myHeaders
-            };
-        }else{
-            // For non-GET requests, stringify the data and include in body
-            raw = JSON.stringify(data);
-            requestOptions = {
-                method: type,
-                headers: myHeaders,
-                body: raw,
-                redirect: "follow"
-            };    
-        }
-        
-        let response = await fetch(url, requestOptions);
-        console.log(response);
-        return response;
-    }catch(e){
-        console.log(e);
-        alert("Server Error")
+    // Configure request options based on HTTP method
+    if (type === "GET") {
+      requestOptions = {
+        method: "GET",
+        redirect: "follow",
+        headers: myHeaders,
+      };
+    } else {
+      // For non-GET requests, stringify the data and include in body
+      raw = JSON.stringify(data);
+      requestOptions = {
+        method: type,
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
     }
-}
+
+    let response = await fetch(url, requestOptions);
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("Server Error");
+  }
+};

@@ -1,8 +1,8 @@
 """
 This module contains test cases for the Reviews model and its serializer in a Django application.
 
-The `ReviewsModelTests` class extends `TestCase` to provide a framework for testing
-various aspects of the Reviews model. It includes:
+The `ReviewsModelTests` class extends `TestCase` to provide a framework for testing various
+aspects of the Reviews model. It includes:
 
 - **setUp**: Initializes common valid data for testing.
 - **test_department_not_blank**: Ensures the 'department' field cannot be blank.
@@ -41,10 +41,12 @@ from .serializers import ReviewsSerializer # Import serializer for validation an
 # pylint: disable=R0904
 class ReviewsModelTests(TestCase):
     """
-    Test cases for the Reviews model.
+    Test suite for the Reviews model and its serializer.
 
-    This class tests various validations and constraints for the Reviews model,
-    ensuring data integrity and correct behavior of the associated serializer.
+    This class tests various validation rules and functionalities of the Reviews model, including:
+    - Field constraints (e.g., non-blank fields, maximum lengths)
+    - Validating optional fields
+    - Checking filtering functionality by different attributes
     """
     # pylint: disable=C0103
     def setUp(self):
@@ -154,14 +156,10 @@ class ReviewsModelTests(TestCase):
     def test_filter_reviews_by_department(self):
         """Test filtering reviews by 'department'."""
         # Create two review instances with different departments
-        # pylint: disable=E1101
         review1 = Reviews.objects.create(**self.valid_data)
-        # pylint: disable=E1101
         review2 = Reviews.objects.create(**{**self.valid_data, "department": "HR"})
         # Filter reviews by department and check presence of each review
-        # pylint: disable=E1101
         it_reviews = Reviews.objects.filter(department="IT")
-        # pylint: disable=E1101
         hr_reviews = Reviews.objects.filter(department="HR")
         self.assertIn(review1, it_reviews)
         self.assertIn(review2, hr_reviews)
@@ -169,27 +167,19 @@ class ReviewsModelTests(TestCase):
     def test_filter_reviews_by_rating(self):
         """Test filtering reviews by 'rating'."""
         # Create two review instances with different ratings
-        # pylint: disable=E1101
         review1 = Reviews.objects.create(**self.valid_data)
-        # pylint: disable=E1101
         review2 = Reviews.objects.create(**{**self.valid_data, "rating": 5})
         # Filter reviews by rating and check presence of each review
-        # pylint: disable=E1101
         high_rating_reviews = Reviews.objects.filter(rating=5) # filter reviews
-        # pylint: disable=E1101
         low_rating_reviews = Reviews.objects.filter(rating=4) # filter reviews
         self.assertIn(review2, high_rating_reviews) # Validate data
         self.assertIn(review1, low_rating_reviews) # Validate data
 
     def test_filter_reviews_by_job_title(self):
         """Test filtering reviews by 'job_title'."""
-        # pylint: disable=E1101
         review1 = Reviews.objects.create(**self.valid_data)
-        # pylint: disable=E1101
         review2 = Reviews.objects.create(**{**self.valid_data, "job_title": "Manager"})
-        # pylint: disable=E1101
         engineer_reviews = Reviews.objects.filter(job_title="Engineer") # filter reviews
-        # pylint: disable=E1101
         manager_reviews = Reviews.objects.filter(job_title="Manager") # filter reviews
         self.assertIn(review1, engineer_reviews) # Validate data
         self.assertIn(review2, manager_reviews) # Validate data
@@ -251,7 +241,7 @@ class ReviewsModelTests(TestCase):
         with self.assertRaises(ValidationError):# Expect a validation error
             ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-    # pylint: disable=C0202,C0103
+    # pylint: disable=C0202
     @classmethod
     def tearDownClass(self):
         """Clean up the database by deletincg all review instances after tests have run."""
