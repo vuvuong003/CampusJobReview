@@ -100,7 +100,8 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware", # CORS middleware for handling cross-origin requests
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True # Allow all origins (not recommended for production)
+CORS_ORIGIN_ALLOW_ALL = True 
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
@@ -111,8 +112,17 @@ CORS_ALLOW_HEADERS = [
     'user-agent',
     'x-csrftoken',
     'x-requested-with',
+    'ngrok-skip-browser-warning'
 ] # Specify allowed headers for CORS
-CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT'
+]
 # URL configuration for the project
 ROOT_URLCONF = "review_backend.urls"
 # Template settings

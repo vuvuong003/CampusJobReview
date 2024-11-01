@@ -1,4 +1,4 @@
-let base_url = "https://9cdb-2405-201-17-f0cf-1d04-9fb0-1cd-55c6.ngrok-free.app"
+let base_url = "https://fe0e-2405-201-17-f0cf-d385-7e24-cb91-c75f.ngrok-free.app"
 
 export let login_url = base_url + "/auth/token/";
 export let register_url = base_url + "/auth/register/";
@@ -9,6 +9,7 @@ export let unprotected_api_call = async (url, data={}, type="POST") => {
     try{
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("ngrok-skip-browser-warning", true)
 
         let raw
         let requestOptions
@@ -44,6 +45,7 @@ export let protected_api_call = async (url, data={}, type="POST") => {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + token);
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("ngrok-skip-browser-warning", true)
 
         let raw
         let requestOptions
