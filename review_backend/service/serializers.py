@@ -1,5 +1,5 @@
-from rest_framework import serializers
-from .models import Reviews, Vacancies
+from rest_framework import serializers  # Import Django REST framework serializers
+from .models import Reviews, Vacancies # Import models to create serializers for
 
 """
 This module contains serializers for the Reviews and Vacancies models, enabling validation and serialization of data for RESTful APIs in a Django application.
@@ -15,6 +15,16 @@ Functions:
 
 
 class ReviewsSerializer(serializers.ModelSerializer):
+    """Serializer for the Reviews model.
+
+    This serializer handles the conversion of Reviews model instances to JSON format
+    and vice versa, ensuring data consistency and validation before saving.
+
+    Meta Attributes:
+        model (Reviews): Specifies the Reviews model for serialization.
+        fields (str): Includes all model fields.
+        extra_kwargs (dict): Specifies required fields to enforce non-null constraints.
+    """
     class Meta:
         model = Reviews
         fields = '__all__'  # This will include all fields from the Reviews model
@@ -31,23 +41,58 @@ class ReviewsSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, attrs):
+        """Custom validation for Reviews model data.
+
+        Ensures that `rating` is within the valid range (1-5) and that `review` content
+        is provided if required. 
+
+        Args:
+            attrs (dict): Attributes being validated.
+
+        Raises:
+            serializers.ValidationError: If validation constraints are violated.
+
+        Returns:
+            dict: Validated attributes.
+        """
         # Add custom validation logic here if needed
         if attrs['rating'] < 1 or attrs['rating'] > 5:
             raise serializers.ValidationError(
                 "Rating must be between 1 and 5.")
         if not attrs['review']:
             raise serializers.ValidationError("Review cannot be empty.")
-        # Add more validation as needed
         return attrs
 
 
 class VacanciesSerializer(serializers.ModelSerializer):
+    """Serializer for the Vacancies model.
+
+    This serializer converts Vacancies model data to JSON format for API
+    responses and performs data validation for attributes before saving.
+
+    Meta Attributes:
+        model (Vacancies): Specifies the Vacancies model for serialization.
+        fields (str): Includes all fields of the Vacancies model.
+    """
     class Meta:
         model = Vacancies
         fields = '__all__'  # This will include all fields from the Vacancies model
 
     def validate(self, attrs):
-        # Add custom validation logic here if needed
+        """Custom validation for Vacancies model data.
+
+        Checks that critical fields like job title and job description are not
+        empty and that `maxHoursAllowed` is greater than zero.
+
+        Args:
+            attrs (dict): Attributes to be validated.
+
+        Raises:
+            serializers.ValidationError: If any validation constraint is violated.
+
+        Returns:
+            dict: Validated attributes.
+        """
         if not attrs['jobTitle']:
             raise serializers.ValidationError("Job title cannot be empty.")
         if not attrs['jobDescription']:
