@@ -8,6 +8,7 @@ Sum of our Self-Assessment Scores: TODO
 | Number of commits |100 | 3 | | https://github.com/SAT510/CampusJobReview/commits/test/|
 | Number of commits: by different people|100 | 3 | | https://github.com/SAT510/CampusJobReview/commits/test/|
 | Issues reports: there are many |100 | 3 | | https://github.com/SAT510/CampusJobReview/issues|
+| Issues are being closed |100 | 3 | | https://github.com/SAT510/CampusJobReview/issues?q=is%3Aissue+is%3Aclosed|
 | Docs: doco generated, format not ugly |100 | 3 | | Each code page has a pretty standard and language-specific documentation. API and in-line documentation is also generated. Check this out in the code base or the repository.|
 | Docs: what: point descriptions of each class/function (in isolation) |100 | 3 | | https://github.com/SAT510/CampusJobReview/blob/test/project_docs/CSC-510.pdf|
 | Docs: how: for common use cases X,Y,Z mini-tutorials showing worked examples on how to do X,Y,Z |100 | 3 | | https://github.com/SAT510/CampusJobReview/blob/shazia_testing/UseCase_Documentation.md|
@@ -17,12 +18,13 @@ Sum of our Self-Assessment Scores: TODO
 | Test cases exist |100 |  3 | | run npm test in the frontend folder, run python manage.py test --keepdb in the backend folder. For more details: visit these links in Github actions: https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml & https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml|
 | Test cases are routinely executed |100 | 3 | | 60 test cases. We have github actions linked to [badges](https://github.com/SAT510/CampusJobReview/tree/test/.github/workflows)|
 | Issues are discussed before they are closed |100 | 3 | |  https://github.com/SAT510/CampusJobReview/issues -> We also have badges to show the status of the issues.|
-| Chat channel: exists |100 | 3 | | discord + github project board. Some links to explore are issue discussions: https://github.com/SAT510/CampusJobReview/issues , the backlog: https://github.com/orgs/SAT510/projects/1/views/1|
+| Chat channel: exists |100 | 3 | | discord + github project board. Some links to explore are issue discussions: https://github.com/SAT510/CampusJobReview/issues , the backlog: https://github.com/orgs/SAT510/projects/1/views/1 & for collaboration proof: https://drive.google.com/file/d/12wwTuD_4J5Bb45YwqWsHmA-tqJFCNcoj/view?usp=sharing & https://drive.google.com/file/d/11GPnsS2MS7fNmhqhBUCUpU7YVjaJGRnh/view?usp=sharing|
 | Test cases: a large proportion of the issues are related to handling failing cases. |100 | 3 | | We have 60 test cases and 2 test badges to show that [django and jest](https://github.com/SAT510/CampusJobReview/tree/test/.github/workflows). Moreover, a lot of our issues focus on bugs as well as enhancements. Check it out here: https://github.com/SAT510/CampusJobReview/issues?q=is%3Aissue+is%3Aclosed |
 | Evidence that the whole team is using the same tools: everyone can get to all tools and files |100 | 3 | | can be tested during the TA demo and pull requests show that all our code is mergeable: https://github.com/SAT510/CampusJobReview/pulls?q=is%3Apr+is%3Aclosed |
 | Evidence that the whole team is using the same tools (e.g. config files in the repo, updated by lots of different people) |100 | 3 | | can be tested during the TA demo and pull requests: https://github.com/SAT510/CampusJobReview/pulls?q=is%3Apr+is%3Aclosed|
 | Evidence that the whole team is using the same tools (e.g. tutor can ask anyone to share screen, they demonstrate the system running on their computer) |100 | 3 | | can be tested during the TA demo|
 | Evidence that the members of the team are working across multiple places in the code base |100 | 3 | | https://github.com/SAT510/CampusJobReview/commits/test/ and checkout pull requests and discussions in the pull requests: https://github.com/SAT510/CampusJobReview/pulls?q=is%3Apr+is%3Aclosed|
+| Short release cycles |100 | 3 | | Releases: https://github.com/SAT510/CampusJobReview/releases & https://zenodo.org/records/14020963
 | The file .gitignore lists what files should not be saved to the repo |100 | 3 | | https://github.com/SAT510/CampusJobReview/blob/test/.gitignore|
 | The file INSTALL.md lists how to install the code |100 | 3 | | https://github.com/SAT510/CampusJobReview/blob/test/INSTALL.md|
 | The file LICENSE.md lists rules of usage for this repo |100 |  3 | | https://github.com/SAT510/CampusJobReview/blob/test/LICENSE.md|
@@ -48,7 +50,7 @@ Sum of our Self-Assessment Scores: TODO
 | Is your software available as a package that can be deployed without building it? | | | |
 | Is your software available for free? | | | |
 | Is your source code publicly available to download, either as a downloadable bundle or via access to a source code repository? | | | |
-| Is your software hosted in an established, third-party repository likeGitHub (https://github.com), BitBucket (https://bitbucket.org),LaunchPad (https://launchpad.net) orSourceForge (https://sourceforge.net)? | | | |
+| Is your software hosted in an established, third-party repository likeGitHub (https://github.com), BitBucket (https://bitbucket.org),LaunchPad (https://launchpad.net) or SourceForge (https://sourceforge.net)? | | | |
 | Is your documentation clearly available on your website or within your software? | | | |
 | Does your documentation include a "quick start" guide, that provides a short overview of how to use your software with some basic examples of use? | | | |
 | If you provide more extensive documentation, does this provide clear, step-by-step instructions on how to deploy and use your software? | | | |
