@@ -1,12 +1,8 @@
-from django.test import TestCase  # Import Django's TestCase for testing
-from rest_framework.exceptions import ValidationError # Import ValidationError for handling validation issues
-from .models import Reviews # Import Reviews model for creating instances in tests
-from .serializers import ReviewsSerializer # Import serializer for validation and data handling
-
 """
 This module contains test cases for the Reviews model and its serializer in a Django application.
 
-The `ReviewsModelTests` class extends `TestCase` to provide a framework for testing various aspects of the Reviews model. It includes:
+The `ReviewsModelTests` class extends `TestCase` to provide a framework for testing various
+aspects of the Reviews model. It includes:
 
 - **setUp**: Initializes common valid data for testing.
 - **test_department_not_blank**: Ensures the 'department' field cannot be blank.
@@ -27,14 +23,32 @@ The `ReviewsModelTests` class extends `TestCase` to provide a framework for test
 - **test_optional_recommendation_field**: Validates that 'recommendation' can be null.
 - **test_invalid_rating_value**: Ensures 'rating' is within the range of 1 to 5.
 - **test_empty_string_in_benefits**: Confirms 'benefits' can be an empty string.
-- **test_job_description_character_limit**: Ensures 'job_description' does not exceed 120 characters.
+- **test_job_description_character_limit**: Ensures 'job_description' does not exceed 120
+characters.
 - **test_invalid_hourly_pay_length**: Ensures 'hourly_pay' does not exceed 10 characters.
 - **tearDownClass**: Cleans up the database by deleting all reviews after tests.
 
 This suite helps maintain data integrity and validate the functionality of the Reviews model.
 """
+from django.test import TestCase  # Import Django's TestCase for testing
+from rest_framework.exceptions import ValidationError # Import ValidationError for
+# handling validation issues
+from .models import Reviews # Import Reviews model for creating instances in tests
+from .serializers import ReviewsSerializer # Import serializer for validation and data handling
+
+
 # Define test cases for the Reviews model using TestCase from Django
+# pylint: disable=R0904
 class ReviewsModelTests(TestCase):
+    """
+    Test suite for the Reviews model and its serializer.
+
+    This class tests various validation rules and functionalities of the Reviews model, including:
+    - Field constraints (e.g., non-blank fields, maximum lengths)
+    - Validating optional fields
+    - Checking filtering functionality by different attributes
+    """
+    # pylint: disable=C0103
     def setUp(self):
         """Set up common valid data for testing various fields and constraints in each test case."""
         # Set valid initial data for use in multiple tests
@@ -118,7 +132,7 @@ class ReviewsModelTests(TestCase):
         # Set 'job_title' to a string of 65 characters
         data = {**self.valid_data, "job_title": "A" * 65}
         with self.assertRaises(ValidationError): # Expect a validation error
-            ReviewsSerializer(data=data).is_valid(raise_exception=True) 
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
     # def test_invalid_hourly_pay_type(self):
     #     """Test that 'hourly_pay' must be a string, not a number."""
@@ -156,8 +170,8 @@ class ReviewsModelTests(TestCase):
         review1 = Reviews.objects.create(**self.valid_data)
         review2 = Reviews.objects.create(**{**self.valid_data, "rating": 5})
         # Filter reviews by rating and check presence of each review
-        high_rating_reviews = Reviews.objects.filter(rating=5) # filter reviews 
-        low_rating_reviews = Reviews.objects.filter(rating=4) # filter reviews 
+        high_rating_reviews = Reviews.objects.filter(rating=5) # filter reviews
+        low_rating_reviews = Reviews.objects.filter(rating=4) # filter reviews
         self.assertIn(review2, high_rating_reviews) # Validate data
         self.assertIn(review1, low_rating_reviews) # Validate data
 
@@ -166,7 +180,7 @@ class ReviewsModelTests(TestCase):
         review1 = Reviews.objects.create(**self.valid_data)
         review2 = Reviews.objects.create(**{**self.valid_data, "job_title": "Manager"})
         engineer_reviews = Reviews.objects.filter(job_title="Engineer") # filter reviews
-        manager_reviews = Reviews.objects.filter(job_title="Manager") # filter reviews 
+        manager_reviews = Reviews.objects.filter(job_title="Manager") # filter reviews
         self.assertIn(review1, engineer_reviews) # Validate data
         self.assertIn(review2, manager_reviews) # Validate data
 
@@ -226,9 +240,10 @@ class ReviewsModelTests(TestCase):
         data = {**self.valid_data, "hourly_pay": "12345678901"}
         with self.assertRaises(ValidationError):# Expect a validation error
             ReviewsSerializer(data=data).is_valid(raise_exception=True)
-            
 
+    # pylint: disable=C0202
     @classmethod
     def tearDownClass(self):
+        """Clean up the database by deleting all reviews after tests."""
         Reviews.objects.all().delete()
         super().tearDownClass()
