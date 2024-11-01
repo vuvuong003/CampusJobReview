@@ -3,39 +3,39 @@ Sum of our Self-Assessment Scores: TODO
 
 | Notes | Amay Self-Assessment | Shazia Self-Assessment| Tahreem Self-Assessment | Evidence |
 |-------|----------------------|-----------------------|-------------------------|----------|
-|Workload is spread over the whole team (one team member is often Xtimes more productive than the others)|  |  | | |
-|but nevertheless, here is a track record that everyone is contributing a lot)| |
-| Number of commits | | | | |
-| Number of commits: by different people| | | | |
-| Issues reports: there are many | | | | |
-| Docs: doco generated, format not ugly | | | | |
-| Docs: what: point descriptions of each class/function (in isolation) | | | | |
-| Docs: how: for common use cases X,Y,Z mini-tutorials showing worked examples on how to do X,Y,Z | | | | |
-| Docs: why: docs tell a story, motivate the whole thing, deliver a punchline that makes you want to rush out and use the thing | | | | |
-| Docs: short video, animated, hosted on your repo. That convinces people why they want to work on your code | | | | |
-| Use of version control tools | | | | |
-| Test cases exist | | | | |
-| Test cases are routinely executed | | | | |
-| Issues are discussed before they are closed | | | | |
-| Chat channel: exists | | | | |
-| Test cases: a large proportion of the issues related to handling failing cases. | | | | |
-| Evidence that the whole team is using the same tools: everyone can get to all tools and files | | | | |
-| Evidence that the whole team is using the same tools (e.g. config files in the repo, updated by lots of different people) | | | | |
-| Evidence that the whole team is using the same tools (e.g. tutor can ask anyone to share screen, they demonstrate the system running on their computer) | | | | |
-| Evidence that the members of the team are working across multiple places in the code base | | | | |
-| The file .gitignore lists what files should not be saved to the repo | | | | |
-| The file INSTALL.md lists how to install the code | | | | |
-| The file LICENSE.md lists rules of usage for this repo | | | | |
-| The file CODE-OF-CONDUCT.md lists rules of behavior for this repo | | | | |
-| The file CONTRIBUTING.md lists coding standards and lots of tips on how to extend the system without screwing things up | | | | |
-| The file README.md contains all the following	 | | | | |
-| Video	 | | | | |
-| DOI badge: exists | | | | |
-| Badges showing your style checkers | | | | |
-| Badges showing your code formatters | | | | |
-| Badges showing your syntax checkers | | | | |
-| Badges showing your code coverage tools | | | | |
-| Badges showing any other Other automated analysis tools | | | | |
+|Workload is spread over the whole team (one team member is often Xtimes more productive than the others)| 100  |  | | https://github.com/SAT510/CampusJobReview/commits/test/|
+|but nevertheless, here is a track record that everyone is contributing a lot)|100 | | | look below|
+| Number of commits |100 | | | https://github.com/SAT510/CampusJobReview/commits/test/|
+| Number of commits: by different people|100 | | | https://github.com/SAT510/CampusJobReview/commits/test/|
+| Issues reports: there are many |100 | | | https://github.com/SAT510/CampusJobReview/issues|
+| Docs: doco generated, format not ugly |100 | | | Each code page has a pretty standard documentation. API documentation is also generated|
+| Docs: what: point descriptions of each class/function (in isolation) |100 | | | Each code page has inline documentation. Can be checked in the repository|
+| Docs: how: for common use cases X,Y,Z mini-tutorials showing worked examples on how to do X,Y,Z |100 | | | https://github.com/SAT510/CampusJobReview/blob/shazia_testing/UseCase_Documentation.md|
+| Docs: why: docs tell a story, motivate the whole thing, deliver a punchline that makes you want to rush out and use the thing | 100| | | Read the Documentation section in the README|
+| Docs: short video, animated, hosted on your repo. That convinces people why they want to work on your code |100 | | | https://drive.google.com/file/d/1cmAgHYnGPp1LA3F_dimup3XeC6HHNplY/view?usp=sharing|
+| Use of version control tools |100 | | | https://github.com/SAT510/CampusJobReview|
+| Test cases exist |100 | | | run npm test in the frontend folder, run python manage.py test --keepdb in the backend folder|
+| Test cases are routinely executed |100 | | | We have github actions linked to badges (https://github.com/SAT510/CampusJobReview/tree/test/.github/workflows)|
+| Issues are discussed before they are closed |100 | | | https://github.com/SAT510/CampusJobReview/issues|
+| Chat channel: exists |100 | | | discord + github project board|
+| Test cases: a large proportion of the issues related to handling failing cases. |100 | | | We have 60 test cases and 2 test badges to show that (django and jest)|
+| Evidence that the whole team is using the same tools: everyone can get to all tools and files |100 | | | can be tested during the TA demo|
+| Evidence that the whole team is using the same tools (e.g. config files in the repo, updated by lots of different people) |100 | | | can be tested during the TA demo|
+| Evidence that the whole team is using the same tools (e.g. tutor can ask anyone to share screen, they demonstrate the system running on their computer) |100 | | | can be tested during the TA demo|
+| Evidence that the members of the team are working across multiple places in the code base |100 | | | https://github.com/SAT510/CampusJobReview/commits/test/|
+| The file .gitignore lists what files should not be saved to the repo |100 | | | https://github.com/SAT510/CampusJobReview/blob/test/.gitignore|
+| The file INSTALL.md lists how to install the code |100 | | | https://github.com/SAT510/CampusJobReview/blob/test/INSTALL.md|
+| The file LICENSE.md lists rules of usage for this repo |100 | | | https://github.com/SAT510/CampusJobReview/blob/test/LICENSE.md|
+| The file CODE-OF-CONDUCT.md lists rules of behavior for this repo |100 | | | https://github.com/SAT510/CampusJobReview/blob/test/CODE-OF-CONDUCT.md|
+| The file CONTRIBUTING.md lists coding standards and lots of tips on how to extend the system without screwing things up |100 | | | https://github.com/SAT510/CampusJobReview/blob/project-resources/CONTRIBUTING.md|
+| The file README.md contains all the following	 |100 | | | |
+| Video	 |100 | | | Both the animation and the demo video exist in the README (https://drive.google.com/file/d/1cmAgHYnGPp1LA3F_dimup3XeC6HHNplY/view?usp=sharing) (TODO Demo link)|
+| DOI badge: exists |100 | | | DOI badge exists in the Readme|
+| Badges showing your style checkers |100 | | | We have embedded pylint and black badge in the README|
+| Badges showing your code formatters |100 | | | We have embedded autopep badge in the readme|
+| Badges showing your syntax checkers |100 | | | We have embedded pylint badge in the README|
+| Badges showing your code coverage tools |100 | | | We have embedded a codecov badge in the Readme|
+| Badges showing any other Other automated analysis tools |100 | | | We use black for further python formatting and analysis|
 
 ## Software Sustainability Evaluation
 | Question | Answer [Y/N] | Self-Assessment | Evidence |
