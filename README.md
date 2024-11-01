@@ -67,6 +67,7 @@ We have made lots of changes to ensure that our app is feasible, maintainable, e
 
 5. Enhanced User Interaction: We added dynamic filters for pay rate, ratings, job locations, and more, allowing users to sort various fields for a more focused and personalized approach to their job searches.
 
+6. Backend upgrade: Upgraded to a django rest framework from a basic flask application. This allows portability of the application.
 
 ### Future Scope
 TODO: while doing the poster
