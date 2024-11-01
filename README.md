@@ -1,8 +1,22 @@
 # NC STATE JOBS RATING AND REVIEW SYSTEM 
+
+The original authors of this project are 
+- [Mohit Soni](https://github.com/mohitsoni2111)
+- [Tilak Satra](https://github.com/tilaksatra)
+- [Akshat Savla](https://github.com/akshat22)
+- [Madiha Mansoori](https://github.com/madiha2001)
+- [Anagha Patil](https://github.com/Anagha-2000)
+
+Please refer to the original repository [here!](https://github.com/ashishjoshi2605/ncsu-campus-jobs-review-system)
+The project we cloned was not working, requiring us to start from the foundation. The intended repository to work with is linked [here!](https://github.com/akshat22/campus-job-review-system)
+
+To gain a deeper understanding of the changes and improvements from the original project to the newly enhanced version, please watch the demo video. This video showcases the new functionalities and highlights the enhancements made throughout the project
+
 ## Table of contents
+
 - [Introduction](#Introduction)
 - [Demo Video](#demo-video)
-- [Newly Enhanched Features](#newly-enhanched-features)
+- [Newly Enhanced Features](#newly-enhanced-features)
 - [Future Scope](#future-scope)
 - [Installation](#installation)
 - [Licence](#License)
@@ -41,7 +55,7 @@ Explore our platform and take the first step towards finding the right on-campus
 ### Demo Video 
 TODO
 
-### Newly Enhanched Features
+### Newly Enhanced Features
 We have made lots of changes to ensure that our app is feasible, maintainable, extendable, and can be used by a broad audience. Throughout this process, we have extended various features and fixed bugs. Our enhancements and bug fixes include:
 
 1. Database Migration: We have migrated the current minimal SQL to MongoDB. This ensures enhanced performance, particularly with faster queries for dynamic filtering, while also improving scalability.
