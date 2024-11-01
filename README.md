@@ -43,7 +43,9 @@ Explore our platform and take the first step towards finding the right on-campus
 [![GitHub open issues](https://img.shields.io/github/issues-raw/SAT510/CampusJobReview)](https://github.com/SAT510/CampusJobReview/issues?q=is%3Aopen)  
 [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/SAT510/CampusJobReview)](https://github.com/SAT510/CampusJobReview/issues?q=is%3Aclosed)
 
-[![Django Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml)  [![Jest Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml)   [![codecov](https://codecov.io/gh/shaziamuckram/SAT510/project-resources/main/graph/badge.svg)](https://codecov.io/gh/yourusername/yourrepo)
+[![Django Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml)  [![Jest Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml)   
+
+[![codecov](https://codecov.io/gh/SAT510/CampusJobReview/graph/badge.svg?token=3U8KLQ8AA4)](https://codecov.io/gh/SAT510/CampusJobReview)
 
 <p align="center"><img width="700" src="./resources/Intro_to_CampusJobReview.gif"></p>
 
