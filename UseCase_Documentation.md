@@ -65,7 +65,7 @@ We offer an exclusive and easy option for you to filter the reviews based on fie
 ### Browser Extension
 With the integration of a browser API, users will experience enhanced functionality:
 
-Job Review Pop-Ups: When browsing job postings, you will receive pop-ups with job reviews from peers, helping you make informed decisions. Below are the pictures showing the browser extension functionality. 
+Job Review Pop-Ups: When browsing job postings, you will receive pop-ups through our browser extension that currently show the title of the job based on the department title that is associated with the list of reviews on our website. Below are the pictures showing the browser extension functionality. 
 ![Browser_Extension_page](docs/images/browser_extension_1.jpg)
 ![Browser_Extension2_page](docs/images/browser_extension_2.jpg)
 
