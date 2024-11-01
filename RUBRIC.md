@@ -3,41 +3,41 @@ Sum of our Self-Assessment Scores: Amay: 105, Shazia: 105, Tahreem: 105
 
 | Notes | Amay Self-Assessment | Shazia Self-Assessment| Tahreem Self-Assessment | Evidence |
 |-------|----------------------|-----------------------|-------------------------|----------|
-|Workload is spread over the whole team (one team member is often Xtimes more productive than the others)| 3  | 3| | https://github.com/SAT510/CampusJobReview/pulse|
-|but nevertheless, here is a track record that everyone is contributing a lot)|3 | 3 | |https://github.com/SAT510/CampusJobReview/graphs/contributors|
-| Number of commits |3 | 3 | | https://github.com/SAT510/CampusJobReview/commits/test/|
-| Number of commits: by different people|3 | 3 | | https://github.com/SAT510/CampusJobReview/commits/test/|
-| Issues reports: there are many |3 | 3 | | https://github.com/SAT510/CampusJobReview/issues|
-| Issues are being closed |3 | 3 | | https://github.com/SAT510/CampusJobReview/issues?q=is%3Aissue+is%3Aclosed|
-| Docs: doco generated, format not ugly |3 | 3 | | Each code page has a pretty standard and language-specific documentation. API and in-line documentation is also generated. Check this out in the code base or the repository.|
-| Docs: what: point descriptions of each class/function (in isolation) |3 | 3 | | https://github.com/SAT510/CampusJobReview/blob/test/project_docs/CSC-510.pdf|
-| Docs: how: for common use cases X,Y,Z mini-tutorials showing worked examples on how to do X,Y,Z |3 | 3 | | https://github.com/SAT510/CampusJobReview/blob/shazia_testing/UseCase_Documentation.md|
-| Docs: why: docs tell a story, motivate the whole thing, deliver a punchline that makes you want to rush out and use the thing | 3| 3 | | Read the Documentation section in the README and even checkout the Introduction section in the [README](https://github.com/SAT510/CampusJobReview/blob/test/README.md)|
-| Docs: short video, animated, hosted on your repo. That convinces people why they want to work on your code |3 | 3 | | https://drive.google.com/file/d/1cmAgHYnGPp1LA3F_dimup3XeC6HHNplY/view?usp=sharing|
-| Use of version control tools |3 | 3 | | https://github.com/SAT510/CampusJobReview|
-| Test cases exist |3 |  3 | | run npm test in the frontend folder, run python manage.py test --keepdb in the backend folder. For more details: visit these links in Github actions: https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml & https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml|
-| Test cases are routinely executed |3 | 3 | | 60 test cases. We have github actions linked to [badges](https://github.com/SAT510/CampusJobReview/tree/test/.github/workflows)|
-| Issues are discussed before they are closed |3 | 3 | |  https://github.com/SAT510/CampusJobReview/issues -> We also have badges to show the status of the issues.|
-| Chat channel: exists |3 | 3 | | discord + github project board. Some links to explore are issue discussions: https://github.com/SAT510/CampusJobReview/issues , the backlog: https://github.com/orgs/SAT510/projects/1/views/1 & for collaboration proof: https://drive.google.com/file/d/12wwTuD_4J5Bb45YwqWsHmA-tqJFCNcoj/view?usp=sharing & https://drive.google.com/file/d/11GPnsS2MS7fNmhqhBUCUpU7YVjaJGRnh/view?usp=sharing|
-| Test cases: a large proportion of the issues are related to handling failing cases. |3 | 3 | | We have 60 test cases and 2 test badges to show that [django and jest](https://github.com/SAT510/CampusJobReview/tree/test/.github/workflows). Moreover, a lot of our issues focus on bugs as well as enhancements. Check it out here: https://github.com/SAT510/CampusJobReview/issues?q=is%3Aissue+is%3Aclosed |
-| Evidence that the whole team is using the same tools: everyone can get to all tools and files |3 | 3 | | can be tested during the TA demo and pull requests show that all our code is mergeable: https://github.com/SAT510/CampusJobReview/pulls?q=is%3Apr+is%3Aclosed |
-| Evidence that the whole team is using the same tools (e.g. config files in the repo, updated by lots of different people) |3 | 3 | | can be tested during the TA demo and pull requests: https://github.com/SAT510/CampusJobReview/pulls?q=is%3Apr+is%3Aclosed|
-| Evidence that the whole team is using the same tools (e.g. tutor can ask anyone to share screen, they demonstrate the system running on their computer) |3 | 3 | | can be tested during the TA demo|
-| Evidence that the members of the team are working across multiple places in the code base |3 | 3 | | https://github.com/SAT510/CampusJobReview/commits/test/ and checkout pull requests and discussions in the pull requests: https://github.com/SAT510/CampusJobReview/pulls?q=is%3Apr+is%3Aclosed|
-| Short release cycles |3 | 3 | | Releases: https://github.com/SAT510/CampusJobReview/releases & https://zenodo.org/records/14020963
-| The file .gitignore lists what files should not be saved to the repo |3 | 3 | | https://github.com/SAT510/CampusJobReview/blob/test/.gitignore|
-| The file INSTALL.md lists how to install the code |3 | 3 | | https://github.com/SAT510/CampusJobReview/blob/test/INSTALL.md|
-| The file LICENSE.md lists rules of usage for this repo |3 |  3 | | https://github.com/SAT510/CampusJobReview/blob/test/LICENSE.md|
-| The file CODE-OF-CONDUCT.md lists rules of behavior for this repo |3 |  3 | | https://github.com/SAT510/CampusJobReview/blob/test/CODE-OF-CONDUCT.md|
-| The file CONTRIBUTING.md lists coding standards and lots of tips on how to extend the system without screwing things up |3 | 3 | | https://github.com/SAT510/CampusJobReview/blob/project-resources/CONTRIBUTING.md|
-| The file README.md contains all the following	 |3 |  3 | | https://github.com/SAT510/CampusJobReview/blob/test/README.md|
-| Video	 |3 |  3 | | Both the animation and the demo video exist in the [README](https://drive.google.com/file/d/1cmAgHYnGPp1LA3F_dimup3XeC6HHNplY/view?usp=sharing) (TODO Demo link)|
-| DOI badge: exists |3 | 3 | | DOI badge exists in the Readme: https://github.com/SAT510/CampusJobReview/blob/test/README.md and explore more about our releases here: https://zenodo.org/records/14020963|
-| Badges showing your style checkers |3 | 3 | | We have embedded pylint and black badge in the README. [Pylint Github Actions](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml) and [Black Github Action](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml) |
-| Badges showing your code formatters |3 | 3 | | We have embedded autopep badge in the Readme. [Autopep Github Action](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml)|
-| Badges showing your syntax checkers |3 | 3 | | We have embedded pylint badge in the README. [Pylint Github Actions](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml)|
-| Badges showing your code coverage tools |3 | 3 | | We have embedded a codecov badge in the Readme. [Code Coverage Github Actions](https://github.com/SAT510/CampusJobReview/actions/workflows/codecoverage.yml)|
-| Badges showing any other Other automated analysis tools |3 | 3 | | We use black for further python formatting and analysis. WE also have badges to show the status of the issues. Check out readme here: https://github.com/SAT510/CampusJobReview/blob/test/README.md|
+|Workload is spread over the whole team (one team member is often Xtimes more productive than the others)| 3  | 3| 3 | https://github.com/SAT510/CampusJobReview/pulse|
+|but nevertheless, here is a track record that everyone is contributing a lot)|3 | 3 | 3 |https://github.com/SAT510/CampusJobReview/graphs/contributors|
+| Number of commits |3 | 3 | 3| https://github.com/SAT510/CampusJobReview/commits/test/|
+| Number of commits: by different people|3 | 3 | 3 | https://github.com/SAT510/CampusJobReview/commits/test/|
+| Issues reports: there are many |3 | 3 | 3| https://github.com/SAT510/CampusJobReview/issues|
+| Issues are being closed |3 | 3 | 3| https://github.com/SAT510/CampusJobReview/issues?q=is%3Aissue+is%3Aclosed|
+| Docs: doco generated, format not ugly |3 | 3 | 3| Each code page has a pretty standard and language-specific documentation. API and in-line documentation is also generated. Check this out in the code base or the repository.|
+| Docs: what: point descriptions of each class/function (in isolation) |3 | 3 | 3| https://github.com/SAT510/CampusJobReview/blob/test/project_docs/CSC-510.pdf|
+| Docs: how: for common use cases X,Y,Z mini-tutorials showing worked examples on how to do X,Y,Z |3 | 3 | 3| https://github.com/SAT510/CampusJobReview/blob/shazia_testing/UseCase_Documentation.md|
+| Docs: why: docs tell a story, motivate the whole thing, deliver a punchline that makes you want to rush out and use the thing | 3| 3 | 3| Read the Documentation section in the README and even checkout the Introduction section in the [README](https://github.com/SAT510/CampusJobReview/blob/test/README.md)|
+| Docs: short video, animated, hosted on your repo. That convinces people why they want to work on your code |3 | 3 | 3| https://drive.google.com/file/d/1cmAgHYnGPp1LA3F_dimup3XeC6HHNplY/view?usp=sharing|
+| Use of version control tools |3 | 3 | 3| https://github.com/SAT510/CampusJobReview|
+| Test cases exist |3 |  3 | 3| run npm test in the frontend folder, run python manage.py test --keepdb in the backend folder. For more details: visit these links in Github actions: https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml & https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml|
+| Test cases are routinely executed |3 | 3 | 3| 60 test cases. We have github actions linked to [badges](https://github.com/SAT510/CampusJobReview/tree/test/.github/workflows)|
+| Issues are discussed before they are closed |3 | 3 | 3|  https://github.com/SAT510/CampusJobReview/issues -> We also have badges to show the status of the issues.|
+| Chat channel: exists |3 | 3 | 3| discord + github project board. Some links to explore are issue discussions: https://github.com/SAT510/CampusJobReview/issues , the backlog: https://github.com/orgs/SAT510/projects/1/views/1 & for collaboration proof: https://drive.google.com/file/d/12wwTuD_4J5Bb45YwqWsHmA-tqJFCNcoj/view?usp=sharing & https://drive.google.com/file/d/11GPnsS2MS7fNmhqhBUCUpU7YVjaJGRnh/view?usp=sharing|
+| Test cases: a large proportion of the issues are related to handling failing cases. |3 | 3 | 3| We have 60 test cases and 2 test badges to show that [django and jest](https://github.com/SAT510/CampusJobReview/tree/test/.github/workflows). Moreover, a lot of our issues focus on bugs as well as enhancements. Check it out here: https://github.com/SAT510/CampusJobReview/issues?q=is%3Aissue+is%3Aclosed |
+| Evidence that the whole team is using the same tools: everyone can get to all tools and files |3 | 3 | 3| can be tested during the TA demo and pull requests show that all our code is mergeable: https://github.com/SAT510/CampusJobReview/pulls?q=is%3Apr+is%3Aclosed |
+| Evidence that the whole team is using the same tools (e.g. config files in the repo, updated by lots of different people) |3 | 3 | 3| can be tested during the TA demo and pull requests: https://github.com/SAT510/CampusJobReview/pulls?q=is%3Apr+is%3Aclosed|
+| Evidence that the whole team is using the same tools (e.g. tutor can ask anyone to share screen, they demonstrate the system running on their computer) |3 | 3 | 3| can be tested during the TA demo|
+| Evidence that the members of the team are working across multiple places in the code base |3 | 3 | 3| https://github.com/SAT510/CampusJobReview/commits/test/ and checkout pull requests and discussions in the pull requests: https://github.com/SAT510/CampusJobReview/pulls?q=is%3Apr+is%3Aclosed|
+| Short release cycles |3 | 3 | 3| Releases: https://github.com/SAT510/CampusJobReview/releases & https://zenodo.org/records/14020963
+| The file .gitignore lists what files should not be saved to the repo |3 | 3 | 3| https://github.com/SAT510/CampusJobReview/blob/test/.gitignore|
+| The file INSTALL.md lists how to install the code |3 | 3 | 3| https://github.com/SAT510/CampusJobReview/blob/test/INSTALL.md|
+| The file LICENSE.md lists rules of usage for this repo |3 |  3 | 3| https://github.com/SAT510/CampusJobReview/blob/test/LICENSE.md|
+| The file CODE-OF-CONDUCT.md lists rules of behavior for this repo |3 |  3 | 3| https://github.com/SAT510/CampusJobReview/blob/test/CODE-OF-CONDUCT.md|
+| The file CONTRIBUTING.md lists coding standards and lots of tips on how to extend the system without screwing things up |3 | 3 | 3| https://github.com/SAT510/CampusJobReview/blob/project-resources/CONTRIBUTING.md|
+| The file README.md contains all the following	 |3 |  3 | 3| https://github.com/SAT510/CampusJobReview/blob/test/README.md|
+| Video	 |3 |  3 | 3| Both the animation and the demo video exist in the [README](https://drive.google.com/file/d/1cmAgHYnGPp1LA3F_dimup3XeC6HHNplY/view?usp=sharing) (TODO Demo link)|
+| DOI badge: exists |3 | 3 | 3| DOI badge exists in the Readme: https://github.com/SAT510/CampusJobReview/blob/test/README.md and explore more about our releases here: https://zenodo.org/records/14020963|
+| Badges showing your style checkers |3 | 3 | 3| We have embedded pylint and black badge in the README. [Pylint Github Actions](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml) and [Black Github Action](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml) |
+| Badges showing your code formatters |3 | 3 | 3| We have embedded autopep badge in the Readme. [Autopep Github Action](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml)|
+| Badges showing your syntax checkers |3 | 3 | 3| We have embedded pylint badge in the README. [Pylint Github Actions](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml)|
+| Badges showing your code coverage tools |3 | 3 | 3| We have embedded a codecov badge in the Readme. [Code Coverage Github Actions](https://github.com/SAT510/CampusJobReview/actions/workflows/codecoverage.yml)|
+| Badges showing any other Other automated analysis tools |3 | 3 | 3| We use black for further python formatting and analysis. WE also have badges to show the status of the issues. Check out readme here: https://github.com/SAT510/CampusJobReview/blob/test/README.md|
 
 ## Software Sustainability Evaluation
 | Question | Answer [Y/N] | Group-Self-Assessment |
