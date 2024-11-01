@@ -48,7 +48,7 @@ class ClientManager(BaseUserManager):
         if username is None:
             raise TypeError("User should have a username")
         user = self.model(username=username) # Instantiate user with username
-        
+
         user.set_password(password) # Encrypt and set password
 
         user.save(using=self._db) # Save user to the database
@@ -105,14 +105,14 @@ class Client(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         max_length=50, primary_key=True, unique=True, blank=False
     ) # Unique username, primary key
-    
+
     is_admin = models.BooleanField(default=False) # Marks user as admin
     is_staff = models.BooleanField(default=False) # Marks user as staff
 
     USERNAME_FIELD = "username" # Set 'username' as identifier for authentication
     objects = ClientManager() # Assign custom manager for user creation
 
-   
+    # pylint: disable=E0307
     def __str__(self):
         """
         Returns the string representation of the Client instance.

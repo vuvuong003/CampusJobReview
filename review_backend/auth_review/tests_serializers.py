@@ -13,7 +13,7 @@ from django.test import TestCase  # pylint: disable=E0401
 # Import to dynamically retrieve User model
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
 # Import for handling validation errors
-from rest_framework.exceptions import ValidationError  # pylint: disable=E0401
+# from rest_framework.exceptions import ValidationError  # pylint: disable=E0401
 # Import serializers to test
 from .serializers import RegisterSerializer, MyTokenObtainPairSerializer
 
@@ -67,7 +67,7 @@ class RegisterSerializerTest(TestCase):
         serializer = RegisterSerializer(data=data)
         self.assertFalse(serializer.is_valid()) # Expect serializer to be invalid
         self.assertIn('password', serializer.errors) # Check for 'password' error
-    
+
     def test_registration_weak_password(self):
         """Test that registration fails when the password does not meet validation criteria."""
         data = {
@@ -99,4 +99,4 @@ class MyTokenObtainPairSerializerTest(TestCase):
 
         self.assertIn("username", token) # Check for custom claim in token
         self.assertEqual(token["username"], user.username) # Verify token username
-        
+ # pylint: disable=C0304

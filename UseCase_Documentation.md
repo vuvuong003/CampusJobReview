@@ -62,6 +62,16 @@ The page should look similar to the following:
 We offer an exclusive and easy option for you to filter the reviews based on fields such as Department, Location, and Job Title. Moreover, we also allow you to set a filter on reviews based on the minimum and maximum ratings by your peers. This makes it easier for you to locate the most useful pieces of information in no time. Here is an example of filtering the reviews based on the department. 
     ![Filter_reviews_page](docs/images/filter_reviews.jpg)
 
+### Browser Extension
+With the integration of a browser API, users will experience enhanced functionality:
+
+Job Review Pop-Ups: When browsing job postings, you will receive pop-ups with job reviews from peers, helping you make informed decisions. Below are the pictures showing the browser extension functionality. 
+![Browser_Extension_page](docs/images/browser_extension_1.jpg)
+![Browser_Extension2_page](docs/images/browser_extension_2.jpg)
+
+
+
+
 ### Logout
 Once you have explored all the reviews or added reviews, you can log out while making sure that all your changes are saved. This adds another layer of security measure. Click on the LOGOUT option located on the top right corner and you will be directed back to the landing page as shown below. 
 ![Landing-Page](docs/images/landing_page.jpeg)

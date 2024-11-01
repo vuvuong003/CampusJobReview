@@ -136,6 +136,9 @@ class MyTokenObtainPairView(TokenObtainPairView):
         """
         raise MethodNotAllowed("GET", detail={"msg": "Get not allowed"})
 
+
+
+    # pylint: disable=W0221,W0237
     def post(self, requests):
         """
         Handle user authentication requests.
@@ -146,7 +149,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
         response.
 
         Args:
-            request: The HTTP request containing the authentication data.
+            requests: The HTTP request containing the authentication data.
 
 
         Returns:

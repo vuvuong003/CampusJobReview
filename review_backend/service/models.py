@@ -8,7 +8,8 @@ vacancy information in the database.
 """
 # Import Djongo models to work with MongoDB
 from djongo import models  # pylint: disable=E0401
-from rest_framework.exceptions import ValidationError # Import ValidationError for custom validation logic
+from rest_framework.exceptions import ValidationError # Import ValidationError
+# for custom validation logic
 
 # from django.contrib.auth.models import AbstractUser
 
@@ -35,9 +36,10 @@ class Reviews(models.Model):
     department = models.CharField(max_length=100, blank=False, null=False) # Department name
     locations = models.CharField(max_length=120, db_index=True, blank=True) # Job location
     job_title = models.CharField(max_length=64, db_index=True, null=False) # Job description
-    job_description = models.CharField(max_length=120, db_index=True, blank=True, null=True) 
+    job_description = models.CharField(max_length=120, db_index=True, blank=True, null=True)
     hourly_pay = models.CharField(max_length=10, null=False, blank=False) # Pay rate as a string
-    benefits = models.CharField(max_length=120, db_index=True, null=False, blank=True) # Job benefits
+    benefits = models.CharField(max_length=120, db_index=True, null=False, blank=True) # Job
+    # benefits
     review = models.CharField(max_length=120, db_index=True, null=True, blank=True) # Review text
     rating = models.IntegerField(null=False, blank=False) # Rating out of 5
     recommendation = models.IntegerField(null=True, blank=True) # Recommendation flag
@@ -45,7 +47,8 @@ class Reviews(models.Model):
     def clean(self):
         """Custom validation logic for the Reviews model.
 
-        Validates that required fields are not null and that `rating` is within the valid range (1-5).
+        Validates that required fields are not null and that `rating` is within the
+        # valid range (1-5).
         Also ensures `hourly_pay` and `review` are strings.
         
         Raises:

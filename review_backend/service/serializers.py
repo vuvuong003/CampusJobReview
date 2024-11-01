@@ -1,19 +1,27 @@
+"""
+This module contains serializers for the Reviews and Vacancies models, enabling
+validation and serialization of data for RESTful
+APIs in a Django application.
+
+Components:
+- **ReviewsSerializer**: Serializes the Reviews model, enforcing required fields
+and custom validation rules for attributes such as rating and review content.
+- **VacanciesSerializer**: Serializes the Vacancies model, ensuring that critical
+fields like job title and job description are provided, and validates constraints
+on the maximum hours allowed.
+
+Functions:
+- **ReviewsSerializer.validate**: Custom validation for Reviews, ensuring the rating
+is between 1 and 5 and that the review field is not empty.
+- **VacanciesSerializer.validate**: Custom validation for Vacancies, checking that
+job title and job description are not empty and that the maximum hours allowed is greater than zero.
+"""
 from rest_framework import serializers  # Import Django REST framework serializers
 from .models import Reviews, Vacancies # Import models to create serializers for
 
-"""
-This module contains serializers for the Reviews and Vacancies models, enabling validation and serialization of data for RESTful APIs in a Django application.
-
-Components:
-- **ReviewsSerializer**: Serializes the Reviews model, enforcing required fields and custom validation rules for attributes such as rating and review content.
-- **VacanciesSerializer**: Serializes the Vacancies model, ensuring that critical fields like job title and job description are provided, and validates constraints on the maximum hours allowed.
-
-Functions:
-- **ReviewsSerializer.validate**: Custom validation for Reviews, ensuring the rating is between 1 and 5 and that the review field is not empty.
-- **VacanciesSerializer.validate**: Custom validation for Vacancies, checking that job title and job description are not empty and that the maximum hours allowed is greater than zero.
-"""
 
 
+# pylint: disable=R0903
 class ReviewsSerializer(serializers.ModelSerializer):
     """Serializer for the Reviews model.
 
@@ -26,6 +34,15 @@ class ReviewsSerializer(serializers.ModelSerializer):
         extra_kwargs (dict): Specifies required fields to enforce non-null constraints.
     """
     class Meta:
+        """
+        Meta options for the ReviewsSerializer.
+
+        Attributes:
+            model: The model associated with this serializer (Reviews).
+            fields: A list of fields to include in the serialization.
+            extra_kwargs: Additional constraints for specific fields, such as
+                          requiring certain fields to be present.
+        """
         model = Reviews
         fields = '__all__'  # This will include all fields from the Reviews model
         extra_kwargs = {
@@ -63,7 +80,10 @@ class ReviewsSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Review cannot be empty.")
         return attrs
 
+# Disable the "too-few-public-methods" warning for this class
+# since it typically require only one or no methods.
 
+# pylint: disable=R0903
 class VacanciesSerializer(serializers.ModelSerializer):
     """Serializer for the Vacancies model.
 
@@ -75,6 +95,13 @@ class VacanciesSerializer(serializers.ModelSerializer):
         fields (str): Includes all fields of the Vacancies model.
     """
     class Meta:
+        """
+        Meta options for the VacanciesSerializer.
+
+        Attributes:
+            model: The model associated with this serializer (Vacancies).
+            fields: A list of fields to include in the serialization.
+        """
         model = Vacancies
         fields = '__all__'  # This will include all fields from the Vacancies model
 
