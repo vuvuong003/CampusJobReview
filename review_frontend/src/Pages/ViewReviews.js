@@ -183,7 +183,7 @@ class Reviews extends React.Component {
                         </div>
 
                         {/* Review Table */}
-                        <div className="bg-white w-[70vw] h-[40vh] shadow-lg flex items-center justify-center p-10 overflow-y-auto">
+                        <div className="bg-white w-[70vw] h-[40vh] shadow-lg items-center justify-center p-10 overflow-y-auto">
                             <div className="overflow-x-auto">
                                 <table className="min-w-full table-auto border-collapse">
                                     <thead className="bg-gray-200">

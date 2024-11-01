@@ -1,9 +1,9 @@
-let base_url = "https://9cdb-2405-201-17-f0cf-1d04-9fb0-1cd-55c6.ngrok-free.app"
+let base_url = "https://826b-2405-201-17-f0cf-bc83-31ca-ed9e-3384.ngrok-free.app/"
 
-export let login_url = base_url + "/auth/token/";
-export let register_url = base_url + "/auth/register/";
-export let review_url = base_url + "/service/reviews/";
-export let filter_url = base_url + "/service/filter";
+export let login_url = base_url + "auth/token/";
+export let register_url = base_url + "auth/register/";
+export let review_url = base_url + "service/reviews/";
+export let filter_url = base_url + "service/filter";
 
 export let unprotected_api_call = async (url, data={}, type="POST") => {
     try{
