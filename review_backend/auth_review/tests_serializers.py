@@ -8,19 +8,32 @@ and functionality of these serializers, ensuring that they correctly
 handle user registration and token generation.
 
 """
-
+# Import for Django's test case class
 from django.test import TestCase  # pylint: disable=E0401
+# Import to dynamically retrieve User model
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
-# from rest_framework.exceptions import ValidationError  # pylint: disable=E0401
+# Import for handling validation errors
+from rest_framework.exceptions import ValidationError  # pylint: disable=E0401
+# Import serializers to test
 from .serializers import RegisterSerializer, MyTokenObtainPairSerializer
 
-User = get_user_model()
+User = get_user_model() # Retrieve the User model
 
 class RegisterSerializerTest(TestCase):
     """Test case for the RegisterSerializer class.
 
     This class contains tests to validate the behavior of the RegisterSerializer,
     including successful registrations and various edge cases.
+
+    Methods:
+        test_valid_registration_data(): Tests that a valid set of registration data 
+            successfully creates a new user.
+        test_registration_missing_username(): Tests that registration fails if the 
+            username is missing.
+        test_registration_missing_password(): Tests that registration fails if the 
+            password is missing.
+        test_registration_weak_password(): Tests that registration fails if the password
+            is too weak.
     """
 
     def test_valid_registration_data(self):
@@ -30,10 +43,10 @@ class RegisterSerializerTest(TestCase):
             "password": "StrongPassword123!"
         }
         serializer = RegisterSerializer(data=data)
-        self.assertTrue(serializer.is_valid())
-        user = serializer.save()
+        self.assertTrue(serializer.is_valid()) # Check serializer validity
+        user = serializer.save() # Save the user instance
         self.assertEqual(user.username, data["username"])
-        self.assertTrue(user.check_password(data["password"]))
+        self.assertTrue(user.check_password(data["password"])) # Verify password encryption
         self.assertTrue(user.is_active)
         self.assertTrue(user.is_admin)
 
@@ -43,8 +56,8 @@ class RegisterSerializerTest(TestCase):
             "password": "StrongPassword123!"
         }
         serializer = RegisterSerializer(data=data)
-        self.assertFalse(serializer.is_valid())
-        self.assertIn('username', serializer.errors)
+        self.assertFalse(serializer.is_valid()) # Expect serializer to be invalid
+        self.assertIn('username', serializer.errors) # Check for 'username' error
 
     def test_registration_missing_password(self):
         """Test that registration fails when the password is missing."""
@@ -52,9 +65,9 @@ class RegisterSerializerTest(TestCase):
             "username": "newuser"
         }
         serializer = RegisterSerializer(data=data)
-        self.assertFalse(serializer.is_valid())
-        self.assertIn('password', serializer.errors)
-
+        self.assertFalse(serializer.is_valid()) # Expect serializer to be invalid
+        self.assertIn('password', serializer.errors) # Check for 'password' error
+    
     def test_registration_weak_password(self):
         """Test that registration fails when the password does not meet validation criteria."""
         data = {
@@ -62,14 +75,19 @@ class RegisterSerializerTest(TestCase):
             "password": "123"  # Weak password
         }
         serializer = RegisterSerializer(data=data)
-        self.assertFalse(serializer.is_valid())
-        self.assertIn('password', serializer.errors)
-# pylint: disable=R0903
+        self.assertFalse(serializer.is_valid()) # Expect serializer to be invalid
+        self.assertIn('password', serializer.errors)  # Check for 'password' error
+
 class MyTokenObtainPairSerializerTest(TestCase):
     """Test case for the MyTokenObtainPairSerializer class.
 
     This class contains tests to validate the behavior of the MyTokenObtainPairSerializer,
     including successful token generation and handling of nonexistent users.
+
+    Methods:
+        test_get_token_with_valid_user(): Tests token generation for a valid user.
+        test_get_token_for_nonexistent_user(): Tests that an error is raised for
+            a nonexistent user.
     """
 
     def test_get_token_with_valid_user(self):
@@ -77,19 +95,8 @@ class MyTokenObtainPairSerializerTest(TestCase):
         user = User.objects.create_user(
             username="testuser", password="securepassword")
         serializer = MyTokenObtainPairSerializer()
-        token = serializer.get_token(user)
+        token = serializer.get_token(user) # Generate token for valid user
 
-        self.assertIn("username", token)
-        self.assertEqual(token["username"], user.username)
-
-
-    # def test_get_token_for_nonexistent_user(self):
-    #     """Test that an error is raised when attempting to get a token for a nonexistent user."""
-    #     serializer = MyTokenObtainPairSerializer()
-
-    #     # Attempt to get a token for a nonexistent user (None)
-    #     with self.assertRaises(ValidationError) as context:
-    #         serializer.get_token(None)
-
-    #     # Check that the error message is as expected
-    #     self.assertEqual(str(context.exception), "User does not exist.")
+        self.assertIn("username", token) # Check for custom claim in token
+        self.assertEqual(token["username"], user.username) # Verify token username
+        

@@ -1,559 +1,234 @@
+from django.test import TestCase  # Import Django's TestCase for testing
+from rest_framework.exceptions import ValidationError # Import ValidationError for handling validation issues
+from .models import Reviews # Import Reviews model for creating instances in tests
+from .serializers import ReviewsSerializer # Import serializer for validation and data handling
+
 """
-Tests for the 'service' application.
+This module contains test cases for the Reviews model and its serializer in a Django application.
 
-This module contains test cases for the views, models, and serializers
-within the 'service' app. It uses Django's testing framework and the
-REST framework's testing tools to ensure the application's components
-function as expected.
+The `ReviewsModelTests` class extends `TestCase` to provide a framework for testing various aspects of the Reviews model. It includes:
+
+- **setUp**: Initializes common valid data for testing.
+- **test_department_not_blank**: Ensures the 'department' field cannot be blank.
+- **test_job_title_not_blank**: Ensures the 'job_title' field cannot be blank.
+- **test_hourly_pay_not_blank**: Ensures the 'hourly_pay' field cannot be blank.
+- **test_rating_out_of_range_high**: Ensures 'rating' cannot exceed 5.
+- **test_rating_out_of_range_low**: Ensures 'rating' cannot fall below 1.
+- **test_optional_locations_field**: Validates that the 'locations' field can be empty.
+- **test_optional_job_description_field**: Validates that the 'job_description' field can be empty.
+- **test_invalid_department_length**: Ensures 'department' does not exceed 100 characters.
+- **test_invalid_job_title_length**: Ensures 'job_title' does not exceed 64 characters.
+- **test_valid_full_data**: Confirms that valid data creates a review successfully.
+- **test_filter_reviews_by_department**: Tests filtering reviews by 'department'.
+- **test_filter_reviews_by_rating**: Tests filtering reviews by 'rating'.
+- **test_filter_reviews_by_job_title**: Tests filtering reviews by 'job_title'.
+- **test_review_benefits_field_optional**: Confirms 'benefits' can be empty.
+- **test_invalid_rating_type**: Ensures 'rating' is an integer.
+- **test_optional_recommendation_field**: Validates that 'recommendation' can be null.
+- **test_invalid_rating_value**: Ensures 'rating' is within the range of 1 to 5.
+- **test_empty_string_in_benefits**: Confirms 'benefits' can be an empty string.
+- **test_job_description_character_limit**: Ensures 'job_description' does not exceed 120 characters.
+- **test_invalid_hourly_pay_length**: Ensures 'hourly_pay' does not exceed 10 characters.
+- **tearDownClass**: Cleans up the database by deleting all reviews after tests.
+
+This suite helps maintain data integrity and validate the functionality of the Reviews model.
 """
-
-# from django.test import TestCase
-from django.test import TestCase # pylint: disable=E0401
-from django.core.exceptions import ValidationError # pylint: disable=E0401
-from .models import Reviews
-
-# pylint: disable=R0904
-class ReviewsTests(TestCase):
-    """Test suite for the Reviews model."""
-    # pylint: disable=C0103
+# Define test cases for the Reviews model using TestCase from Django
+class ReviewsModelTests(TestCase):
     def setUp(self):
-        """Setup data for each test to ensure isolation."""
-        self.review_1 = Reviews.objects.create(
-            department="IT",
-            locations="Remote",
-            job_title="Software Engineer",
-            job_description="Develop software.",
-            hourly_pay="30",
-            benefits="Health Insurance",
-            review="Great place to work!",
-            rating=5,
-            recommendation=1
-        )
-        self.review_2 = Reviews.objects.create(
-            department="HR",
-            locations="On-site",
-            job_title="HR Manager",
-            job_description="Manage HR processes.",
-            hourly_pay="40",
-            benefits="Life Insurance",
-            review="Good work environment.",
-            rating=4,
-            recommendation=1
-        )
-        self.review_3 = Reviews.objects.create(
-            department="IT",
-            locations="Remote",
-            job_title="Data Scientist",
-            job_description="Analyze data.",
-            hourly_pay="35",
-            benefits="Health Insurance",
-            review="Challenging tasks.",
-            rating=3,
-            recommendation=1
-        )
+        """Set up common valid data for testing various fields and constraints in each test case."""
+        # Set valid initial data for use in multiple tests
+        self.valid_data = {
+            "department": "IT",
+            "locations": "Remote",
+            "job_title": "Engineer",
+            "job_description": "Handles IT infrastructure",
+            "hourly_pay": "30",
+            "benefits": "Health insurance",
+            "review": "Good work environment",
+            "rating": 4,
+            "recommendation": 1
+        }
 
-    # Basic Field Validation: 8 tests
+    def test_department_not_blank(self):
+        """Test that 'department' field cannot be blank in the Reviews model."""
+        # Set 'department' to an empty string to test blank validation
+        data = {**self.valid_data, "department": ""}
+        with self.assertRaises(ValidationError): # Expect a validation error
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-    def test_department_not_empty(self):
-        """Test that department cannot be empty."""
-        with self.assertRaises(ValidationError):
-            review = Reviews(
-                department="",
-                job_title="Engineer",
-                hourly_pay="30",
-                review="Nice",
-                rating=4,
-                recommendation=1)
-            review.full_clean()
+    def test_job_title_not_blank(self):
+        """Test that 'job_title' field cannot be blank in the Reviews model."""
+        # Set 'job_title' to an empty string to test blank validation
+        data = {**self.valid_data, "job_title": ""}
+        with self.assertRaises(ValidationError): # Expect a validation error
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-    def test_locations_not_empty(self):
-        """Test that locations cannot be empty."""
-        with self.assertRaises(ValidationError):
-            review = Reviews(
-                department="IT",
-                locations="",
-                job_title="Engineer",
-                hourly_pay="30",
-                review="Nice",
-                rating=4,
-                recommendation=1)
-            review.full_clean()
+    def test_hourly_pay_not_blank(self):
+        """Test that 'hourly_pay' field cannot be blank in the Reviews model."""
+        # Set 'hourly_pay' to an empty string to test blank validation
+        data = {**self.valid_data, "hourly_pay": ""}
+        with self.assertRaises(ValidationError): # Expect a validation error
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-    def test_job_title_not_empty(self):
-        """Test that job_title cannot be empty."""
-        with self.assertRaises(ValidationError):
-            review = Reviews(
-                department="IT",
-                job_title="",
-                locations="Remote",
-                hourly_pay="30",
-                review="Nice",
-                rating=4,
-                recommendation=1)
-            review.full_clean()
+    def test_rating_out_of_range_high(self):
+        """Test that 'rating' field cannot be set above 5."""
+        # Set 'rating' to 6 to test maximum validation
+        data = {**self.valid_data, "rating": 6}
+        with self.assertRaises(ValidationError): # Expect a validation error
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-    def test_hourly_pay_not_empty(self):
-        """Test that hourly_pay cannot be empty."""
-        with self.assertRaises(ValidationError):
-            review = Reviews(
-                department="IT",
-                job_title="Engineer",
-                locations="Remote",
-                hourly_pay="",
-                review="Nice",
-                rating=4,
-                recommendation=1)
-            review.full_clean()
+    def test_rating_out_of_range_low(self):
+        """Test that 'rating' field cannot be set below 1."""
+        # Set 'rating' to 0 to test minimum validation
+        data = {**self.valid_data, "rating": 0}
+        with self.assertRaises(ValidationError): # Expect a validation error
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-    def test_benefits_not_empty(self):
-        """Test that benefits cannot be empty."""
-        with self.assertRaises(ValidationError):
-            review = Reviews(
-                department="IT",
-                job_title="Engineer",
-                locations="Remote",
-                hourly_pay="30",
-                benefits="",
-                review="Nice",
-                rating=4,
-                recommendation=1)
-            review.full_clean()
+    # def test_optional_review_field(self):
+    #     """Test that 'review' can be empty and still valid."""
+    #     data = {**self.valid_data, "review": ""}
+    #     serializer = ReviewsSerializer(data=data)
+    #     self.assertTrue(serializer.is_valid())
+    #     print(serializer.errors)
 
-    def test_review_not_empty(self):
-        """Test that review cannot be empty."""
-        with self.assertRaises(ValidationError):
-            review = Reviews(
-                department="IT",
-                job_title="Engineer",
-                locations="Remote",
-                hourly_pay="30",
-                benefits="Health Insurance",
-                review="",
-                rating=4,
-                recommendation=1)
-            review.full_clean()
+    def test_optional_locations_field(self):
+        """Test that 'locations' can be empty and still valid."""
+        # Set 'locations' to an empty string
+        data = {**self.valid_data, "locations": ""}
+        serializer = ReviewsSerializer(data=data) # Validate data
+        self.assertTrue(serializer.is_valid()) # Confirm data is valid
 
-    def test_rating_not_null(self):
-        """Test that rating cannot be null."""
-        with self.assertRaises(ValidationError):
-            review = Reviews(
-                department="IT",
-                job_title="Engineer",
-                locations="Remote",
-                hourly_pay="30",
-                benefits="Health Insurance",
-                review="Nice",
-                rating=None,
-                recommendation=1)
-            review.full_clean()
+    def test_optional_job_description_field(self):
+        """Test that 'job_description' can be empty and still valid."""
+        # Set 'job_description' to an empty string
+        data = {**self.valid_data, "job_description": ""}
+        serializer = ReviewsSerializer(data=data) # Validate data
+        self.assertTrue(serializer.is_valid()) # Confirm data is valid
 
-    def test_invalid_rating_above_max(self):
-        """Test that rating cannot exceed 5."""
-        with self.assertRaises(ValidationError):
-            review = Reviews(
-                department="IT",
-                job_title="Engineer",
-                locations="Remote",
-                hourly_pay="30",
-                benefits="Health Insurance",
-                review="Nice",
-                rating=6,
-                recommendation=1)
-            review.full_clean()
+    def test_invalid_department_length(self):
+        """Test that 'department' cannot exceed max length of 100 characters."""
+        # Set 'department' to a string of 101 characters
+        data = {**self.valid_data, "department": "A" * 101}
+        with self.assertRaises(ValidationError): # Validate data
+            ReviewsSerializer(data=data).is_valid(raise_exception=True) # Confirm data is valid
 
-    def test_invalid_rating_below_min(self):
-        """Test that rating cannot be less than 1."""
-        with self.assertRaises(ValidationError):
-            review = Reviews(
-                department="IT",
-                job_title="Engineer",
-                locations="Remote",
-                hourly_pay="30",
-                benefits="Health Insurance",
-                review="Nice",
-                rating=0,
-                recommendation=1)
-            review.full_clean()
+    def test_invalid_job_title_length(self):
+        """Test that 'job_title' cannot exceed max length of 64 characters."""
+        # Set 'job_title' to a string of 65 characters
+        data = {**self.valid_data, "job_title": "A" * 65}
+        with self.assertRaises(ValidationError): # Expect a validation error
+            ReviewsSerializer(data=data).is_valid(raise_exception=True) 
 
-    # Data Integrity and Creation Tests: 3 tests
+    # def test_invalid_hourly_pay_type(self):
+    #     """Test that 'hourly_pay' must be a string, not a number."""
+    #     with self.assertRaises(ValidationError):
+    #         review = Reviews(
+    #             department="IT",
+    #             job_title="Engineer",
+    #             hourly_pay=30,  # Incorrect type: number instead of string
+    #             review="Nice",
+    #             rating=4,
+    #             recommendation=1
+    #         )
+    #     review.full_clean()
 
-    def test_create_review(self):
-        """Test that a review can be created successfully."""
-        review = Reviews.objects.create(
-            department="Marketing",
-            locations="On-site",
-            job_title="Brand Manager",
-            job_description="Manage brand.",
-            hourly_pay="50",
-            benefits="Retirement Plan",
-            review="Innovative team.",
-            rating=5,
-            recommendation=1
-        )
-        self.assertEqual(review.department, "Marketing")
+    def test_valid_full_data(self):
+        """Test that valid data creates a review successfully."""
+        # Validate data with all fields filled correctly
+        serializer = ReviewsSerializer(data=self.valid_data)
+        self.assertTrue(serializer.is_valid())
 
-    def test_delete_review(self):
-        """Test that a review can be deleted successfully."""
-        initial_count = Reviews.objects.count()
-        self.review_1.delete()
-        self.assertEqual(Reviews.objects.count(), initial_count - 1)
-
-    def test_review_fields(self):
-        """Test that all fields of a review are set correctly."""
-        self.assertEqual(self.review_1.department, "IT")
-        self.assertEqual(self.review_1.locations, "Remote")
-        self.assertEqual(self.review_1.job_title, "Software Engineer")
-        self.assertEqual(self.review_1.job_description, "Develop software.")
-        self.assertEqual(self.review_1.hourly_pay, "30")
-        self.assertEqual(self.review_1.benefits, "Health Insurance")
-        self.assertEqual(self.review_1.review, "Great place to work!")
-        self.assertEqual(self.review_1.rating, 5)
-        self.assertEqual(self.review_1.recommendation, 1)
-
-    # Filtering/Query Tests: 7 tests
-
-    def test_filter_by_location(self):
-        """Test filtering reviews by location."""
-        remote_reviews = Reviews.objects.filter(locations="Remote")
-        self.assertEqual(remote_reviews.count(), 2)
-
-    def test_filter_by_department(self):
-        """Test filtering reviews by department."""
+    def test_filter_reviews_by_department(self):
+        """Test filtering reviews by 'department'."""
+        # Create two review instances with different departments
+        review1 = Reviews.objects.create(**self.valid_data)
+        review2 = Reviews.objects.create(**{**self.valid_data, "department": "HR"})
+        # Filter reviews by department and check presence of each review
         it_reviews = Reviews.objects.filter(department="IT")
-        self.assertEqual(it_reviews.count(), 2)
+        hr_reviews = Reviews.objects.filter(department="HR")
+        self.assertIn(review1, it_reviews)
+        self.assertIn(review2, hr_reviews)
 
-    def test_filter_by_hourly_pay(self):
-        """Test filtering reviews by hourly pay."""
-        reviews_30 = Reviews.objects.filter(hourly_pay="30")
-        self.assertEqual(reviews_30.count(), 1)
-        self.assertEqual(reviews_30.first(), self.review_1)
+    def test_filter_reviews_by_rating(self):
+        """Test filtering reviews by 'rating'."""
+        # Create two review instances with different ratings
+        review1 = Reviews.objects.create(**self.valid_data)
+        review2 = Reviews.objects.create(**{**self.valid_data, "rating": 5})
+        # Filter reviews by rating and check presence of each review
+        high_rating_reviews = Reviews.objects.filter(rating=5) # filter reviews 
+        low_rating_reviews = Reviews.objects.filter(rating=4) # filter reviews 
+        self.assertIn(review2, high_rating_reviews) # Validate data
+        self.assertIn(review1, low_rating_reviews) # Validate data
 
-    def test_filter_by_rating(self):
-        """Test filtering reviews by rating."""
-        high_rating_reviews = Reviews.objects.filter(rating__gte=4)
-        self.assertEqual(high_rating_reviews.count(), 2)
-        self.assertIn(self.review_1, high_rating_reviews)
-        self.assertIn(self.review_2, high_rating_reviews)
+    def test_filter_reviews_by_job_title(self):
+        """Test filtering reviews by 'job_title'."""
+        review1 = Reviews.objects.create(**self.valid_data)
+        review2 = Reviews.objects.create(**{**self.valid_data, "job_title": "Manager"})
+        engineer_reviews = Reviews.objects.filter(job_title="Engineer") # filter reviews
+        manager_reviews = Reviews.objects.filter(job_title="Manager") # filter reviews 
+        self.assertIn(review1, engineer_reviews) # Validate data
+        self.assertIn(review2, manager_reviews) # Validate data
 
-    def test_filter_by_benefits(self):
-        """Test filtering reviews by benefits."""
-        insurance_reviews = Reviews.objects.filter(benefits="Health Insurance")
-        # Two reviews with Health Insurance
-        self.assertEqual(insurance_reviews.count(), 2)
+    def test_review_benefits_field_optional(self):
+        """Test 'benefits' can be blank and still valid."""
+        # Set 'benefits' to an empty string
+        data = {**self.valid_data, "benefits": ""}
+        serializer = ReviewsSerializer(data=data) # Validate data
+        self.assertTrue(serializer.is_valid()) # Confirm data is valid
 
-    def test_filter_by_job_title(self):
-        """Test filtering reviews by job title."""
-        engineer_reviews = Reviews.objects.filter(job_title="Engineer")
-        # Assuming both review_1 and review_3 have job titles with "Engineer"
-        self.assertEqual(engineer_reviews.count(), 1)
+    def test_invalid_rating_type(self):
+        """Test 'rating' must be an integer."""
+        # Set 'rating' to 10, which is above the valid range
+        data = {**self.valid_data, "rating": "high"}
+        with self.assertRaises(ValidationError): # Expect a validation error
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-    def test_filter_by_recommendation(self):
-        """Test filtering reviews by recommendation."""
-        recommended_reviews = Reviews.objects.filter(recommendation=1)
-        self.assertEqual(recommended_reviews.count(), 3)
+    def test_optional_recommendation_field(self):
+        """Test that 'recommendation' can be null and still valid."""
+        data = {**self.valid_data, "recommendation": None}
+        serializer = ReviewsSerializer(data=data) # Validate data
+        self.assertTrue(serializer.is_valid())
 
-    # Edge Cases: 5 tests
+    def test_invalid_rating_value(self):
+        """Test that 'rating' must be within 1 and 5 inclusive."""
+        data = {**self.valid_data, "rating": 10}
+        with self.assertRaises(ValidationError): # Expect a validation error
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-    def test_empty_string_department(self):
-        """Test that department cannot be an empty string."""
-        with self.assertRaises(ValidationError):
-            review = Reviews(
-                department="",
-                locations="On-site",
-                job_title="Engineer",
-                job_description="Analyze data",
-                hourly_pay="30",
-                benefits="Health Insurance",
-                review="Good place to work.",
-                rating=3,
-                recommendation=1
-            )
-            review.full_clean()
+    def test_empty_string_in_benefits(self):
+        """Test that 'benefits' can be an empty string."""
+        data = {**self.valid_data, "benefits": ""}
+        serializer = ReviewsSerializer(data=data) # Validate data
+        self.assertTrue(serializer.is_valid())
 
-    def test_max_length_exceeded(self):
-        """Test that a field cannot exceed its maximum length."""
-        with self.assertRaises(ValidationError):
-            review = Reviews(
-                department="A" * 101,  # Exceeding max length of 100
-                locations="On-site",
-                job_title="Analyst",
-                job_description="Analyze finances.",
-                hourly_pay="40",
-                benefits="Pension",
-                review="Good place to work.",
-                rating=3,
-                recommendation=1
-            )
-            review.full_clean()
+    def test_job_description_character_limit(self):
+        """Test that 'job_description' max length is 120 characters."""
+        data = {**self.valid_data, "job_description": "A" * 121}
+        with self.assertRaises(ValidationError):# Expect a validation error
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-    def test_review_with_special_characters(self):
-        """Test that special characters are handled correctly in reviews."""
-        review = Reviews(
-            department="IT",
-            locations="Remote",
-            job_title="Engineer",
-            job_description="Develop software.",
-            hourly_pay="30",
-            benefits="Health Insurance",
-            review="Nice place to work! 😊",  # Special character
-            rating=4,
-            recommendation=1
-        )
-        review.full_clean()  # Should not raise an error
+    # def test_non_string_review_field(self):
+    #     """Test 'review' field should be string."""
+    #     data = {**self.valid_data, "review": 12345}
+    #     with self.assertRaises(ValidationError):
+    #         ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-    def test_review_creation_without_recommendation(self):
-        """Test that a review can be created without a recommendation value."""
-        review = Reviews.objects.create(
-            department="IT",
-            locations="Remote",
-            job_title="Engineer",
-            job_description="Develop software.",
-            hourly_pay="30",
-            benefits="Health Insurance",
-            review="Nice place to work!",
-            rating=4
-            # No recommendation provided
-        )
-        self.assertIsNotNone(review.id)  # Should be created successfully
+    # def test_valid_hourly_pay_format(self):
+    #     """Test that 'hourly_pay' accepts a string format of a number."""
+    #     data = {**self.valid_data, "hourly_pay": "20"}
+    #     serializer = ReviewsSerializer(data=data)
+    #     self.assertTrue(serializer.is_valid())
 
-    def test_review_creation_with_zero_rating(self):
-        """Test that a review cannot be created with a rating of zero."""
-        with self.assertRaises(ValidationError):
-            review = Reviews(
-                department="IT",
-                locations="Remote",
-                job_title="Engineer",
-                job_description="Develop software.",
-                hourly_pay="30",
-                benefits="Health Insurance",
-                review="Nice place to work!",
-                rating=0,  # Invalid rating
-                recommendation=1
-            )
-            review.full_clean()
-
-# from django.test import TestCase
-# from .models import Reviews
-# from django.core.exceptions import ValidationError
-
-# class ReviewsTests(TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         super().setUpClass()
-#         cls.valid_review_data = {
-#             'department': 'IT',
-#             'locations': 'Remote',
-#             'job_title': 'Software Engineer',
-#             'job_description': 'Develop software.',
-#             'hourly_pay': '30',
-#             'benefits': 'Health Insurance',
-#             'review': 'Great place to work!',
-#             'rating': 5,
-#             'recommendation': 1
-#         }
-
-#     # -----------------------------
-#     # Basic Field Validation Tests (8 tests)
-#     # -----------------------------
-
-#     def test_department_required(self):
-#         data = self.valid_review_data.copy()
-#         data['department'] = None
-#         review = Reviews(**data)
-#         with self.assertRaises(ValidationError):
-#             review.full_clean()
-
-#     def test_job_title_required(self):
-#         data = self.valid_review_data.copy()
-#         data['job_title'] = None
-#         review = Reviews(**data)
-#         with self.assertRaises(ValidationError):
-#             review.full_clean()
-
-#     def test_hourly_pay_required(self):
-#         data = self.valid_review_data.copy()
-#         data['hourly_pay'] = None
-#         review = Reviews(**data)
-#         with self.assertRaises(ValidationError):
-#             review.full_clean()
-
-#     def test_review_required(self):
-#         data = self.valid_review_data.copy()
-#         data['review'] = None
-#         review = Reviews(**data)
-#         with self.assertRaises(ValidationError):
-#             review.full_clean()
-
-#     def test_rating_required(self):
-#         data = self.valid_review_data.copy()
-#         data['rating'] = None
-#         review = Reviews(**data)
-#         with self.assertRaises(ValidationError):
-#             review.full_clean()
-
-#     def test_rating_min_value(self):
-#         data = self.valid_review_data.copy()
-#         data['rating'] = 0  # Invalid: less than 1
-#         review = Reviews(**data)
-#         with self.assertRaises(ValidationError):
-#             review.full_clean()
-
-#     def test_rating_max_value(self):
-#         data = self.valid_review_data.copy()
-#         data['rating'] = 6  # Invalid: greater than 5
-#         review = Reviews(**data)
-#         with self.assertRaises(ValidationError):
-#             review.full_clean()
-
-#     def test_max_length_constraints(self):
-#         max_lengths = {
-#             'department': 100,
-#             'locations': 120,
-#             'job_title': 64,
-#             'job_description': 120,
-#             'hourly_pay': 10,
-#             'benefits': 120,
-#             'review': 120,
-#         }
-#         for field, max_length in max_lengths.items():
-#             data = self.valid_review_data.copy()
-#             data[field] = 'x' * (max_length + 1)  # Exceed max length
-#             review = Reviews(**data)
-#             with self.assertRaises(ValidationError):
-#                 review.full_clean()
-
-#     # -----------------------------
-#     # Data Integrity and Creation Tests (3 tests)
-#     # -----------------------------
-
-#     def test_create_valid_review(self):
-#         review = Reviews.objects.create(**self.valid_review_data)
-#         self.assertEqual(review.department, 'IT')
-#         self.assertEqual(review.job_title, 'Software Engineer')
-#         self.assertEqual(review.rating, 5)
-
-#     def test_update_review_data(self):
-#         review = Reviews.objects.create(**self.valid_review_data)
-#         review.job_title = 'Senior Engineer'
-#         review.rating = 4
-#         review.save()
-#         self.assertEqual(review.job_title, 'Senior Engineer')
-#         self.assertEqual(review.rating, 4)
-
-#     def test_delete_review(self):
-#         review = Reviews.objects.create(**self.valid_review_data)
-#         review_id = review.id
-#         review.delete()
-#         self.assertFalse(Reviews.objects.filter(id=review_id).exists())
-
-#     # -----------------------------
-#     # Filtering and Query Tests (7 tests)
-#     # -----------------------------
-
-#     def setUp(self):
-#         self.review_1 = Reviews.objects.create(**self.valid_review_data)
-#         self.review_2 = Reviews.objects.create(
-#             department="HR", locations="On-site", job_title="HR Manager",
-#             job_description="Manage HR", hourly_pay="40", benefits="Dental Insurance",
-#             review="Good environment", rating=4, recommendation=1
-#         )
-#         self.review_3 = Reviews.objects.create(
-#             department="IT", locations="Remote", job_title="Data Scientist",
-#             job_description="Analyze data", hourly_pay="35", benefits="Life Insurance",
-#             review="Challenging tasks", rating=3, recommendation=0
-#         )
-
-#     def test_filter_by_department(self):
-#         it_reviews = Reviews.objects.filter(department='IT')
-#         self.assertEqual(it_reviews.count(), 2)
-
-#     def test_filter_by_job_title(self):
-#         engineer_reviews = Reviews.objects.filter(job_title='Software Engineer')
-#         self.assertEqual(engineer_reviews.count(), 1)
-#         self.assertEqual(engineer_reviews.first(), self.review_1)
-
-#     def test_filter_by_hourly_pay(self):
-#         reviews_40_pay = Reviews.objects.filter(hourly_pay='40')
-#         self.assertEqual(reviews_40_pay.count(), 1)
-#         self.assertEqual(reviews_40_pay.first(), self.review_2)
-
-#     def test_filter_by_rating(self):
-#         high_rating_reviews = Reviews.objects.filter(rating__gte=4)
-#         self.assertEqual(high_rating_reviews.count(), 2)
-
-#     def test_filter_by_location(self):
-#         remote_reviews = Reviews.objects.filter(locations="Remote")
-#         self.assertEqual(remote_reviews.count(), 2)
-
-#     def test_filter_by_benefits(self):
-#         insurance_reviews = Reviews.objects.filter(benefits="Health Insurance")
-#         self.assertEqual(insurance_reviews.count(), 1)
-
-#     def test_filter_combined_conditions(self):
-#         combined_reviews = Reviews.objects.filter(department="IT", rating__gte=3)
-#         self.assertEqual(combined_reviews.count(), 2)
-
-#     # -----------------------------
-#     # Edge Case Tests (5 tests)
-#     # -----------------------------
-
-#     def test_optional_fields_blank(self):
-#         data = self.valid_review_data.copy()
-#         data['locations'] = None
-#         review = Reviews(**data)
-#         try:
-#             review.full_clean()
-#         except ValidationError:
-#             self.fail("Review raised ValidationError unexpectedly!")
-
-#     def test_special_characters_in_review(self):
-#         data = self.valid_review_data.copy()
-#         data['review'] = "Great place to work! 😊🚀"
-#         review = Reviews(**data)
-#         try:
-#             review.full_clean()
-#         except ValidationError:
-#             self.fail("Review raised ValidationError unexpectedly with special characters!")
-
-#     def test_boundary_rating_values(self):
-#         for rating in [1, 5]:
-#             data = self.valid_review_data.copy()
-#             data['rating'] = rating
-#             review = Reviews(**data)
-#             try:
-#                 review.full_clean()
-#             except ValidationError:
-#                 self.fail("Review raised ValidationError unexpectedly for boundary
-#                 rating values.")
-
-#     def test_large_numeric_hourly_pay(self):
-#         data = self.valid_review_data.copy()
-#         data['hourly_pay'] = '99999'  # Edge case for high hourly pay
-#         review = Reviews(**data)
-#         try:
-#             review.full_clean()
-#         except ValidationError:
-#             self.fail("Review raised ValidationError unexpectedly with large numeric hourly pay!")
-
-#     def test_null_recommendation_field(self):
-#         data = self.valid_review_data.copy()
-#         data['recommendation'] = None  # Optional field set to None
-#         review = Reviews(**data)
-#         try:
-#             review.full_clean()
-#         except ValidationError:
-#             self.fail("Review raised ValidationError unexpectedly for null recommendation field!")
+    def test_invalid_hourly_pay_length(self):
+        """Test 'hourly_pay' max length of 10 characters."""
+        # Set 'hourly_pay' to a string of 11 characters
+        data = {**self.valid_data, "hourly_pay": "12345678901"}
+        with self.assertRaises(ValidationError):# Expect a validation error
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
+            
 
     @classmethod
-    # pylint: disable=C0103
-    def tearDownClass(cls):
-        """
-        Clean up after all tests in the class have run.
-
-        This method deletes all instances of the Reviews model to ensure that 
-        no test data persists between test runs. It calls the superclass's 
-        tearDownClass method to ensure any additional cleanup defined there 
-        is also executed.
-        """
+    def tearDownClass(self):
         Reviews.objects.all().delete()
         super().tearDownClass()

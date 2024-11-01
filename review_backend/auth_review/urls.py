@@ -6,25 +6,27 @@ handling user authentication, registration, and token management.
 It leverages Django REST Framework's URL routing capabilities to
 create clean and manageable endpoints for the API.
 """
+# Import format pattern utility to enable different response formats (e.g., JSON, HTML)
 from rest_framework.urlpatterns import format_suffix_patterns  # pylint: disable=E0401
+# Import view for refreshing JWT tokens
 from rest_framework_simplejwt.views import TokenRefreshView  # pylint: disable=E0401
+# Import path function to define URL patterns
 from django.urls import path  # pylint: disable=E0401
+# Import custom views for obtaining JWT tokens and registering users
 from .views import MyTokenObtainPairView, RegisterView
 
 
-# This class defines the URL rouring. Defines the endpoints that the application will respond
-# to, linking them to appropriate views that handle requests and return
-# responses.
-
+# Define URL routing for the auth_review application.
 urlpatterns = [
     # This endpoint when accessed triggers the  MyTokenObtainPairView.as_view to handle the request/
     # Deals with user authentication and returns JWT token upon successful login.
     path("token/", MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
-    # This endpoint is for refreshing a JWT token by handling the login for refreshing an
-    # expired token and returning a new one.
+    # Endpoint for refreshing a JWT token. Routes to TokenRefreshView,
+    # which manages refreshing an expired token to provide a new one.
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    # Handles registration, allowing new users to sign up and create an account
+    # Endpoint for user registration. Routes to RegisterView, allowing
+    # new users to sign up and create an account in the system.
     path("register/", RegisterView.as_view(), name="register"),
 ]
-# allows our AP to respond to requests with different formats.
+# Enable the API to respond to different formats by applying format suffix patterns
 urlpatterns = format_suffix_patterns(urlpatterns)
