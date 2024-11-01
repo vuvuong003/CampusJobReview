@@ -244,6 +244,7 @@ class ReviewsModelTests(TestCase):
     # pylint: disable=C0202
     @classmethod
     def tearDownClass(self):
-        """Clean up the database by deleting all reviews after tests."""
+        """Clean up the database by deletincg all review instances after tests have run."""
+        # pylint: disable=E1101
         Reviews.objects.all().delete()
         super().tearDownClass()

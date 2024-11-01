@@ -43,7 +43,9 @@ Explore our platform and take the first step towards finding the right on-campus
 [![GitHub open issues](https://img.shields.io/github/issues-raw/SAT510/CampusJobReview)](https://github.com/SAT510/CampusJobReview/issues?q=is%3Aopen)  
 [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/SAT510/CampusJobReview)](https://github.com/SAT510/CampusJobReview/issues?q=is%3Aclosed)
 
-[![Django Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml)  [![Jest Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml)   [![codecov](https://codecov.io/gh/shaziamuckram/SAT510/project-resources/main/graph/badge.svg)](https://codecov.io/gh/yourusername/yourrepo)
+[![Django Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml)  [![Jest Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml)   
+
+[![codecov](https://codecov.io/gh/SAT510/CampusJobReview/graph/badge.svg?token=3U8KLQ8AA4)](https://codecov.io/gh/SAT510/CampusJobReview)
 
 <p align="center"><img width="700" src="./resources/Intro_to_CampusJobReview.gif"></p>
 
@@ -70,7 +72,13 @@ We have made lots of changes to ensure that our app is feasible, maintainable, e
 6. Backend upgrade: Upgraded to a django rest framework from a basic flask application. This allows portability of the application.
 
 ### Future Scope
-TODO: while doing the poster
+1. Form Validation: Enhance frontend form validaition to have stronger checks and better user experience.
+
+2. Browser Extension Enhancement: Extend the browser extension to be integrated with the backend and show the complete review. Additionally, add an auto-fill feature based on the review information that would simplify data entry, enhancing user-friendliness and efficiency.
+
+3. Community Features: Introduce a forum or discussion board where users can share experiences, ask questions, and provide advice on job applications and interviews. This could foster a community around job hunting and reviews.
+
+4. Mobile Application Development: Develop a mobile version of the CampusJobReview platform to allow users to access job listings, submit reviews, and receive notifications on the go, enhancing accessibility and user engagement.
 
 ### Installation
 For detailed installation steps tailored to your operating system, please refer to the [INSTALL.md](https://github.com/SAT510/CampusJobReview/blob/test/INSTALL.md) file. This guide aims to provide you comprehensive instructions as to how to set up and run your project smoothly, regardless of whether you are using Windows or macOS. We highly recommend that you follow the steps in a chronological manner to ensure a successful installation. 
