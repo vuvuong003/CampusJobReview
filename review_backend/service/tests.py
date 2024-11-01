@@ -1,216 +1,216 @@
-# from django.test import TestCase
-# from rest_framework.exceptions import ValidationError
-# from .models import Reviews
-# from .serializers import ReviewsSerializer
+from django.test import TestCase
+from rest_framework.exceptions import ValidationError
+from .models import Reviews
+from .serializers import ReviewsSerializer
 
-# """
-# This module contains test cases for the Reviews model and its serializer in a Django application.
+"""
+This module contains test cases for the Reviews model and its serializer in a Django application.
 
-# The `ReviewsModelTests` class extends `TestCase` to provide a framework for testing various aspects of the Reviews model. It includes:
+The `ReviewsModelTests` class extends `TestCase` to provide a framework for testing various aspects of the Reviews model. It includes:
 
-# - **setUp**: Initializes common valid data for testing.
-# - **test_department_not_blank**: Ensures the 'department' field cannot be blank.
-# - **test_job_title_not_blank**: Ensures the 'job_title' field cannot be blank.
-# - **test_hourly_pay_not_blank**: Ensures the 'hourly_pay' field cannot be blank.
-# - **test_rating_out_of_range_high**: Ensures 'rating' cannot exceed 5.
-# - **test_rating_out_of_range_low**: Ensures 'rating' cannot fall below 1.
-# - **test_optional_locations_field**: Validates that the 'locations' field can be empty.
-# - **test_optional_job_description_field**: Validates that the 'job_description' field can be empty.
-# - **test_invalid_department_length**: Ensures 'department' does not exceed 100 characters.
-# - **test_invalid_job_title_length**: Ensures 'job_title' does not exceed 64 characters.
-# - **test_valid_full_data**: Confirms that valid data creates a review successfully.
-# - **test_filter_reviews_by_department**: Tests filtering reviews by 'department'.
-# - **test_filter_reviews_by_rating**: Tests filtering reviews by 'rating'.
-# - **test_filter_reviews_by_job_title**: Tests filtering reviews by 'job_title'.
-# - **test_review_benefits_field_optional**: Confirms 'benefits' can be empty.
-# - **test_invalid_rating_type**: Ensures 'rating' is an integer.
-# - **test_optional_recommendation_field**: Validates that 'recommendation' can be null.
-# - **test_invalid_rating_value**: Ensures 'rating' is within the range of 1 to 5.
-# - **test_empty_string_in_benefits**: Confirms 'benefits' can be an empty string.
-# - **test_job_description_character_limit**: Ensures 'job_description' does not exceed 120 characters.
-# - **test_invalid_hourly_pay_length**: Ensures 'hourly_pay' does not exceed 10 characters.
-# - **tearDownClass**: Cleans up the database by deleting all reviews after tests.
+- **setUp**: Initializes common valid data for testing.
+- **test_department_not_blank**: Ensures the 'department' field cannot be blank.
+- **test_job_title_not_blank**: Ensures the 'job_title' field cannot be blank.
+- **test_hourly_pay_not_blank**: Ensures the 'hourly_pay' field cannot be blank.
+- **test_rating_out_of_range_high**: Ensures 'rating' cannot exceed 5.
+- **test_rating_out_of_range_low**: Ensures 'rating' cannot fall below 1.
+- **test_optional_locations_field**: Validates that the 'locations' field can be empty.
+- **test_optional_job_description_field**: Validates that the 'job_description' field can be empty.
+- **test_invalid_department_length**: Ensures 'department' does not exceed 100 characters.
+- **test_invalid_job_title_length**: Ensures 'job_title' does not exceed 64 characters.
+- **test_valid_full_data**: Confirms that valid data creates a review successfully.
+- **test_filter_reviews_by_department**: Tests filtering reviews by 'department'.
+- **test_filter_reviews_by_rating**: Tests filtering reviews by 'rating'.
+- **test_filter_reviews_by_job_title**: Tests filtering reviews by 'job_title'.
+- **test_review_benefits_field_optional**: Confirms 'benefits' can be empty.
+- **test_invalid_rating_type**: Ensures 'rating' is an integer.
+- **test_optional_recommendation_field**: Validates that 'recommendation' can be null.
+- **test_invalid_rating_value**: Ensures 'rating' is within the range of 1 to 5.
+- **test_empty_string_in_benefits**: Confirms 'benefits' can be an empty string.
+- **test_job_description_character_limit**: Ensures 'job_description' does not exceed 120 characters.
+- **test_invalid_hourly_pay_length**: Ensures 'hourly_pay' does not exceed 10 characters.
+- **tearDownClass**: Cleans up the database by deleting all reviews after tests.
 
-# This suite helps maintain data integrity and validate the functionality of the Reviews model.
-# """
+This suite helps maintain data integrity and validate the functionality of the Reviews model.
+"""
 
-# class ReviewsModelTests(TestCase):
-#     def setUp(self):
-#         # Common valid data for testing
-#         self.valid_data = {
-#             "department": "IT",
-#             "locations": "Remote",
-#             "job_title": "Engineer",
-#             "job_description": "Handles IT infrastructure",
-#             "hourly_pay": "30",
-#             "benefits": "Health insurance",
-#             "review": "Good work environment",
-#             "rating": 4,
-#             "recommendation": 1
-#         }
+class ReviewsModelTests(TestCase):
+    def setUp(self):
+        # Common valid data for testing
+        self.valid_data = {
+            "department": "IT",
+            "locations": "Remote",
+            "job_title": "Engineer",
+            "job_description": "Handles IT infrastructure",
+            "hourly_pay": "30",
+            "benefits": "Health insurance",
+            "review": "Good work environment",
+            "rating": 4,
+            "recommendation": 1
+        }
 
-#     def test_department_not_blank(self):
-#         """Test that 'department' cannot be blank."""
-#         data = {**self.valid_data, "department": ""}
-#         with self.assertRaises(ValidationError):
-#             ReviewsSerializer(data=data).is_valid(raise_exception=True)
+    def test_department_not_blank(self):
+        """Test that 'department' cannot be blank."""
+        data = {**self.valid_data, "department": ""}
+        with self.assertRaises(ValidationError):
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-#     def test_job_title_not_blank(self):
-#         """Test that 'job_title' cannot be blank."""
-#         data = {**self.valid_data, "job_title": ""}
-#         with self.assertRaises(ValidationError):
-#             ReviewsSerializer(data=data).is_valid(raise_exception=True)
+    def test_job_title_not_blank(self):
+        """Test that 'job_title' cannot be blank."""
+        data = {**self.valid_data, "job_title": ""}
+        with self.assertRaises(ValidationError):
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-#     def test_hourly_pay_not_blank(self):
-#         """Test that 'hourly_pay' cannot be blank."""
-#         data = {**self.valid_data, "hourly_pay": ""}
-#         with self.assertRaises(ValidationError):
-#             ReviewsSerializer(data=data).is_valid(raise_exception=True)
+    def test_hourly_pay_not_blank(self):
+        """Test that 'hourly_pay' cannot be blank."""
+        data = {**self.valid_data, "hourly_pay": ""}
+        with self.assertRaises(ValidationError):
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-#     def test_rating_out_of_range_high(self):
-#         """Test that 'rating' cannot be above 5."""
-#         data = {**self.valid_data, "rating": 6}
-#         with self.assertRaises(ValidationError):
-#             ReviewsSerializer(data=data).is_valid(raise_exception=True)
+    def test_rating_out_of_range_high(self):
+        """Test that 'rating' cannot be above 5."""
+        data = {**self.valid_data, "rating": 6}
+        with self.assertRaises(ValidationError):
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-#     def test_rating_out_of_range_low(self):
-#         """Test that 'rating' cannot be below 1."""
-#         data = {**self.valid_data, "rating": 0}
-#         with self.assertRaises(ValidationError):
-#             ReviewsSerializer(data=data).is_valid(raise_exception=True)
+    def test_rating_out_of_range_low(self):
+        """Test that 'rating' cannot be below 1."""
+        data = {**self.valid_data, "rating": 0}
+        with self.assertRaises(ValidationError):
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-#     # def test_optional_review_field(self):
-#     #     """Test that 'review' can be empty and still valid."""
-#     #     data = {**self.valid_data, "review": ""}
-#     #     serializer = ReviewsSerializer(data=data)
-#     #     self.assertTrue(serializer.is_valid())
-#     #     print(serializer.errors)
+    # def test_optional_review_field(self):
+    #     """Test that 'review' can be empty and still valid."""
+    #     data = {**self.valid_data, "review": ""}
+    #     serializer = ReviewsSerializer(data=data)
+    #     self.assertTrue(serializer.is_valid())
+    #     print(serializer.errors)
 
-#     def test_optional_locations_field(self):
-#         """Test that 'locations' can be empty and still valid."""
-#         data = {**self.valid_data, "locations": ""}
-#         serializer = ReviewsSerializer(data=data)
-#         self.assertTrue(serializer.is_valid())
+    def test_optional_locations_field(self):
+        """Test that 'locations' can be empty and still valid."""
+        data = {**self.valid_data, "locations": ""}
+        serializer = ReviewsSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
 
-#     def test_optional_job_description_field(self):
-#         """Test that 'job_description' can be empty and still valid."""
-#         data = {**self.valid_data, "job_description": ""}
-#         serializer = ReviewsSerializer(data=data)
-#         self.assertTrue(serializer.is_valid())
+    def test_optional_job_description_field(self):
+        """Test that 'job_description' can be empty and still valid."""
+        data = {**self.valid_data, "job_description": ""}
+        serializer = ReviewsSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
 
-#     def test_invalid_department_length(self):
-#         """Test that 'department' cannot exceed max length of 100 characters."""
-#         data = {**self.valid_data, "department": "A" * 101}
-#         with self.assertRaises(ValidationError):
-#             ReviewsSerializer(data=data).is_valid(raise_exception=True)
+    def test_invalid_department_length(self):
+        """Test that 'department' cannot exceed max length of 100 characters."""
+        data = {**self.valid_data, "department": "A" * 101}
+        with self.assertRaises(ValidationError):
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-#     def test_invalid_job_title_length(self):
-#         """Test that 'job_title' cannot exceed max length of 64 characters."""
-#         data = {**self.valid_data, "job_title": "A" * 65}
-#         with self.assertRaises(ValidationError):
-#             ReviewsSerializer(data=data).is_valid(raise_exception=True)
+    def test_invalid_job_title_length(self):
+        """Test that 'job_title' cannot exceed max length of 64 characters."""
+        data = {**self.valid_data, "job_title": "A" * 65}
+        with self.assertRaises(ValidationError):
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-#     # def test_invalid_hourly_pay_type(self):
-#     #     """Test that 'hourly_pay' must be a string, not a number."""
-#     #     with self.assertRaises(ValidationError):
-#     #         review = Reviews(
-#     #             department="IT",
-#     #             job_title="Engineer",
-#     #             hourly_pay=30,  # Incorrect type: number instead of string
-#     #             review="Nice",
-#     #             rating=4,
-#     #             recommendation=1
-#     #         )
-#     #     review.full_clean()
+    # def test_invalid_hourly_pay_type(self):
+    #     """Test that 'hourly_pay' must be a string, not a number."""
+    #     with self.assertRaises(ValidationError):
+    #         review = Reviews(
+    #             department="IT",
+    #             job_title="Engineer",
+    #             hourly_pay=30,  # Incorrect type: number instead of string
+    #             review="Nice",
+    #             rating=4,
+    #             recommendation=1
+    #         )
+    #     review.full_clean()
 
-#     def test_valid_full_data(self):
-#         """Test that valid data creates a review successfully."""
-#         serializer = ReviewsSerializer(data=self.valid_data)
-#         self.assertTrue(serializer.is_valid())
+    def test_valid_full_data(self):
+        """Test that valid data creates a review successfully."""
+        serializer = ReviewsSerializer(data=self.valid_data)
+        self.assertTrue(serializer.is_valid())
 
-#     def test_filter_reviews_by_department(self):
-#         """Test filtering reviews by 'department'."""
-#         review1 = Reviews.objects.create(**self.valid_data)
-#         review2 = Reviews.objects.create(**{**self.valid_data, "department": "HR"})
-#         it_reviews = Reviews.objects.filter(department="IT")
-#         hr_reviews = Reviews.objects.filter(department="HR")
-#         self.assertIn(review1, it_reviews)
-#         self.assertIn(review2, hr_reviews)
+    def test_filter_reviews_by_department(self):
+        """Test filtering reviews by 'department'."""
+        review1 = Reviews.objects.create(**self.valid_data)
+        review2 = Reviews.objects.create(**{**self.valid_data, "department": "HR"})
+        it_reviews = Reviews.objects.filter(department="IT")
+        hr_reviews = Reviews.objects.filter(department="HR")
+        self.assertIn(review1, it_reviews)
+        self.assertIn(review2, hr_reviews)
 
-#     def test_filter_reviews_by_rating(self):
-#         """Test filtering reviews by 'rating'."""
-#         review1 = Reviews.objects.create(**self.valid_data)
-#         review2 = Reviews.objects.create(**{**self.valid_data, "rating": 5})
-#         high_rating_reviews = Reviews.objects.filter(rating=5)
-#         low_rating_reviews = Reviews.objects.filter(rating=4)
-#         self.assertIn(review2, high_rating_reviews)
-#         self.assertIn(review1, low_rating_reviews)
+    def test_filter_reviews_by_rating(self):
+        """Test filtering reviews by 'rating'."""
+        review1 = Reviews.objects.create(**self.valid_data)
+        review2 = Reviews.objects.create(**{**self.valid_data, "rating": 5})
+        high_rating_reviews = Reviews.objects.filter(rating=5)
+        low_rating_reviews = Reviews.objects.filter(rating=4)
+        self.assertIn(review2, high_rating_reviews)
+        self.assertIn(review1, low_rating_reviews)
 
-#     def test_filter_reviews_by_job_title(self):
-#         """Test filtering reviews by 'job_title'."""
-#         review1 = Reviews.objects.create(**self.valid_data)
-#         review2 = Reviews.objects.create(**{**self.valid_data, "job_title": "Manager"})
-#         engineer_reviews = Reviews.objects.filter(job_title="Engineer")
-#         manager_reviews = Reviews.objects.filter(job_title="Manager")
-#         self.assertIn(review1, engineer_reviews)
-#         self.assertIn(review2, manager_reviews)
+    def test_filter_reviews_by_job_title(self):
+        """Test filtering reviews by 'job_title'."""
+        review1 = Reviews.objects.create(**self.valid_data)
+        review2 = Reviews.objects.create(**{**self.valid_data, "job_title": "Manager"})
+        engineer_reviews = Reviews.objects.filter(job_title="Engineer")
+        manager_reviews = Reviews.objects.filter(job_title="Manager")
+        self.assertIn(review1, engineer_reviews)
+        self.assertIn(review2, manager_reviews)
 
-#     def test_review_benefits_field_optional(self):
-#         """Test 'benefits' can be blank and still valid."""
-#         data = {**self.valid_data, "benefits": ""}
-#         serializer = ReviewsSerializer(data=data)
-#         self.assertTrue(serializer.is_valid())
+    def test_review_benefits_field_optional(self):
+        """Test 'benefits' can be blank and still valid."""
+        data = {**self.valid_data, "benefits": ""}
+        serializer = ReviewsSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
 
-#     def test_invalid_rating_type(self):
-#         """Test 'rating' must be an integer."""
-#         data = {**self.valid_data, "rating": "high"}
-#         with self.assertRaises(ValidationError):
-#             ReviewsSerializer(data=data).is_valid(raise_exception=True)
+    def test_invalid_rating_type(self):
+        """Test 'rating' must be an integer."""
+        data = {**self.valid_data, "rating": "high"}
+        with self.assertRaises(ValidationError):
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-#     def test_optional_recommendation_field(self):
-#         """Test that 'recommendation' can be null and still valid."""
-#         data = {**self.valid_data, "recommendation": None}
-#         serializer = ReviewsSerializer(data=data)
-#         self.assertTrue(serializer.is_valid())
+    def test_optional_recommendation_field(self):
+        """Test that 'recommendation' can be null and still valid."""
+        data = {**self.valid_data, "recommendation": None}
+        serializer = ReviewsSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
 
-#     def test_invalid_rating_value(self):
-#         """Test that 'rating' must be within 1 and 5 inclusive."""
-#         data = {**self.valid_data, "rating": 10}
-#         with self.assertRaises(ValidationError):
-#             ReviewsSerializer(data=data).is_valid(raise_exception=True)
+    def test_invalid_rating_value(self):
+        """Test that 'rating' must be within 1 and 5 inclusive."""
+        data = {**self.valid_data, "rating": 10}
+        with self.assertRaises(ValidationError):
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-#     def test_empty_string_in_benefits(self):
-#         """Test that 'benefits' can be an empty string."""
-#         data = {**self.valid_data, "benefits": ""}
-#         serializer = ReviewsSerializer(data=data)
-#         self.assertTrue(serializer.is_valid())
+    def test_empty_string_in_benefits(self):
+        """Test that 'benefits' can be an empty string."""
+        data = {**self.valid_data, "benefits": ""}
+        serializer = ReviewsSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
 
-#     def test_job_description_character_limit(self):
-#         """Test that 'job_description' max length is 120 characters."""
-#         data = {**self.valid_data, "job_description": "A" * 121}
-#         with self.assertRaises(ValidationError):
-#             ReviewsSerializer(data=data).is_valid(raise_exception=True)
+    def test_job_description_character_limit(self):
+        """Test that 'job_description' max length is 120 characters."""
+        data = {**self.valid_data, "job_description": "A" * 121}
+        with self.assertRaises(ValidationError):
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-#     # def test_non_string_review_field(self):
-#     #     """Test 'review' field should be string."""
-#     #     data = {**self.valid_data, "review": 12345}
-#     #     with self.assertRaises(ValidationError):
-#     #         ReviewsSerializer(data=data).is_valid(raise_exception=True)
+    # def test_non_string_review_field(self):
+    #     """Test 'review' field should be string."""
+    #     data = {**self.valid_data, "review": 12345}
+    #     with self.assertRaises(ValidationError):
+    #         ReviewsSerializer(data=data).is_valid(raise_exception=True)
 
-#     # def test_valid_hourly_pay_format(self):
-#     #     """Test that 'hourly_pay' accepts a string format of a number."""
-#     #     data = {**self.valid_data, "hourly_pay": "20"}
-#     #     serializer = ReviewsSerializer(data=data)
-#     #     self.assertTrue(serializer.is_valid())
+    # def test_valid_hourly_pay_format(self):
+    #     """Test that 'hourly_pay' accepts a string format of a number."""
+    #     data = {**self.valid_data, "hourly_pay": "20"}
+    #     serializer = ReviewsSerializer(data=data)
+    #     self.assertTrue(serializer.is_valid())
 
-#     def test_invalid_hourly_pay_length(self):
-#         """Test 'hourly_pay' max length of 10 characters."""
-#         data = {**self.valid_data, "hourly_pay": "12345678901"}
-#         with self.assertRaises(ValidationError):
-#             ReviewsSerializer(data=data).is_valid(raise_exception=True)
+    def test_invalid_hourly_pay_length(self):
+        """Test 'hourly_pay' max length of 10 characters."""
+        data = {**self.valid_data, "hourly_pay": "12345678901"}
+        with self.assertRaises(ValidationError):
+            ReviewsSerializer(data=data).is_valid(raise_exception=True)
             
 
-#     @classmethod
-#     def tearDownClass(self):
-#         Reviews.objects.all().delete()
-#         super().tearDownClass()
+    @classmethod
+    def tearDownClass(self):
+        Reviews.objects.all().delete()
+        super().tearDownClass()
