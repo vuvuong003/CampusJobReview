@@ -131,7 +131,7 @@ TEMPLATES = [
         },
     },
 ]
-
+# WSGI application settings
 WSGI_APPLICATION = "review_backend.wsgi.application"
 
 
@@ -144,39 +144,41 @@ WSGI_APPLICATION = "review_backend.wsgi.application"
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-load_dotenv()
+# Load environment variables from .env file
+load_dotenv() # Load environment variables for secure configurations
+# Database configuration for MongoDB using Djongo
 DATABASES = {
     "default": {
-        "ENGINE": "djongo",
-        "NAME": os.getenv("DB_NAME"),
+        "ENGINE": "djongo", # Use Djongo for MongoDB support
+        "NAME": os.getenv("DB_NAME"), # Get the database name from environment variable
+        # MongoDB connection settings
         "CLIENT": {
             # 'host': "mongodb+srv://"+os.getenv('DB_USERNAME')+":"
             # +os.getenv("DB_PASSWORD")+"@cluster0.ohnr0.mongodb.net/"
             "host": "mongodb+srv://"
-            + os.getenv("DB_USERNAME")
+            + os.getenv("DB_USERNAME") # Get the username from environment variable
             + ":"
-            + os.getenv("DB_PASSWORD")
+            + os.getenv("DB_PASSWORD") # Get the password from environment variable
             + "@cluster0.falr3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
         },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator", # Validate password similarity
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", # Validate minimum password length
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", # Check for common passwords
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", # Check for numeric passwords
     },
 ]
 
@@ -184,21 +186,21 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en-us" # Set the default language code
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "UTC" # Set the default time zone
 
-USE_I18N = True
+USE_I18N = True # Enable internationalization
 
-USE_TZ = True
+USE_TZ = True # Enable time zone support
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "static/" # Set the URL for serving static files
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField" # Use BigAutoField as the default primary key field
