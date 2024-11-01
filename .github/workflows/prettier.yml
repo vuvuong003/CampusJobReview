@@ -3,7 +3,7 @@ name: Format Code with Prettier
 on:
   push:
     branches:
-      - test  
+      - '*' 
   pull_request:
     branches:
       - test 
