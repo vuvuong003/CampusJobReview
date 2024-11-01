@@ -2,7 +2,7 @@ name: Django Testing
 
 on:
   push:
-    branches: [ "amay/badge", "test" ]
+    branches: [ "test"]
   pull_request:
     branches: [ "test" ]
 jobs:
