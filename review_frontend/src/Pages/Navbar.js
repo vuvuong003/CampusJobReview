@@ -4,6 +4,7 @@
  */
 
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -18,11 +19,12 @@ import MenuItem from "@mui/material/MenuItem";
 /**
  * NavBar component for application navigation
  * @component
- * @param {Object} props - Component props
+ * @param {Object} _props - Component props
  * @param {Function} props.navigation - Navigation function for routing
  * @returns {JSX.Element} Rendered NavBar component
  */
-function NavBar(props) {
+function NavBar(_props) {
+  const navigate = useNavigate();
   /**
    * Dynamic navigation menu items based on authentication state
    * @type {Array<string>}
@@ -63,18 +65,18 @@ function NavBar(props) {
    */
   const goto = (page) => {
     if (page === "Home") {
-      props.navigation("/");
+      navigate("/");
     } else if (page === "Login") {
-      props.navigation("/login");
+      navigate("/login");
     } else if (page === "Signup") {
-      props.navigation("/signup");
+      navigate("/signup");
     } else if (page === "Logout") {
       localStorage.setItem("login", "false");
-      props.navigation("/");
+      navigate("/");
     } else if (page === "Add Review") {
-      props.navigation("/add-review");
+      navigate("/add-review");
     } else if (page === "View Reviews") {
-      props.navigation("/view-reviews");
+      navigate("/view-reviews");
     }
   };
 
