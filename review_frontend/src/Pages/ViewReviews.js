@@ -98,6 +98,16 @@ class JobRow extends React.Component {
  * @description Main component for displaying and filtering job reviews
  */
 class Reviews extends React.Component {
+   /**
+   * @state
+   * @property {Array<Object>} jobs - Array of job review objects
+   * @property {Object} formData - Filter criteria for reviews
+   * @property {string} formData.department - Filter by department name
+   * @property {string} formData.locations - Filter by job location
+   * @property {string} formData.job_title - Filter by job title
+   * @property {string} formData.min_rating - Minimum rating filter
+   * @property {string} formData.max_rating - Maximum rating filter
+   */
   state = {
     jobs: [],
     formData: {
@@ -172,7 +182,7 @@ class Reviews extends React.Component {
     // Background image styles
     const myStyle = {
       backgroundImage: `url(${process.env.PUBLIC_URL + "/WolfPlaza.jpg"})`,
-      height: "92.5vh",
+      height: "100vh",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
@@ -190,87 +200,76 @@ class Reviews extends React.Component {
           <div style={myStyle} className="absolute inset-0 opacity-40 bg-black"></div>
 
           {/* Main content container */}
-          <div className="fixed inset-0 flex flex-col items-center justify-center mt-20">
-            <div className="bg-white w-[70vw] p-6 mb-6 rounded-xl shadow-lg transform transition-all duration-300">
-              <form
-                onSubmit={this.handleSubmit}
-                className="flex flex-wrap gap-4 items-center"
-              >
-                {/* Department filter */}
-                <input
-                  type="text"
-                  name="department"
-                  placeholder="Department"
-                  value={this.state.formData.department}
-                  onChange={this.handleChange}
-                  className="px-4 py-3 border rounded-lg w-[18%] focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  aria-label="Filter by department"
-                />
-                {/* Location filter */}
-                <input
-                  type="text"
-                  name="locations"
-                  placeholder="Location"
-                  value={this.state.formData.locations}
-                  onChange={this.handleChange}
-                  className="px-4 py-3 border rounded-lg w-[18%] focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  aria-label="Filter by location"
-                />
-                {/* Job title filter */}
-                <input
-                  type="text"
-                  name="job_title"
-                  placeholder="Job Title"
-                  value={this.state.formData.job_title}
-                  onChange={this.handleChange}
-                  className="px-4 py-3 border rounded-lg w-[18%] focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  aria-label="Filter by job title"
-                />
-                {/* Minimum rating filter */}
-                <select
-                  name="min_rating"
-                  value={this.state.formData.min_rating}
-                  onChange={this.handleChange}
-                  className="px-4 py-3 border rounded-lg w-[18%] focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  aria-label="Filter by minimum rating"
+          <div className="flex w-full h-full">
+            {/* Left side: Filters */}
+            <div className="w-1/4 p-6">
+              <div className="bg-white shadow-lg p-6 rounded-xl mb-6">
+                <form
+                  onSubmit={this.handleSubmit}
+                  className="flex flex-col gap-4"
                 >
-                  <option value="">Min Rating</option>
-                  {[1, 2, 3, 4, 5].map((rating) => (
-                    <option key={rating} value={rating}>
-                      {rating}
-                    </option>
-                  ))}
-                </select>
-                {/* Maximum rating filter */}
-                <select
-                  name="max_rating"
-                  value={this.state.formData.max_rating}
-                  onChange={this.handleChange}
-                  className="px-4 py-3 border rounded-lg w-[18%] focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  aria-label="Filter by maximum rating"
-                >
-                  <option value="">Max Rating</option>
-                  {[1, 2, 3, 4, 5].map((rating) => (
-                    <option key={rating} value={rating}>
-                      {rating}
-                    </option>
-                  ))}
-                </select>
-                {/* Filter button */}
-                <div className="w-full flex justify-center mt-4">
+                  <input
+                    type="text"
+                    name="department"
+                    placeholder="Department"
+                    value={this.state.formData.department}
+                    onChange={this.handleChange}
+                    className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <input
+                    type="text"
+                    name="locations"
+                    placeholder="Location"
+                    value={this.state.formData.locations}
+                    onChange={this.handleChange}
+                    className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <input
+                    type="text"
+                    name="job_title"
+                    placeholder="Job Title"
+                    value={this.state.formData.job_title}
+                    onChange={this.handleChange}
+                    className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <select
+                    name="min_rating"
+                    value={this.state.formData.min_rating}
+                    onChange={this.handleChange}
+                    className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Min Rating</option>
+                    {[1, 2, 3, 4, 5].map((rating) => (
+                      <option key={rating} value={rating}>
+                        {rating}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    name="max_rating"
+                    value={this.state.formData.max_rating}
+                    onChange={this.handleChange}
+                    className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Max Rating</option>
+                    {[1, 2, 3, 4, 5].map((rating) => (
+                      <option key={rating} value={rating}>
+                        {rating}
+                      </option>
+                    ))}
+                  </select>
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out"
-                    onClick={this.handleSubmit}
-                    aria-label="Apply filters"
+                    className="bg-blue-500 text-white py-3 rounded-lg"
                   >
-                    Apply Filters
+                    Filter
                   </button>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
 
-            <div className="bg-white w-[70vw] shadow-lg p-10 overflow-y-auto rounded-xl">
+            {/* Right side: Job Listings */}
+            <div className="w-3/4 p-6 overflow-y-auto flex-1">
               {this.state.jobs.map((job, index) => (
                 <JobRow
                   key={index}
