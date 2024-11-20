@@ -219,3 +219,5 @@ STATIC_URL = "static/" # Set the URL for serving static files
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField" # Use BigAutoField as
 # the default primary key field
+
+AUTH_USER_MODEL = 'auth_review.Client'

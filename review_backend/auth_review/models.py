@@ -13,6 +13,7 @@ from django.contrib.auth.models import (  # pylint: disable=E0401
     AbstractBaseUser, # Provides basic authentication fields
     BaseUserManager, # Base class for creating custom user managers
     PermissionsMixin, # Base class for creating custom user managers
+    Group, Permission
 )
 
 # Custom manager for the Client model, responsible for creating regular and super users
@@ -107,6 +108,9 @@ class Client(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "username" # Set 'username' as identifier for authentication
     objects = ClientManager() # Assign custom manager for user creation
+    groups = models.ManyToManyField(Group, related_name="client_set", blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name="client_permissions", blank=True)
+
 
     # pylint: disable=E0307
     def __str__(self):

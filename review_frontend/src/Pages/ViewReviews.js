@@ -7,6 +7,7 @@ import * as React from "react";
 import NavBar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import { unprotected_api_call, filter_url } from "../api/api";
+import Comments from "./Comments";
 
 /**
  * @class JobRow
@@ -37,6 +38,7 @@ class JobRow extends React.Component {
   render() {
     // Destructure props for cleaner access
     const {
+      reviewId,
       jobTitle,
       jobDescription,
       department,
@@ -59,7 +61,7 @@ class JobRow extends React.Component {
               onClick={this.toggleExpand}
               className="hover:text-blue-500 focus:outline-none"
             >
-              {jobTitle}
+              {jobTitle} (${hourlyPay}/hr)
             </a>
           </h3>
           <div className="flex items-center space-x-2">
@@ -79,12 +81,11 @@ class JobRow extends React.Component {
             <p><strong>Job Description:</strong> {jobDescription}</p>
             <p><strong>Department:</strong> {department}</p>
             <p><strong>Location:</strong> {location}</p>
-            <p><strong>Hourly Pay:</strong> ${hourlyPay}</p>
             <p><strong>Benefits:</strong> {benefits}</p>
             <p><strong>Review:</strong> {review}</p>
-            <p><strong>Rating:</strong> {rating}</p>
             <p><strong>Recommendation:</strong> {recommendation}</p>
             <p><strong>Reviewed By:</strong> {reviewedBy}</p>
+            <Comments reviewId={reviewId}/>
           </div>
         )}
       </div>
@@ -173,8 +174,8 @@ class Reviews extends React.Component {
     if (response.status === 200) {
       let data = await response.json();
       this.setState({ jobs: data });
-    } else {
-      alert("Server Error");
+    } else  {
+      alert("No jobs match the selected criteria.");
     }
   };
 
@@ -273,6 +274,7 @@ class Reviews extends React.Component {
               {this.state.jobs.map((job, index) => (
                 <JobRow
                   key={index}
+                  reviewId = {job.id}
                   jobTitle={job.job_title}
                   jobDescription={job.job_description}
                   department={job.department}

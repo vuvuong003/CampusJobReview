@@ -17,7 +17,7 @@ is between 1 and 5 and that the review field is not empty.
 job title and job description are not empty and that the maximum hours allowed is greater than zero.
 """
 from rest_framework import serializers  # Import Django REST framework serializers
-from .models import Reviews, Vacancies # Import models to create serializers for
+from .models import Reviews, Vacancies, Comment # Import models to create serializers for
 
 
 
@@ -130,3 +130,18 @@ class VacanciesSerializer(serializers.ModelSerializer):
                 "Max hours allowed must be greater than 0.")
         # Add more validation as needed
         return attrs
+    
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ['id', 'review', 'user', 'text', 'created_at']
+        extra_kwargs = {
+            'text': {'required': True},
+            'review': {'read_only': True},
+            'user': {'read_only': True},
+        }
+
+    def validate(self, data):
+        if not data.get('text'):
+            raise serializers.ValidationError("Text is required.")
+        return data
