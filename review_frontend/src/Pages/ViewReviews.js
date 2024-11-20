@@ -57,7 +57,7 @@ class JobRow extends React.Component {
         <div className="job-summary flex justify-between items-center">
           <h3 className="job-title text-2xl font-semibold text-gray-800">
             <a
-              href="#"
+              href="/"
               onClick={this.toggleExpand}
               className="hover:text-blue-500 focus:outline-none"
             >
@@ -78,13 +78,50 @@ class JobRow extends React.Component {
         </div>
         {isExpanded && (
           <div className="job-details mt-4 text-gray-600">
-            <p><strong>Job Description:</strong> {jobDescription}</p>
-            <p><strong>Department:</strong> {department}</p>
-            <p><strong>Location:</strong> {location}</p>
-            <p><strong>Benefits:</strong> {benefits}</p>
-            <p><strong>Review:</strong> {review}</p>
-            <p><strong>Recommendation:</strong> {recommendation}</p>
-            <p><strong>Reviewed By:</strong> {reviewedBy}</p>
+            <div className="job-details p-4 border border-gray-300 rounded-lg">
+                  {/* Job Review Section */}
+                  <div className="job-review mb-4">
+                    <p className="text-lg text-left font-semibold text-gray-800">
+                      <strong>Reviewed By:</strong> {reviewedBy}
+                    </p>
+                    <p className="text-lg text-left text-gray-600">{review}</p>
+                  </div>
+
+                  {/* Job Description */}
+                  <div className="job-description mb-4">
+                    <p className="text-lg text-left font-semibold text-gray-800">
+                      <strong>Job Description:</strong> {jobDescription}
+                    </p>
+                  </div>
+
+                  {/* Category Row with Circular Boxes */}
+                  <div className="categories flex flex-wrap gap-4">
+                    <div
+                      className="category bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium"
+                      style={{ display: 'inline-block' }}
+                    >
+                      Department: {department}
+                    </div>
+                    <div
+                      className="category bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium"
+                      style={{ display: 'inline-block' }}
+                    >
+                      Location: {location}
+                    </div>
+                    <div
+                      className="category bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full text-sm font-medium"
+                      style={{ display: 'inline-block' }}
+                    >
+                      Benefits: {benefits}
+                    </div>
+                    <div
+                      className="category bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-medium"
+                      style={{ display: 'inline-block' }}
+                    >
+                      Recommendation: {recommendation}
+                    </div>
+                  </div>
+                </div>
             <Comments reviewId={reviewId}/>
           </div>
         )}
@@ -179,6 +216,29 @@ class Reviews extends React.Component {
     }
   };
 
+    /**
+   * Handles resetting the filters
+   * @method
+   */
+  handleReset = () => {
+    // Reset the form fields
+    this.setState(
+      {
+        formData: {
+          department: "",
+          locations: "",
+          job_title: "",
+          min_rating: "",
+          max_rating: "",
+        },
+      },
+      () => {
+        // Refetch the full jobs list
+        this.componentDidMount();
+      }
+    );
+  };
+
   render() {
     // Background image styles
     const myStyle = {
@@ -264,6 +324,14 @@ class Reviews extends React.Component {
                     className="bg-blue-500 text-white py-3 rounded-lg"
                   >
                     Filter
+                  </button>
+                   {/* Reset Button */}
+                  <button
+                    type="button"
+                    onClick={this.handleReset}
+                    className="bg-red-500 text-white py-3 rounded-lg"
+                  >
+                    Reset
                   </button>
                 </form>
               </div>
