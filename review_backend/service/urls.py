@@ -26,4 +26,5 @@ urlpatterns = [
     path('filter/', FilterReviewsView.as_view(), name='filter-reviews'), # Define 'filter/'
     # path for filtered reviews view
     path('comments/<int:id>/', CommentViewSet.as_view({'get': 'list', 'post': 'create'}), name='comments'),
+    path('comments/<int:id>/<int:comment_id>/', CommentViewSet.as_view({'delete': 'destroy'}), name='delete-comment'),
 ]

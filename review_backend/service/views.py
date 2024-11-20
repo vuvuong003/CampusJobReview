@@ -10,6 +10,7 @@ logic and provide the appropriate responses to the client.
 from rest_framework import viewsets # Import viewsets for creating API views
 from rest_framework import generics # Import generics for generic API views
 from rest_framework.response import Response # Import Response for HTTP responses
+#from rest_framework.exceptions import PermissionDenied # Import Response for HTTP responses
 from rest_framework import status # Import status codes for HTTP responses
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated # Import authentication permissions
@@ -196,4 +197,20 @@ class CommentViewSet(viewsets.ModelViewSet):
         review = get_object_or_404(Reviews, id=review_id)  # Get the review object
         user = self.request.user #Get the current user
         serializer.save(review=review, user=user)  # Assign the review to the comment
-
+    
+    def destroy(self, request, *args, **kwargs):
+        id = kwargs.get('id')  # Extract the review ID from the URL
+        comment_id = kwargs.get('comment_id')  # Extract the comment ID from the URL
+        
+        try:
+            # Ensure the comment exists with the given review ID
+            comment = Comment.objects.get(id=comment_id, review_id=id)
+        except Comment.DoesNotExist:
+            return Response({'detail': 'Comment not found.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Check if the user is authorized to delete the comment
+        # if comment.user != request.user:
+        #     raise PermissionDenied("You are not allowed to delete this comment.")
+        
+        comment.delete()
+        return Response({'detail': 'Comment deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)

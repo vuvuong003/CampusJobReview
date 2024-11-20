@@ -7,15 +7,17 @@ const Comments = ({ reviewId}) => {
   const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
-    const fetchComments = async () => {
-      const response = await protected_api_call(`${comment_url}${reviewId}/`, {}, "GET");
-      if (response.status === 200) {
-        const data = await response.json();
-        setComments(data);
-      }
-    };
     fetchComments();
   }, [reviewId]);
+
+  // Function to fetch comments
+  const fetchComments = async () => {
+    const response = await protected_api_call(`${comment_url}${reviewId}/`, {}, "GET");
+    if (response.status === 200) {
+      const data = await response.json();
+      setComments(data);
+    }
+  };
 
   const handleAddComment = async () => {
     if (newComment.trim() === "") return;
@@ -26,6 +28,17 @@ const Comments = ({ reviewId}) => {
       const addedComment = await response.json();
       setComments([...comments, addedComment]);
       setNewComment("");
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    const response = await protected_api_call(
+      `${comment_url}${reviewId}/${commentId}/`, {}, "DELETE");
+    if (response.status === 204) {
+      // Successfully deleted the comment, refetch the comments
+      fetchComments();
+    } else {
+      alert("Failed to delete comment");
     }
   };
 
@@ -48,11 +61,17 @@ const Comments = ({ reviewId}) => {
       </div>
       <div className="comments-list">
         {comments.map((comment) => (
-          <div key={comment.commentId} className="comment bg-gray-100 p-4 rounded-lg mb-2">
+          <div key={comment.id} className="comment bg-gray-100 p-4 rounded-lg mb-2">
             <p className="text-sm text-gray-600">
               <strong>{comment.user}</strong> • {formatDistanceToNow(new Date(comment.created_at))} ago
             </p>
             <p>{comment.text}</p>
+              <button
+                onClick={() => handleDeleteComment(comment.id)}
+                className="text-red-500 hover:text-red-700 mt-2"
+              >
+                🗑️ Delete
+              </button>
           </div>
         ))}
       </div>
