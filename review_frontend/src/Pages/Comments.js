@@ -8,10 +8,13 @@ const Comments = ({ reviewId}) => {
 
   const fetchComments = useCallback(async () => {
     const response = await protected_api_call(`${comment_url}${reviewId}/`, {}, "GET");
-    if (response.status === 200) {
+    if (response && response.status === 200) {
       const data = await response.json();
       setComments(data);
+    } else {
+      alert("Failed to load comments");
     }
+    
   }, [reviewId]);
 
   useEffect(() => {
@@ -27,6 +30,8 @@ const Comments = ({ reviewId}) => {
       const addedComment = await response.json();
       setComments([...comments, addedComment]);
       setNewComment("");
+    } else {
+      alert("Failed to add comment");
     }
   };
 
@@ -85,13 +90,15 @@ const Comments = ({ reviewId}) => {
             </div>
             {/* Trash icon */}
             <button
+              type="submit"
               onClick={() => handleDeleteComment(comment.id)}
               className="text-red-500 hover:text-red-700"
               style={{
-                marginLeft: "1rem", // Add space between the text and icon
-                fontSize: "2rem", // Larger icon size
-                alignSelf: "flex-start", // Align icon to the top
+                marginLeft: "1rem",
+                fontSize: "2rem",
+                alignSelf: "flex-between",
               }}
+              aria-label={`Delete comment`}
             >
               🗑️
             </button>
@@ -108,6 +115,7 @@ const Comments = ({ reviewId}) => {
         <button
           onClick={handleAddComment}
           className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-2"
+          aria-label="Post comment"
         >
           Post Comment
         </button>
