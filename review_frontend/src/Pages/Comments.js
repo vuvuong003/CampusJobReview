@@ -1,11 +1,37 @@
+/**
+ * @fileoverview Display, insert and delete comments for job reviews
+ * Contains components for displaying, inserting and deleting comments for each job review
+ */
 import React, { useState, useEffect, useCallback } from "react";
 import { protected_api_call, comment_url } from "../api/api";
 import { formatDistanceToNow } from "date-fns";
 
+/**
+ * Comments component that handles displaying, adding, and deleting comments for a review.
+ * Fetches comments from the API, allows users to add new comments, and delete existing ones.
+ * 
+ * @param {Object} props - The props passed to the component.
+ * @param {string} props.reviewId - The ID of the review for which comments are being managed.
+ * @returns {JSX.Element} The rendered Comments component.
+ */
 const Comments = ({ reviewId}) => {
+  /**
+   * State to hold the list of comments fetched from the API.
+   * @type {Array}
+   */
   const [comments, setComments] = useState([]);
+  /**
+   * State to hold the new comment text input by the user.
+   * @type {string}
+   */
   const [newComment, setNewComment] = useState("");
 
+  /**
+   * Fetches the list of comments for the current review ID from the API.
+   * 
+   * @async
+   * @function
+   */
   const fetchComments = useCallback(async () => {
     const response = await protected_api_call(`${comment_url}${reviewId}/`, {}, "GET");
     if (response && response.status === 200) {
@@ -17,10 +43,20 @@ const Comments = ({ reviewId}) => {
     
   }, [reviewId]);
 
+  /**
+   * Fetch comments when the component mounts or the review ID changes.
+   */
   useEffect(() => {
     fetchComments();
   }, [fetchComments]);
 
+  /**
+   * Handles adding a new comment to the review.
+   * Sends a POST request to the API and updates the state with the new comment.
+   * 
+   * @async
+   * @function
+   */
   const handleAddComment = async () => {
     if (newComment.trim() === "") return;
 
@@ -35,6 +71,14 @@ const Comments = ({ reviewId}) => {
     }
   };
 
+  /**
+   * Handles deleting a comment by its ID.
+   * Sends a DELETE request to the API and refetches the comments if the deletion is successful.
+   * 
+   * @async
+   * @function
+   * @param {string} commentId - The ID of the comment to be deleted.
+   */
   const handleDeleteComment = async (commentId) => {
     const response = await protected_api_call(
       `${comment_url}${reviewId}/${commentId}/`, {}, "DELETE");

@@ -1,6 +1,6 @@
 /**
  * @fileoverview Reviews display and filtering components
- * Contains components for displaying job reviews in a table format with filtering capabilities
+ * Contains components for displaying job reviews in a collapsible table format with filtering capabilities
  */
 
 import * as React from "react";
@@ -31,6 +31,10 @@ class JobRow extends React.Component {
     isExpanded: false, // To track the expanded state of the row
   };
 
+  /**
+   * Toggles the expanded state of the job review row
+   * @method
+   */
   toggleExpand = () => {
     this.setState((prevState) => ({ isExpanded: !prevState.isExpanded }));
   };
@@ -221,7 +225,7 @@ class Reviews extends React.Component {
     }
   };
 
-    /**
+  /**
    * Handles resetting the filters
    * @method
    */
@@ -274,6 +278,7 @@ class Reviews extends React.Component {
                   onSubmit={this.handleSubmit}
                   className="flex flex-col gap-4"
                 >
+                  {/* Department filter */}
                   <input
                     type="text"
                     name="department"
@@ -282,6 +287,7 @@ class Reviews extends React.Component {
                     onChange={this.handleChange}
                     className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {/* Location filter */}
                   <input
                     type="text"
                     name="locations"
@@ -290,6 +296,7 @@ class Reviews extends React.Component {
                     onChange={this.handleChange}
                     className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                   {/* Job title filter */}
                   <input
                     type="text"
                     name="job_title"
@@ -298,6 +305,7 @@ class Reviews extends React.Component {
                     onChange={this.handleChange}
                     className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {/* Minimum rating filter */}
                   <select
                     name="min_rating"
                     value={this.state.formData.min_rating}
@@ -311,6 +319,7 @@ class Reviews extends React.Component {
                       </option>
                     ))}
                   </select>
+                  {/* Maximum rating filter */}
                   <select
                     name="max_rating"
                     value={this.state.formData.max_rating}
@@ -324,6 +333,7 @@ class Reviews extends React.Component {
                       </option>
                     ))}
                   </select>
+                  {/* Filter button */}
                   <button
                     type="submit"
                     className="bg-blue-500 text-white py-3 rounded-lg"
