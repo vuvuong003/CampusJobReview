@@ -12,7 +12,7 @@ from rest_framework import generics # Import generics for generic API views
 from rest_framework.response import Response # Import Response for HTTP responses
 #from rest_framework.exceptions import PermissionDenied # Import Response for HTTP responses
 from rest_framework import status # Import status codes for HTTP responses
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404 # Helper function for fetching objects safely
 from rest_framework.permissions import IsAuthenticated # Import authentication permissions
 from .models import Reviews # Import Reviews model for review-related views
 from .serializers import ReviewsSerializer # Import serializer for Reviews
@@ -199,6 +199,20 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer.save(review=review, user=user)  # Assign the review to the comment
     
     def destroy(self, request, *args, **kwargs):
+        """
+        Delete a specific comment.
+
+        This method handles the deletion of a comment, ensuring that only
+        authorized users can delete the comment.
+
+        Args:
+            request (Request): The HTTP request.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            Response: A response confirming the deletion of the comment.
+        """
         id = kwargs.get('id')  # Extract the review ID from the URL
         comment_id = kwargs.get('comment_id')  # Extract the comment ID from the URL
         

@@ -163,15 +163,20 @@ class Reviews extends React.Component {
    * @async
    */
   componentDidMount = async () => {
-    let response = await unprotected_api_call(filter_url + "/", {}, "GET");
-    if (response.status === 200) {
-      let data = await response.json();
-      this.setState({ jobs: data });
-      console.log("Data: ", data);
-    } else {
-      alert("Server Error");
+    try {
+      let response = await unprotected_api_call(filter_url + "/", {}, "GET");
+      if (response && response.status === 200) {
+        let data = await response.json();
+        this.setState({ jobs: data });
+        console.log("Data: ", data);
+      } else {
+        alert("Server Error");
+      }
+    } catch (error) {
+      alert("Failed to fetch reviews");
     }
   };
+  
 
   /**
    * Handles changes to filter form inputs
@@ -241,24 +246,24 @@ class Reviews extends React.Component {
 
   render() {
     // Background image styles
-    const myStyle = {
-      backgroundImage: `url(${process.env.PUBLIC_URL + "/WolfPlaza.jpg"})`,
-      height: "100vh",
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      zIndex: -1,
-    };
+    // const myStyle = {
+    //   backgroundImage: `url(${process.env.PUBLIC_URL + "/WolfPlaza.jpg"})`,
+    //   height: "100vh",
+    //   backgroundSize: "cover",
+    //   backgroundRepeat: "no-repeat",
+    //   backgroundPosition: "center",
+    //   position: "absolute",
+    //   top: 0,
+    //   left: 0,
+    //   width: "100%",
+    //   zIndex: -1,
+    // };
 
     return (
       <div>
         <NavBar navigation={this.props.navigate} />
-        <div className="relative h-full w-full">
-          <div style={myStyle} className="absolute inset-0 opacity-40 bg-black"></div>
+        <div className="relative h-full w-full" style={{ backgroundColor: "#ffe5e5"}}>
+          {/* <div style={myStyle} className="absolute inset-0 opacity-40 bg-black"></div> */}
 
           {/* Main content container */}
           <div className="flex w-full h-full">
