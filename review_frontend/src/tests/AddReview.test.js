@@ -46,7 +46,7 @@ describe("AddReview Component", () => {
       screen.getByRole("textbox", { name: /job description/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("textbox", { name: /hourly pay/i }),
+      screen.getByLabelText(/hourly pay/i),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("textbox", { name: /benefits/i }),
@@ -89,14 +89,15 @@ describe("AddReview Component", () => {
       target: { value: "Remote", name: "locations" },
     });
 
-    // Select rating and recommendation
-    const ratingRadio = screen.getByRole("radio", { name: /rating 4/i });
-    fireEvent.click(ratingRadio);
+    // Update rating slider
+    const ratingSlider = screen.getByLabelText(/rating/i);
+    fireEvent.change(ratingSlider, { target: { value: 4 } });
+    expect(ratingSlider).toHaveValue("4");
 
-    const recommendationRadio = screen.getByRole("radio", {
-      name: /recommendation 8/i,
-    });
-    fireEvent.click(recommendationRadio);
+    // Update recommendation slider
+    const recommendationSlider = screen.getByLabelText(/recommendation/i);
+    fireEvent.change(recommendationSlider, { target: { value: 8 } });
+    expect(recommendationSlider).toHaveValue("8");
 
     // Submit form
     fireEvent.click(
@@ -124,24 +125,43 @@ describe("AddReview Component", () => {
     });
   });
 
-  test("renders and selects rating radio buttons", () => {
+  test("renders and interacts with the Rating slider", () => {
     renderAddReview();
-
-    // Check if rating radio buttons exist and can be selected
-    [1, 2, 3, 4, 5].forEach((rating) => {
-      const radio = screen.getByRole("radio", {
-        name: new RegExp(`rating ${rating}`, "i"),
-      });
-      expect(radio).toBeInTheDocument();
-      fireEvent.click(radio);
-      expect(radio).toBeChecked();
-    });
+  
+    // Get the slider using its accessible label
+    const ratingSlider = screen.getByLabelText(/Rating/i);
+  
+    // Verify the slider is rendered
+    expect(ratingSlider).toBeInTheDocument();
+  
+    // Simulate changing the slider value
+    fireEvent.change(ratingSlider, { target: { value: 4 } });
+  
+    // Check if the slider's value is updated
+    expect(ratingSlider).toHaveValue("4");
+  
+    // Verify the displayed recommendation value updates
+    expect(screen.getByText("4")).toBeInTheDocument();
   });
+  
 
-  test("renders and selects recommendation radio buttons", () => {
+  test("renders and interacts with the recommendation slider", () => {
     renderAddReview();
-
-    // Check if recommendation radio buttons exist and can be selected
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach((recommendation) => {});
+  
+    // Get the slider using its accessible label
+    const recommendationSlider = screen.getByLabelText(/Recommendation/i);
+  
+    // Verify the slider is rendered
+    expect(recommendationSlider).toBeInTheDocument();
+  
+    // Simulate changing the slider value
+    fireEvent.change(recommendationSlider, { target: { value: 7 } });
+  
+    // Check if the slider's value is updated
+    expect(recommendationSlider).toHaveValue("7");
+  
+    // Verify the displayed recommendation value updates
+    expect(screen.getByText("7")).toBeInTheDocument();
   });
+  
 });

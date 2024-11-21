@@ -2,13 +2,18 @@
 
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom"; 
 import NavBar from "./../Pages/Navbar";
 
 const mockNavigate = jest.fn();
 
 const renderNavBar = (loginStatus) => {
   localStorage.setItem("login", loginStatus ? "true" : "false");
-  render(<NavBar navigation={mockNavigate} />);
+  render(
+    <MemoryRouter> {/* Wrap the component in MemoryRouter */}
+      <NavBar navigation={mockNavigate} />
+    </MemoryRouter>
+  );
 };
 
 describe("NavBar Component", () => {
