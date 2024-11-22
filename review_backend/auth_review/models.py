@@ -101,11 +101,13 @@ class Client(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         max_length=50, primary_key=True, unique=True, blank=False
     ) # Unique username, primary key
-
+    email = models.EmailField(max_length=50, primary_key=True, unique=True, blank=False) # Email field
+    is_verified = models.BooleanField(default=False) # Marks user as verified
     is_admin = models.BooleanField(default=False) # Marks user as admin
     is_staff = models.BooleanField(default=False) # Marks user as staff
 
     USERNAME_FIELD = "username" # Set 'username' as identifier for authentication
+    REQUIRED_FIELDS = ['email'] # Required fields for user creation
     objects = ClientManager() # Assign custom manager for user creation
 
     # pylint: disable=E0307
