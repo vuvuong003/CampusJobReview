@@ -12,7 +12,7 @@ system to map URLs to specific views in the application.
 from django.urls import include, path # Import 'include' and 'path' for URL configuration
 from rest_framework.routers import DefaultRouter # Import DefaultRouter for automated URL routing
 # Local application imports
-from .views import ReviewsViewSet, VacanciesViewSet, FilterReviewsView
+from .views import ReviewsViewSet, VacanciesViewSet, ReviewsView
 
 # Initialize the default router for automatically handling URLs for viewsets
 router = DefaultRouter()
@@ -23,6 +23,5 @@ router.register(r'vacancies', VacanciesViewSet) # Register 'vacancies' endpoint 
 # Define URL patterns for the service application
 urlpatterns = [
     path('', include(router.urls)), # Include router-generated URLs for registered viewsets
-    path('filter/', FilterReviewsView.as_view(), name='filter-reviews'), # Define 'filter/'
-    # path for filtered reviews view
+    path('all_reviews/', ReviewsView.as_view(), name='get-reviews')
 ]
