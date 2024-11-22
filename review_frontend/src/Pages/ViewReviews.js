@@ -149,7 +149,7 @@ class Reviews extends React.Component {
     for (let key in this.state.formData) {
       if (this.state.formData[key] !== "") {
         if (key == "department" || key == "locations" || key == "job_title"){
-          updatedList = [...updatedList].filter((job) => String(job[key]).includes(this.state.formData[key]));
+          updatedList = [...updatedList].filter((job) => String(job[key]).toLowerCase().includes(this.state.formData[key].toLowerCase()));
         } else if (key == "min_rating") {
           updatedList = [...updatedList].filter((job) => job.rating >= Number(this.state.formData[key]));
         } else {
