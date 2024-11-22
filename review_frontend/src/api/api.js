@@ -9,7 +9,7 @@
  * @constant {string}
  */
 let base_url =
-  "https://2e36-2405-201-17-f0cf-8663-5a65-cde3-65a1.ngrok-free.app/";
+  " https://4aef-2603-6081-23f0-6ed0-2c33-5aa2-39db-1abf.ngrok-free.app/";
 
 /**
  * URL endpoint for user authentication
