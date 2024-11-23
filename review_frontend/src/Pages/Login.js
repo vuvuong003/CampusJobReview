@@ -56,15 +56,25 @@ class Login extends React.Component {
    */
   handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(this.state.formData);
-    let response = await unprotected_api_call(login_url, this.state.formData);
-    if (response.status === 200) {
-      let data = await response.json();
-      localStorage.setItem("user_data", JSON.stringify(data));
-      localStorage.setItem("login", "true");
-      this.props.navigate("/");
-    } else {
-      alert("Invalid Credentials");
+    try {
+      let response = await unprotected_api_call(login_url, this.state.formData);
+
+      if (response.ok) {
+        let data = await response.json();
+        if (data.data && data.data.val) {
+          localStorage.setItem("user_data", JSON.stringify(data));
+          localStorage.setItem("login", "true");
+          this.props.navigate("/");
+        } else {
+          alert("Login failed. Please verify your email first.");
+        }
+      } else {
+        const errorData = await response.json();
+        alert(errorData.detail || "Invalid Credentials");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Server Error. Please try again later.");
     }
   };
 

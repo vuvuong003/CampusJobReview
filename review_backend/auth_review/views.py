@@ -19,6 +19,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView  # pylint: disabl
 # from django.shortcuts import render
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
 from .serializers import MyTokenObtainPairSerializer, RegisterSerializer
+from django.conf import settings
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.core.mail import send_mail
+from django.contrib.auth.tokens import default_token_generator
 
 # This class is responsible for handling essential functionality for user
 # registration and authentication.
@@ -83,17 +88,44 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         # serializer checks if the provided data is valid
         if serializer.is_valid():
-            serializer.save()
+            user = serializer.save()
             # if valid a new user is created with a success response. If not,
             # then return a BAD REQUEST
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            verification_link = f"{request.scheme}://{request.get_host()}/verify-email/{uid}/{token}/"
+
+            send_mail(
+                'Email Verification',
+                f'Click the link below to verify your email: {verification_link}',
+                settings.DEFAULT_FROM_EMAIL,
+                [user.email],
+                fail_silently=False,
+            )
             return Response(
-                {"data": {"val": True, "detail": "Registration Successful"}},
+                {"data": {"val": True, "detail": "Registration Successful. Please verify your email."}},
                 status=status.HTTP_200_OK,
             )
         return Response(
             {"data": {"val": False, "detail": serializer.errors}},
             status=status.HTTP_400_BAD_REQUEST,
         )
+
+class VerifyEmailView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, uib64, token):
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, token):
+            user.is_verified = True
+            user.save()
+            return Respones({"message": "Email verified successfully."}, status=status.HTTP_200_OK)
+        return Response({"message": "Invalid verification link or user ID."}, status=status.HTTP_400_BAD_REQUEST)
 
 
 # view to authenticate

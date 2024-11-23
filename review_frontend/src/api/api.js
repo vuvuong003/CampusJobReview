@@ -9,7 +9,7 @@
  * @constant {string}
  */
 let base_url =
-  " https://4aef-2603-6081-23f0-6ed0-2c33-5aa2-39db-1abf.ngrok-free.app/";
+  "https://b2c7-2603-6081-23f0-6ed0-fc11-f696-7b47-d16c.ngrok-free.app/";
 
 /**
  * URL endpoint for user authentication
@@ -51,32 +51,22 @@ export let unprotected_api_call = async (url, data = {}, type = "POST") => {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("ngrok-skip-browser-warning", true);
 
-    let raw;
-    let requestOptions;
+    let requestOptions = {
+      method: type,
+      headers: myHeaders,
+      redirect: "follow",
+    };
 
     // Configure request options based on HTTP method
-    if (type === "GET") {
-      requestOptions = {
-        method: "GET",
-        redirect: "follow",
-        headers: myHeaders,
-      };
-    } else {
-      // For non-GET requests, stringify the data and include in body
-      raw = JSON.stringify(data);
-      requestOptions = {
-        method: type,
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
+    if (type !== "GET") {
+      requestOptions.body = JSON.stringify(data);
     }
 
-    let response = await fetch(url, requestOptions);
+    const response = await fetch(url, requestOptions);
     return response;
-  } catch (e) {
-    console.log(e);
-    alert("Server Error");
+  } catch (error) {
+    console.log("API Error:", error);
+    throw error;
   }
 };
 

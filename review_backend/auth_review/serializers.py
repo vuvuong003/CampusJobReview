@@ -53,9 +53,12 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         if user is None:
             raise ValidationError("User does not exist.")
+        if not user.is_verified:
+            raise ValidationError("Email is not verified.")
 
         token = super(MyTokenObtainPairSerializer, cls).get_token(user) # Generate token
         token["username"] = user.username  # Add custom claim for username
+        token["is_verified"] = user.is_verified
         return token
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -77,12 +80,18 @@ class RegisterSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(queryset=User.objects.all())] # Ensures unique usernames
     )
 
+    email = serializers.EmailField(
+        required=True,
+    )
+
     password = serializers.CharField(
         write_only=True, # Password will not be returned in serialized output
         # password is required field
         required=True, # Field is required for user creation
-        validators=[validate_password], # Enforce strong password requirements
+        validators=[validate_password], 
+        style={'input_type': 'password'}# Enforce strong password requirements
     )
+
 
     # called when creating an user.
     def create(self, validated_data):
@@ -95,7 +104,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         Returns:
             User: The created user instance.
         """
-        user = User.objects.create(username=validated_data["username"]) # Create user with username
+        user = User.objects.create(username=validated_data["username"], email=validated_data['email'], is_verified=False) # Create user with username
         user.is_active = True # Set user to active state
         user.is_admin = True # Grant admin privileges
         user.set_password(validated_data["password"]) # Securely hash the password
@@ -113,4 +122,4 @@ class RegisterSerializer(serializers.ModelSerializer):
             fields (list): Fields included in the serialized output.
         """
         model = User # Link serializer to the User model
-        fields = ["username", "password"] # Specify fields to include in output
+        fields = ["username", "password", "email"] # Specify fields to include in output
