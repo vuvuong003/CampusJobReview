@@ -8,8 +8,9 @@
  * Base URL for the API endpoints
  * @constant {string}
  */
-let base_url =
-  "https://b2c7-2603-6081-23f0-6ed0-fc11-f696-7b47-d16c.ngrok-free.app/";
+export let base_url = "http://localhost:8000/";
+
+export let frontend_url = "http://localhost:3000/";
 
 /**
  * URL endpoint for user authentication

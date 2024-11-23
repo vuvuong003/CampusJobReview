@@ -101,7 +101,10 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:8000",
+]
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
@@ -220,13 +223,13 @@ STATIC_URL = "static/" # Set the URL for serving static files
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField" # Use BigAutoField as
 # the default primary key field
 
+FRONTEND_URL = os.getenv("FRONTEND_URL", 'http://localhost:3000') # Get the frontend URL from environment variable
+BACKEND_URL = os.getenv("BACKEND_URL", 'http://localhost:8000') # Get the backend URL from environment variable
 # Email configuration for sending verification emails
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'rohankhandarelect@gmail.com'
-EMAIL_HOST_PASSWORD = 'cmoo fbxv xdur vptm'
-DEFAULT_FROM_EMAIL = 'rohankhandarelect@gmail.com'
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY") # Get the SendGrid API key from environment variable
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL") # Get the default email address from environment variable
+
 
 

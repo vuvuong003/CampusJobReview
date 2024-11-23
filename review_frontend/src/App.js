@@ -10,6 +10,7 @@ import Login from "./Pages/Login";
 import Signup from "./Pages/SignUp";
 import AddReview from "./Pages/AddReview";
 import Reviews from "./Pages/ViewReviews";
+import VerifyEmail from "./Pages/VerifyEmail";
 
 /**
  * @function App
@@ -38,6 +39,7 @@ function App() {
           {/* Review management routes */}
           <Route path="/add-review" element={<AddReview />} />
           <Route path="/view-reviews" element={<Reviews />} />
+          <Route path="verify-email/:uid/:token" element={<VerifyEmail />} />
         </Routes>
       </Router>
     </div>

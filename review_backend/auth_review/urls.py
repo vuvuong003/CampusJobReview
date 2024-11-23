@@ -28,7 +28,7 @@ urlpatterns = [
     # new users to sign up and create an account in the system.
     path("register/", RegisterView.as_view(), name="register"),
 
-    path("verify-email/<uib64>/<token>/", VerifyEmailView.as_view(), name="verify-email"),
+    path("verify-email/<str:uidb64>/<str:token>/", VerifyEmailView.as_view(), name="verify_email"),
 ]
 # Enable the API to respond to different formats by applying format suffix patterns
 urlpatterns = format_suffix_patterns(urlpatterns)

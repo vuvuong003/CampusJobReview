@@ -20,10 +20,12 @@ from rest_framework_simplejwt.views import TokenObtainPairView  # pylint: disabl
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
 from .serializers import MyTokenObtainPairSerializer, RegisterSerializer
 from django.conf import settings
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import default_token_generator
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 # This class is responsible for handling essential functionality for user
 # registration and authentication.
@@ -88,24 +90,39 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         # serializer checks if the provided data is valid
         if serializer.is_valid():
-            user = serializer.save()
-            # if valid a new user is created with a success response. If not,
-            # then return a BAD REQUEST
-            token = default_token_generator.make_token(user)
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            verification_link = f"{request.scheme}://{request.get_host()}/verify-email/{uid}/{token}/"
+            try:
+                user = serializer.save()
+                token = default_token_generator.make_token(user)
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+                verification_link = f"{settings.FRONTEND_URL}/verify-email/{uid}/{token}/"
+                
+                message = Mail(
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to_emails=user.email,
+                    subject="Verify your email",
+                    html_content=f"Click <a href='{verification_link}'>{verification_link}</a> to verify your email."
+                )
 
-            send_mail(
-                'Email Verification',
-                f'Click the link below to verify your email: {verification_link}',
-                settings.DEFAULT_FROM_EMAIL,
-                [user.email],
-                fail_silently=False,
-            )
-            return Response(
-                {"data": {"val": True, "detail": "Registration Successful. Please verify your email."}},
-                status=status.HTTP_200_OK,
-            )
+                try:
+                    sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                    sg.send(message)
+                    return Response(
+                    {"data": {"val": True, "detail": "Registration Successful. Please verify your email."}},
+                    status=status.HTTP_200_OK,
+                    )
+                except Exception as e:
+                    # Delete the user if email sending fails
+                    user.delete()
+                    return Response(
+                        {"data": {"val": False, "detail": f"Registration failed: {str(e)}"}},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    )
+            except Exception as e:
+                return Response(
+                    {"data": {"val": False, "detail": f"Registration failed: {str(e)}"}},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
+                
         return Response(
             {"data": {"val": False, "detail": serializer.errors}},
             status=status.HTTP_400_BAD_REQUEST,
@@ -114,19 +131,28 @@ class RegisterView(APIView):
 class VerifyEmailView(APIView):
     permission_classes = [AllowAny]
 
-    def get(self, request, uib64, token):
+    def get(self, request, uidb64, token):
         try:
             uid = force_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uid)
-        except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-            user = None
-
-        if user is not None and default_token_generator.check_token(user, token):
-            user.is_verified = True
-            user.save()
-            return Respones({"message": "Email verified successfully."}, status=status.HTTP_200_OK)
-        return Response({"message": "Invalid verification link or user ID."}, status=status.HTTP_400_BAD_REQUEST)
-
+            
+            if user is not None and default_token_generator.check_token(user, token):
+                user.is_verified = True
+                user.save()
+                return Response(
+                    {"message": "Email verified successfully."}, 
+                    status=status.HTTP_200_OK
+                )
+            return Response(
+                {"message": "Invalid verification link."}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist) as e:
+            print(f"Verification error: {str(e)}")  # Add debugging
+            return Response(
+                {"message": f"Invalid user ID: {str(e)}"}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 # view to authenticate
 # This class handles user authenticaion and generates JWTs, providing
@@ -171,36 +197,26 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
     # pylint: disable=W0221,W0237
-    def post(self, requests):
-        """
-        Handle user authentication requests.
+    def post(self, request, *args, **kwargs):
+        try:
+            user = User.objects.get(username=request.data.get('username'))
+            if not user.is_verified:
+                return Response(
+                    {"detail": "Please verify your email before logging in."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        except User.DoesNotExist:
+            pass
 
-        This method processes authentication requests and generates a JWT
-        token if the provided credentials are valid. It retrieves the
-        user's index in the database to include additional details in the
-        response.
-
-        Args:
-            requests: The HTTP request containing the authentication data.
-
-
-        Returns:
-            Response: A response object containing the authentication status,
-            generated tokens, and user details.
-        """
-        r = super().post(requests)
-        # successful authentication then retreive the username from the request and search for
-        # user's index in the database.
-        # If the token generation fails, return the original response
-        if r.status_code == 200:
-
+        response = super().post(request, *args, **kwargs)
+        if response.status_code == 200:
             return Response(
                 {
                     "data": {
                         "val": True,
-                        "tokens": r.data,
+                        "tokens": response.data,
                     }
                 },
                 status=status.HTTP_200_OK,
             )
-        return r
+        return response
