@@ -18,6 +18,7 @@ from rest_framework import status  # pylint: disable=E0401
 from rest_framework_simplejwt.views import TokenObtainPairView  # pylint: disable=E0401
 # from django.shortcuts import render
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
+from django.db.models import Q
 from .serializers import MyTokenObtainPairSerializer, RegisterSerializer
 
 # This class is responsible for handling essential functionality for user
@@ -72,10 +73,10 @@ class RegisterView(APIView):
         """
         # checks if username provided already exists in the database then
         # return with an 400 BAD REQUEST
-        user = User.objects.filter(username=request.data["username"])
+        user = User.objects.filter(Q(username=request.data["username"]) | Q(email=request.data["email"]))
         if len(user) > 0:
             return Response(
-                {"data": {"val": False, "detail": "Username Exists"}},
+                {"data": {"val": False, "detail": "Username or email Exists"}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # if username is unique, the serializer is instantiated with the

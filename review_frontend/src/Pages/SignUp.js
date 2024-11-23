@@ -25,6 +25,7 @@ class Signup extends React.Component {
   state = {
     formData: {
       password: "", // User's password
+      email: "", // User's email
       username: "", // User's username
     },
   };
@@ -125,6 +126,22 @@ class Signup extends React.Component {
                     onChange={this.handleChange}
                     className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                     aria-label="Username"
+                    required
+                  />
+                </div>
+
+                <div className="mb-6">
+                  <label htmlFor="username" className="block text-gray-700">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="text"
+                    name="email"
+                    value={this.state.formData.email}
+                    onChange={this.handleChange}
+                    className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    aria-label="Email"
                     required
                   />
                 </div>
