@@ -108,6 +108,9 @@ class Client(AbstractBaseUser, PermissionsMixin):
     is_verified = models.BooleanField(default=False) # Marks user as verified
     is_admin = models.BooleanField(default=False) # Marks user as admin
     is_staff = models.BooleanField(default=False) # Marks user as staff
+    first_name = models.CharField(max_length=30, blank=True, null=True) # First name field
+    last_name = models.CharField(max_length=30, blank=True, null=True) # Last name field
+    bio = models.TextField(blank=True, null=True) # Bio field
 
     USERNAME_FIELD = "username" # Set 'username' as identifier for authentication
     REQUIRED_FIELDS = ['email'] # Required fields for user creation

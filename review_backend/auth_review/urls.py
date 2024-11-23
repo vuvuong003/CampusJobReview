@@ -14,6 +14,7 @@ from rest_framework_simplejwt.views import TokenRefreshView  # pylint: disable=E
 from django.urls import path  # pylint: disable=E0401
 # Import custom views for obtaining JWT tokens and registering users
 from .views import MyTokenObtainPairView, RegisterView, VerifyEmailView
+from .views import ProfileView
 
 
 # Define URL routing for the auth_review application.
@@ -29,6 +30,8 @@ urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
 
     path("verify-email/<str:uidb64>/<str:token>/", VerifyEmailView.as_view(), name="verify_email"),
+
+    path("profile/", ProfileView.as_view(), name="profile"),
 ]
 # Enable the API to respond to different formats by applying format suffix patterns
 urlpatterns = format_suffix_patterns(urlpatterns)

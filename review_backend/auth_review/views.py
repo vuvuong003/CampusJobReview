@@ -26,7 +26,11 @@ from django.core.mail import send_mail
 from django.contrib.auth.tokens import default_token_generator
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-
+from rest_framework import generics, permissions
+from rest_framework.permissions import IsAuthenticated
+from .models import Client
+from .serializers import ProfileSerializer
+from rest_framework import status
 # This class is responsible for handling essential functionality for user
 # registration and authentication.
 
@@ -220,3 +224,19 @@ class MyTokenObtainPairView(TokenObtainPairView):
                 status=status.HTTP_200_OK,
             )
         return response
+    
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        """Get user Profile"""
+        serializer = ProfileSerializer(request.user)
+        return Response(serializer.data)
+
+    def put(self, request):
+        """Update user Profile"""
+        serializer = ProfileSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

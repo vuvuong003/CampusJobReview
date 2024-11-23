@@ -9,6 +9,7 @@ from rest_framework import serializers  # pylint: disable=E0401
 from rest_framework.validators import UniqueValidator  # pylint: disable=E0401
 from rest_framework.exceptions import ValidationError  # Use this for consistency
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer  # pylint: disable=E0401
+from .models import Client  # Import the Client model
 
 # Import for enforcing strong passwords
 from django.contrib.auth.password_validation import validate_password  # pylint: disable=E0401
@@ -123,3 +124,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         """
         model = User # Link serializer to the User model
         fields = ["username", "password", "email"] # Specify fields to include in output
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'bio']
+        read_only_fields = ['username', 'email']

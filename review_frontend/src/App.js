@@ -11,7 +11,7 @@ import Signup from "./Pages/SignUp";
 import AddReview from "./Pages/AddReview";
 import Reviews from "./Pages/ViewReviews";
 import VerifyEmail from "./Pages/VerifyEmail";
-
+import Profile from "./Pages/Profile";
 /**
  * @function App
  * @description Root component of the application that sets up routing
@@ -40,6 +40,7 @@ function App() {
           <Route path="/add-review" element={<AddReview />} />
           <Route path="/view-reviews" element={<Reviews />} />
           <Route path="verify-email/:uid/:token" element={<VerifyEmail />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </div>
