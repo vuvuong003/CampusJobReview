@@ -7,6 +7,14 @@ The original authors of this project are
 - [Madiha Mansoori](https://github.com/madiha2001)
 - [Anagha Patil](https://github.com/Anagha-2000)
 
+  The authors of the next iteration!
+- Amay Gada
+  - ahgada@ncsu.edu
+- Tahreem Yasir
+  - tyasir@ncsu.edu
+- Shazia Muckram 
+  - smuckra@ncsu.edu
+
 Please refer to the original repository [here!](https://github.com/akshat22/campus-job-review-system)
 
 To gain a deeper understanding of the changes and improvements from the original project to the newly enhanced version, please watch the demo video. This video showcases the new functionalities and highlights the enhancements made throughout the project
@@ -38,10 +46,10 @@ Explore our platform and take the first step towards finding the right on-campus
 [![DOI](https://zenodo.org/badge/876539766.svg)](https://doi.org/10.5281/zenodo.14007974)
 ![Python Badge](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)                             ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=white)      ![MongoDB](https://img.shields.io/badge/MongoDB-brightgreen?logo=mongodb&logoColor=white)       ![Django](https://img.shields.io/badge/Django-darkgreen?logo=django&logoColor=white)        ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
-[![Autopep8 Check](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/autopep.yml)     [![Pylint Check](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/pylint.yml)     [![Black](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/black.yml) [![Prettier](https://github.com/SAT510/CampusJobReview/actions/workflows/prettier.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/prettier.yml) 
+[![Autopep8 Check](https://github.com/vuvuong003/CampusJobReview/actions/workflows/autopep.yml/badge.svg)](https://github.com/vuvuong003/CampusJobReview/actions/workflows/autopep.yml)     [![Pylint Check](https://github.com/vuvuong003/CampusJobReview/actions/workflows/pylint.yml/badge.svg)](https://github.com/vuvuong003/CampusJobReview/actions/workflows/pylint.yml)     [![Black](https://github.com/vuvuong003/CampusJobReview/actions/workflows/black.yml/badge.svg)](https://github.com/vuvuong003/CampusJobReview/actions/workflows/black.yml) [![Prettier](https://github.com/vuvuong003/CampusJobReview/actions/workflows/prettier.yml/badge.svg)](https://github.com/vuvuong003/CampusJobReview/actions/workflows/prettier.yml) 
 
-[![GitHub open issues](https://img.shields.io/github/issues-raw/SAT510/CampusJobReview)](https://github.com/SAT510/CampusJobReview/issues?q=is%3Aopen)  
-[![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/SAT510/CampusJobReview)](https://github.com/SAT510/CampusJobReview/issues?q=is%3Aclosed)
+[![GitHub open issues](https://img.shields.io/github/issues-raw/vuvuong003/CampusJobReview)](https://github.com/vuvuong003/CampusJobReview/issues?q=is%3Aopen)  
+[![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/vuvuong003/CampusJobReview)](https://github.com/vuvuong003/CampusJobReview/issues?q=is%3Aclosed)
 
 [![Django Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml)  [![Jest Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml)   
 
@@ -56,7 +64,17 @@ Explore our platform and take the first step towards finding the right on-campus
 ### Demo Video 
 Explore a demo of our application [here!](https://drive.google.com/file/d/1u1iyAw3LeA0d42yTTJDXIi-HXPxxlzvG/view?usp=sharing)
 
-### Newly Enhanced Features
+### New Features!
+Our newly enhanced features will take Campus Job Review to the next level as they significantly elevate the platform by enhancing user engagement, improving usability, and strengthening security, making it a more robust and appealing tool for students. Our enhancements include:
+
+- **Discussion Forum**: Introduced a discussion board where users can share experience, ask questions or simply comment on job reviews.
+- **Enhaced Job Review Display**:  Redesigned the job reviews table with collapsible rows, allowing users to expand jobs for detailed descriptions, along with reviews and associated comments, improving navigation and user experience.
+- **Email Verification**: Improve the sign-up process and user authentication by email verification, and ensure the user's email is valid and active.
+- **Reset Password**: Users can now recover access to their accounts by resetting forgotten passwords, improving the login process.
+- **Profile Page**:  Integrated a profile page where users can view and update their account details, including their name, email, and bio.
+- **Optimize Filters**: Revampted the filter algorithm by shifting the filtering process to the frontend instead of making a backend call, resulting in immediate action upon clicking the “Filter” button.
+
+### Previous Implemented Features
 We have made lots of changes to ensure that our app is feasible, maintainable, extendable, and can be used by a broad audience. Throughout this process, we have extended various features and fixed bugs. Our enhancements and bug fixes include:
 
 1. Database Migration: We have migrated the current minimal SQL to MongoDB. This ensures enhanced performance, particularly with faster queries for dynamic filtering, while also improving scalability.
@@ -107,16 +125,15 @@ Explore our methodologies in developing the Campus Job Review application throug
 1. Use Case Mini Tutorial: Discover the enhanced features of the application by following along with engaging use cases illustrated through various images. [Click here to get started!](https://github.com/SAT510/CampusJobReview/blob/shazia_testing/UseCase_Documentation.md)
 
 2. Add API Endpoints and give brief description. [Click here to get started!](https://github.com/SAT510/CampusJobReview/blob/test/API_Documentation.md)
-
   
-4. Outline of the development and specifications of the CampusJobReview project including technical details, project goals, architecture, feature implementations, and potential areas for future development. This document includes the point description of all the classes and methods of the system. [SystemSpecDoc](https://github.com/SAT510/CampusJobReview/blob/test/project_docs/CSC-510.pdf)
+3. Outline of the development and specifications of the CampusJobReview project including technical details, project goals, architecture, feature implementations, and potential areas for future development. This document includes the point description of all the classes and methods of the system. [SystemSpecDoc](https://github.com/SAT510/CampusJobReview/blob/test/project_docs/CSC-510.pdf)
 
 ### Team Members
-- Amay Gada
-  - ahgada@ncsu.edu
-- Tahreem Yasir
-  - tyasir@ncsu.edu
-- Shazia Muckram 
-  - smuckra@ncsu.edu
+- Vu Vuong
+  - vhvuong@ncsu.edu
+- Rohan Khandare
+  - rkhanda3@ncsu.edu
+- Hrishikesh Salway 
+  - hpsalway@ncsu.edu
 
 Feel free to reach out to us for any questions or concerns. We are happy to help and would love to meet you all!
