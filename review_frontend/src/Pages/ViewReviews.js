@@ -6,7 +6,7 @@
 import * as React from "react";
 import NavBar from "./Navbar";
 import { useNavigate } from "react-router-dom";
-import { review_url, filter_url, unprotected_api_call } from "../api/api";
+import { review_url, all_reviews_url, unprotected_api_call } from "../api/api";
 
 /**
  * @class JobRow
@@ -88,6 +88,7 @@ class Reviews extends React.Component {
    * @property {string} formData.max_rating - Maximum rating filter
    */
   state = {
+    allJobs: [],
     jobs: [],
     formData: {
       department: "",
@@ -104,10 +105,10 @@ class Reviews extends React.Component {
    * @async
    */
   componentDidMount = async () => {
-    let response = await unprotected_api_call(filter_url + "/", {}, "GET");
+    let response = await unprotected_api_call(all_reviews_url, {}, "GET");
     if (response.status === 200) {
       let data = await response.json();
-      this.setState({ jobs: data });
+      this.setState({ allJobs: data, jobs: data });
       console.log("Data: ", data);
     } else {
       alert("Server Error");
@@ -131,31 +132,34 @@ class Reviews extends React.Component {
   };
 
   /**
-   * Handles filter form submission and updates job listings
+   * Handles filter form submsision and updates job listings
    * @method
-   * @async
    * @param {Object} e - Form submission event
-   * @description Constructs URL with filter parameters and fetches filtered results
+   * @description Creates a new job list initiated to the origina list and filters out the unrequired jobs
    */
   handleSubmit = async (e) => {
     e.preventDefault();
-    //update the url to have filter parameters
-    let fu = filter_url + "/?";
-    // Add non-empty filter parameters to URL
+
+    // get the original list of all job reviews
+    const jobs = this.state.allJobs;
+
+    // a copy of the original list which will contain the filtered job reviews
+    let updatedList = jobs;
+
     for (let key in this.state.formData) {
       if (this.state.formData[key] !== "") {
-        fu += key + "=" + this.state.formData[key] + "&";
-      }
-
-      let response = await unprotected_api_call(fu + "/", {}, "GET");
-      if (response.status === 200) {
-        let data = await response.json();
-        this.setState({ jobs: data });
-      } else {
-        alert("Server Error");
+        if (key == "department" || key == "locations" || key == "job_title"){
+          updatedList = [...updatedList].filter((job) => String(job[key]).toLowerCase().includes(this.state.formData[key].toLowerCase()));
+        } else if (key == "min_rating") {
+          updatedList = [...updatedList].filter((job) => job.rating >= Number(this.state.formData[key]));
+        } else {
+          updatedList = [...updatedList].filter((job) => job.rating <= Number(this.state.formData[key]));
+        }
       }
     }
-  };
+
+    this.setState({ jobs: updatedList })
+  }
 
   render() {
     // Background image styles

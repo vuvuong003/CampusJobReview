@@ -9,7 +9,7 @@
  * @constant {string}
  */
 let base_url =
-  "https://2e36-2405-201-17-f0cf-8663-5a65-cde3-65a1.ngrok-free.app/";
+  "https://6cf9-2603-6081-23f0-6ed0-64e4-504a-1844-ca14.ngrok-free.app/";
 
 /**
  * URL endpoint for user authentication
@@ -30,10 +30,10 @@ export let register_url = base_url + "auth/register/";
 export let review_url = base_url + "service/reviews/";
 
 /**
- * URL endpoint for filtering services
+ * URL endpoint for reviews services
  * @constant {string}
  */
-export let filter_url = base_url + "service/filter";
+export let all_reviews_url = base_url + "service/all_reviews/";
 
 /**
  * Makes an API call that doesn't require authentication
