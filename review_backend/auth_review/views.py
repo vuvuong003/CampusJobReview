@@ -22,13 +22,13 @@ from .serializers import MyTokenObtainPairSerializer, RegisterSerializer
 from django.conf import settings
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from django.core.mail import send_mail
 from django.contrib.auth.tokens import default_token_generator
+from django.db.models import Q
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from rest_framework import generics, permissions
 from rest_framework.permissions import IsAuthenticated
-from .models import Client
 from .serializers import ProfileSerializer
 from rest_framework import status
 # This class is responsible for handling essential functionality for user
@@ -83,10 +83,13 @@ class RegisterView(APIView):
         """
         # checks if username provided already exists in the database then
         # return with an 400 BAD REQUEST
-        user = User.objects.filter(username=request.data["username"])
+        user = User.objects.filter(
+            Q(username=request.data["username"]) | Q(email=request.data["email"])
+            )
+        
         if len(user) > 0:
             return Response(
-                {"data": {"val": False, "detail": "Username Exists"}},
+                {"data": {"val": False, "detail": "Entered username or email exists"}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # if username is unique, the serializer is instantiated with the
@@ -240,3 +243,63 @@ class ProfileView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class SendOtpView(APIView):
+    def post(self, request):
+        try:
+            email = request.data.get("email")
+            generatedOtp = request.data.get("generated_otp")
+
+            user = User.objects.get(email=email)
+
+            if user is None:
+                response_data = {'message' : 'Entered email id does not exist'}
+                return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                # metadata of mail (sender, recipient, subject and content)
+                message = Mail(
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to_emails=user.email,
+                    subject="Reset your password",
+                    html_content=f"Hi {user.username}, <br/><br/>Your OTP for resetting your password is <b>{generatedOtp}</b>. Please use it within the next 10 minutes."
+                )
+
+                # sending mail
+                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                sg.send(message)
+
+                return Response(data={"otp": generatedOtp}, status=status.HTTP_200_OK)
+
+        except User.DoesNotExist:
+            response_data = {'message' : 'Entered email id does not exist'}
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+        
+class UpdatePasswordView(APIView):
+    """
+    Handles updating password for an existing user
+
+    Args:
+        request: The HTTP request.
+
+    Returns:
+        Response: A response object containing an error message.  
+    """
+    def post(self, request):
+        try:
+            user = User.objects.get(email=request.data.get("email"))
+
+            password = request.data.get("password")
+
+            try:
+                validate_password(password, user)
+            except ValidationError as e:
+                return Response({"errors": e.message}, status=status.HTTP_400_BAD_REQUEST)
+
+            user.set_password(password)
+            user.save()
+
+            return Response({"message": "Password updated successfully!"}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(data={'message': f'{e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

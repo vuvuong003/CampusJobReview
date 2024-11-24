@@ -5,7 +5,7 @@
 
 import * as React from "react";
 import NavBar from "./Navbar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { login_url, unprotected_api_call } from "../api/api";
 
 /**
@@ -164,6 +164,11 @@ class Login extends React.Component {
                   >
                     Login
                   </button>
+                </div>
+                <div className="flex justify-center">
+                  <Link to="/forgot-password" className="w-full px-4 py-2 mt-2">
+                    Forgot Password?
+                  </Link>
                 </div>
               </form>
             </div>

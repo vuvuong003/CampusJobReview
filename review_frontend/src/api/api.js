@@ -19,6 +19,18 @@ export let frontend_url = "http://localhost:3000/";
 export let login_url = base_url + "auth/token/";
 
 /**
+ * URL endpoint for sending otp to user email
+ * @constant {string}
+ */
+export let send_otp_url = base_url + "auth/send-otp/"
+
+/**
+ * URL endpoing for updating password of an existing user
+ * @constant {string}
+ */
+export let update_password_url = base_url + "auth/update-password/"
+
+/**
  * URL endpoint for user registration
  * @constant {string}
  */

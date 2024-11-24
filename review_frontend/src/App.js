@@ -12,6 +12,9 @@ import AddReview from "./Pages/AddReview";
 import Reviews from "./Pages/ViewReviews";
 import VerifyEmail from "./Pages/VerifyEmail";
 import Profile from "./Pages/Profile";
+import ForgotPassword from "./Pages/ForgotPassword"
+import UpdatePassword from "./Pages/UpdatePassword";
+
 /**
  * @function App
  * @description Root component of the application that sets up routing
@@ -41,6 +44,8 @@ function App() {
           <Route path="/view-reviews" element={<Reviews />} />
           <Route path="verify-email/:uid/:token" element={<VerifyEmail />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/new-password" element={<UpdatePassword />} />
         </Routes>
       </Router>
     </div>

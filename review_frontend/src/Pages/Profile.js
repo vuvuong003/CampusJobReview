@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { protected_api_call, base_url } from "../api/api";
 import NavBar from "./Navbar";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -53,7 +54,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <NavBar />
+      <NavBar navigation={useNavigate()}/>
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">

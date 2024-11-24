@@ -15,7 +15,8 @@ class Command(BaseCommand):
             'Rohan',
             'RK',
             'RRK',
-            'BADBOYXD01'
+            'BADBOYXD01',
+            'hpsalway'
         ]
 
         for username in users_to_delete:
