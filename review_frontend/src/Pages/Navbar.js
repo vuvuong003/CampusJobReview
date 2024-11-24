@@ -31,7 +31,7 @@ function NavBar(props) {
 
   // Modify navigation options if user is logged in
   if (localStorage.getItem("login") === "true") {
-    pages = ["Home", "Add Review", "View Reviews", "Logout"];
+    pages = ["Home", "Add Review", "View Reviews", "Profile", "Logout"];
   }
 
   /**
@@ -75,6 +75,8 @@ function NavBar(props) {
       props.navigation("/add-review");
     } else if (page === "View Reviews") {
       props.navigation("/view-reviews");
+    } else if (page === "Profile") {
+      props.navigation("/profile");
     }
   };
 

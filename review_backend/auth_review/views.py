@@ -19,7 +19,18 @@ from rest_framework_simplejwt.views import TokenObtainPairView  # pylint: disabl
 # from django.shortcuts import render
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
 from .serializers import MyTokenObtainPairSerializer, RegisterSerializer
-
+from django.conf import settings
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.contrib.auth.tokens import default_token_generator
+from django.db.models import Q
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+from rest_framework.permissions import IsAuthenticated
+from .serializers import ProfileSerializer
+from rest_framework import status
 # This class is responsible for handling essential functionality for user
 # registration and authentication.
 
@@ -72,10 +83,13 @@ class RegisterView(APIView):
         """
         # checks if username provided already exists in the database then
         # return with an 400 BAD REQUEST
-        user = User.objects.filter(username=request.data["username"])
+        user = User.objects.filter(
+            Q(username=request.data["username"]) | Q(email=request.data["email"])
+            )
+        
         if len(user) > 0:
             return Response(
-                {"data": {"val": False, "detail": "Username Exists"}},
+                {"data": {"val": False, "detail": "Entered username or email exists"}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # if username is unique, the serializer is instantiated with the
@@ -83,18 +97,69 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         # serializer checks if the provided data is valid
         if serializer.is_valid():
-            serializer.save()
-            # if valid a new user is created with a success response. If not,
-            # then return a BAD REQUEST
-            return Response(
-                {"data": {"val": True, "detail": "Registration Successful"}},
-                status=status.HTTP_200_OK,
-            )
+            try:
+                user = serializer.save()
+                token = default_token_generator.make_token(user)
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+                verification_link = f"{settings.FRONTEND_URL}/verify-email/{uid}/{token}/"
+                
+                message = Mail(
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to_emails=user.email,
+                    subject="Verify your email",
+                    html_content=f"Click <a href='{verification_link}'>{verification_link}</a> to verify your email."
+                )
+
+                try:
+                    sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                    sg.send(message)
+                    return Response(
+                    {"data": {"val": True, "detail": "Registration Successful. Please verify your email."}},
+                    status=status.HTTP_200_OK,
+                    )
+                except Exception as e:
+                    # Delete the user if email sending fails
+                    user.delete()
+                    return Response(
+                        {"data": {"val": False, "detail": f"Registration failed: {str(e)}"}},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    )
+            except Exception as e:
+                return Response(
+                    {"data": {"val": False, "detail": f"Registration failed: {str(e)}"}},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
+                
         return Response(
             {"data": {"val": False, "detail": serializer.errors}},
             status=status.HTTP_400_BAD_REQUEST,
         )
 
+class VerifyEmailView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, uidb64, token):
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+            
+            if user is not None and default_token_generator.check_token(user, token):
+                user.is_verified = True
+                user.save()
+                return Response(
+                    {"message": "Email verified successfully."}, 
+                    status=status.HTTP_200_OK
+                )
+            return Response(
+                {"message": "Invalid verification link."}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist) as e:
+            print(f"Verification error: {str(e)}")  # Add debugging
+            return Response(
+                {"message": f"Invalid user ID: {str(e)}"}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 # view to authenticate
 # This class handles user authenticaion and generates JWTs, providing
@@ -139,36 +204,102 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
     # pylint: disable=W0221,W0237
-    def post(self, requests):
-        """
-        Handle user authentication requests.
+    def post(self, request, *args, **kwargs):
+        try:
+            user = User.objects.get(username=request.data.get('username'))
+            if not user.is_verified:
+                return Response(
+                    {"detail": "Please verify your email before logging in."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        except User.DoesNotExist:
+            pass
 
-        This method processes authentication requests and generates a JWT
-        token if the provided credentials are valid. It retrieves the
-        user's index in the database to include additional details in the
-        response.
-
-        Args:
-            requests: The HTTP request containing the authentication data.
-
-
-        Returns:
-            Response: A response object containing the authentication status,
-            generated tokens, and user details.
-        """
-        r = super().post(requests)
-        # successful authentication then retreive the username from the request and search for
-        # user's index in the database.
-        # If the token generation fails, return the original response
-        if r.status_code == 200:
-
+        response = super().post(request, *args, **kwargs)
+        if response.status_code == 200:
             return Response(
                 {
                     "data": {
                         "val": True,
-                        "tokens": r.data,
+                        "tokens": response.data,
                     }
                 },
                 status=status.HTTP_200_OK,
             )
-        return r
+        return response
+    
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        """Get user Profile"""
+        serializer = ProfileSerializer(request.user)
+        return Response(serializer.data)
+
+    def put(self, request):
+        """Update user Profile"""
+        serializer = ProfileSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class SendOtpView(APIView):
+    def post(self, request):
+        try:
+            email = request.data.get("email")
+            generatedOtp = request.data.get("generated_otp")
+
+            user = User.objects.get(email=email)
+
+            if user is None:
+                response_data = {'message' : 'Entered email id does not exist'}
+                return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                # metadata of mail (sender, recipient, subject and content)
+                message = Mail(
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to_emails=user.email,
+                    subject="Reset your password",
+                    html_content=f"Hi {user.username}, <br/><br/>Your OTP for resetting your password is <b>{generatedOtp}</b>. Please use it within the next 10 minutes."
+                )
+
+                # sending mail
+                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                sg.send(message)
+
+                return Response(data={"otp": generatedOtp}, status=status.HTTP_200_OK)
+
+        except User.DoesNotExist:
+            response_data = {'message' : 'Entered email id does not exist'}
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+        
+class UpdatePasswordView(APIView):
+    """
+    Handles updating password for an existing user
+
+    Args:
+        request: The HTTP request.
+
+    Returns:
+        Response: A response object containing an error message.  
+    """
+    def post(self, request):
+        try:
+            user = User.objects.get(email=request.data.get("email"))
+
+            password = request.data.get("password")
+
+            try:
+                validate_password(password, user)
+            except ValidationError as e:
+                return Response({"errors": e.message}, status=status.HTTP_400_BAD_REQUEST)
+
+            user.set_password(password)
+            user.save()
+
+            return Response({"message": "Password updated successfully!"}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(data={'message': f'{e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

@@ -8,14 +8,28 @@
  * Base URL for the API endpoints
  * @constant {string}
  */
-let base_url =
-  "https://6cf9-2603-6081-23f0-6ed0-64e4-504a-1844-ca14.ngrok-free.app/";
+
+export let base_url = "http://localhost:8000/";
+
+export let frontend_url = "http://localhost:3000/";
 
 /**
  * URL endpoint for user authentication
  * @constant {string}
  */
 export let login_url = base_url + "auth/token/";
+
+/**
+ * URL endpoint for sending otp to user email
+ * @constant {string}
+ */
+export let send_otp_url = base_url + "auth/send-otp/"
+
+/**
+ * URL endpoing for updating password of an existing user
+ * @constant {string}
+ */
+export let update_password_url = base_url + "auth/update-password/"
 
 /**
  * URL endpoint for user registration
@@ -51,32 +65,22 @@ export let unprotected_api_call = async (url, data = {}, type = "POST") => {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("ngrok-skip-browser-warning", true);
 
-    let raw;
-    let requestOptions;
+    let requestOptions = {
+      method: type,
+      headers: myHeaders,
+      redirect: "follow",
+    };
 
     // Configure request options based on HTTP method
-    if (type === "GET") {
-      requestOptions = {
-        method: "GET",
-        redirect: "follow",
-        headers: myHeaders,
-      };
-    } else {
-      // For non-GET requests, stringify the data and include in body
-      raw = JSON.stringify(data);
-      requestOptions = {
-        method: type,
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
+    if (type !== "GET") {
+      requestOptions.body = JSON.stringify(data);
     }
 
-    let response = await fetch(url, requestOptions);
+    const response = await fetch(url, requestOptions);
     return response;
-  } catch (e) {
-    console.log(e);
-    alert("Server Error");
+  } catch (error) {
+    console.log("API Error:", error);
+    throw error;
   }
 };
 

@@ -26,6 +26,7 @@ class Signup extends React.Component {
     formData: {
       password: "", // User's password
       username: "", // User's username
+      email: "", // User's email
     },
   };
 
@@ -56,16 +57,34 @@ class Signup extends React.Component {
    */
   handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(this.state.formData);
-    let response = await unprotected_api_call(
-      register_url,
-      this.state.formData,
-    );
-    if (response.status === 200) {
-      alert("Registration successful");
-      this.props.navigate("/login");
-    } else {
-      alert("User Exists");
+    try {
+      // Format the data according to the backend's expected structure
+      const signupData = {
+        username: this.state.formData.username,
+        email: this.state.formData.email,
+        password: this.state.formData.password,
+      };
+
+      let response = await unprotected_api_call(register_url, signupData);
+
+      if (response.ok) {
+        // Check if response is ok (status in 200-299 range)
+        const data = await response.json();
+        if (data.data && data.data.val) {
+          alert(
+            "Registration successful. Please check your email for verification link."
+          );
+          this.props.navigate("/login");
+        } else {
+          alert(data.data?.detail || "Registration failed");
+        }
+      } else {
+        const errorData = await response.json();
+        alert(errorData.data?.detail || "Registarion failed");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("Server Error. Please try again later.");
     }
   };
 
@@ -128,7 +147,21 @@ class Signup extends React.Component {
                     required
                   />
                 </div>
-
+                <div className="mb-6">
+                  <label htmlFor="email" className="block text-gray-700">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value={this.state.formData.email}
+                    onChange={this.handleChange}
+                    className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    aria-label="Email"
+                    required
+                  />
+                </div>
                 {/* Password input field */}
                 <div className="mb-6">
                   <label htmlFor="password" className="block text-gray-700">

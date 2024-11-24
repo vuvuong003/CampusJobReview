@@ -31,7 +31,7 @@ class ClientManager(BaseUserManager):
 
     # create a regular user with optional password?
 
-    def create_user(self, username, password=None):
+    def create_user(self, username, email, password=None):
         """
         Create and return a regular user with an encrypted password.
 
@@ -47,14 +47,16 @@ class ClientManager(BaseUserManager):
         """
         if username is None:
             raise TypeError("User should have a username")
-        user = self.model(username=username) # Instantiate user with username
+        if email is None:
+            raise TypeError("User should have an email")
+        user = self.model(username=username, email=self.normalize_email(email)) # Instantiate user with username
         user.set_password(password) # Encrypt and set password
 
         user.save(using=self._db) # Save user to the database
         return user
 
     # creates a superuser. Passwords is enforced for superuser accounts
-    def create_superuser(self, username, password=None):
+    def create_superuser(self, username, email, password=None):
         """
         Create and return a superuser with an encrypted password.
         Args:
@@ -69,6 +71,7 @@ class ClientManager(BaseUserManager):
             raise TypeError("Password should not be none")
         user = self.create_user(username, password) # Reuse create_user method
         user.is_active = True
+        user.is_verified = True # Mark superuser as verified
         user.is_superuser = True # Grant superuser privileges
         user.is_staff = True # Grant staff privileges
         user.is_admin = True # Grant admin privileges
@@ -101,11 +104,16 @@ class Client(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         max_length=50, primary_key=True, unique=True, blank=False
     ) # Unique username, primary key
-
+    email = models.EmailField(unique=False, blank=False, null=False) # Email field
+    is_verified = models.BooleanField(default=False) # Marks user as verified
     is_admin = models.BooleanField(default=False) # Marks user as admin
     is_staff = models.BooleanField(default=False) # Marks user as staff
+    first_name = models.CharField(max_length=30, blank=True, null=True) # First name field
+    last_name = models.CharField(max_length=30, blank=True, null=True) # Last name field
+    bio = models.TextField(blank=True, null=True) # Bio field
 
     USERNAME_FIELD = "username" # Set 'username' as identifier for authentication
+    REQUIRED_FIELDS = ['email'] # Required fields for user creation
     objects = ClientManager() # Assign custom manager for user creation
 
     # pylint: disable=E0307
