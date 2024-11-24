@@ -51,9 +51,9 @@ Explore our platform and take the first step towards finding the right on-campus
 [![GitHub open issues](https://img.shields.io/github/issues-raw/vuvuong003/CampusJobReview)](https://github.com/vuvuong003/CampusJobReview/issues?q=is%3Aopen)  
 [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/vuvuong003/CampusJobReview)](https://github.com/vuvuong003/CampusJobReview/issues?q=is%3Aclosed)
 
-[![Django Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/django-tests.yml)  [![Jest Tests](https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml/badge.svg)](https://github.com/SAT510/CampusJobReview/actions/workflows/jest_tests.yml)   
+[![Django Tests](https://github.com/vuvuong003/CampusJobReview/actions/workflows/django-tests.yml/badge.svg)](https://github.com/vuvuong003/CampusJobReview/actions/workflows/django-tests.yml)  [![Jest Tests](https://github.com/vuvuong003/CampusJobReview/actions/workflows/jest_tests.yml/badge.svg)](https://github.com/vuvuong003/CampusJobReview/actions/workflows/jest_tests.yml)   
 
-[![codecov](https://codecov.io/gh/SAT510/CampusJobReview/graph/badge.svg?token=3U8KLQ8AA4)](https://codecov.io/gh/SAT510/CampusJobReview)
+[![codecov](https://codecov.io/gh/vuvuong003/CampusJobReview/graph/badge.svg?token=3U8KLQ8AA4)](https://codecov.io/gh/vuvuong003/CampusJobReview)
 
 <p align="center"><img width="700" src="./resources/Intro_to_CampusJobReview.gif"></p>
 
@@ -90,25 +90,22 @@ We have made lots of changes to ensure that our app is feasible, maintainable, e
 6. Backend upgrade: Upgraded to a django rest framework from a basic flask application. This allows portability of the application.
 
 ### Future Scope
-1. Form Validation: Enhance frontend form validaition to have stronger checks and better user experience.
-
-2. Browser Extension Enhancement: Extend the browser extension to be integrated with the backend and show the complete review. Additionally, add an auto-fill feature based on the review information that would simplify data entry, enhancing user-friendliness and efficiency.
-
-3. Community Features: Introduce a forum or discussion board where users can share experiences, ask questions, and provide advice on job applications and interviews. This could foster a community around job hunting and reviews.
-
-4. Mobile Application Development: Develop a mobile version of the CampusJobReview platform to allow users to access job listings, submit reviews, and receive notifications on the go, enhancing accessibility and user engagement.
+- **Browser Extension Enhancement**: Extend the browser extension to be integrated with the backend and show the complete review. Additionally, add an auto-fill feature based on the review information that would simplify data entry, enhancing user-friendliness and efficiency.
+- **Mobile Application Development**: Develop a mobile version of the CampusJobReview platform to allow users to access job listings, submit reviews, and receive notifications on the go, enhancing accessibility and user engagement.
+- **Job Recommendation System**: Integrate a recommendation system to suggest on-campus jobs based on user preferences, past job reviews, and similar profiles.
+- **Two-Factor Authentication**: Implement 2FA to significantly enhance the security of the application by adding an additional layer of protection, ensuring that only authorized users can access their accounts.
 
 ### Installation
-For detailed installation steps tailored to your operating system, please refer to the [INSTALL.md](https://github.com/SAT510/CampusJobReview/blob/test/INSTALL.md) file. This guide aims to provide you comprehensive instructions as to how to set up and run your project smoothly, regardless of whether you are using Windows or macOS. We highly recommend that you follow the steps in a chronological manner to ensure a successful installation. 
+For detailed installation steps tailored to your operating system, please refer to the [INSTALL.md](https://github.com/vuvuong003/CampusJobReview/blob/test/INSTALL.md) file. This guide aims to provide you comprehensive instructions as to how to set up and run your project smoothly, regardless of whether you are using Windows or macOS. We highly recommend that you follow the steps in a chronological manner to ensure a successful installation. 
 
 ### License
-This project is licensed under the Apache License. For further details, please refer to the [License](https://github.com/SAT510/CampusJobReview/blob/test/LICENSE.md).
+This project is licensed under the Apache License. For further details, please refer to the [License](https://github.com/vuvuong003/CampusJobReview/blob/test/LICENSE.md).
 
 ### Contributions 
-We invite you to check our [CONTRIBUTING.md](https://github.com/SAT510/CampusJobReview/blob/project-resources/CONTRIBUTING.md) for guidelines on contributing to the repository and helping us enhance the project. We encourage and apprecite collaboration and would love to hear new ideas and any suggestions. We appreciate all types of collaboration whether you are a developer, a designer, or someone wih new ideas. Join our community and help us make this project even better for everyone! 
+We invite you to check our [CONTRIBUTING.md](https://github.com/vuvuong003/CampusJobReview/blob/project-resources/CONTRIBUTING.md) for guidelines on contributing to the repository and helping us enhance the project. We encourage and apprecite collaboration and would love to hear new ideas and any suggestions. We appreciate all types of collaboration whether you are a developer, a designer, or someone wih new ideas. Join our community and help us make this project even better for everyone! 
 
 ### CODE-OF-CONDUCT
-We encourage any contributions, but please make sure that these steps are taken in a respectful manner,in accordance with our [CODE-OF-CONDUCT](https://github.com/SAT510/CampusJobReview/blob/test/CODE-OF-CONDUCT.md). We strive to make this project a good experience for everyone and we value an inclusive environment as a paramount in our project. 
+We encourage any contributions, but please make sure that these steps are taken in a respectful manner,in accordance with our [CODE-OF-CONDUCT](https://github.com/vuvuong003/CampusJobReview/blob/test/CODE-OF-CONDUCT.md). We strive to make this project a good experience for everyone and we value an inclusive environment as a paramount in our project. 
 
 ### Technology Stack
 - <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" width="120"/>
@@ -122,11 +119,11 @@ We encourage any contributions, but please make sure that these steps are taken 
 ### Documentation
 Explore our methodologies in developing the Campus Job Review application through this comprehensive guide.
 
-1. Use Case Mini Tutorial: Discover the enhanced features of the application by following along with engaging use cases illustrated through various images. [Click here to get started!](https://github.com/SAT510/CampusJobReview/blob/shazia_testing/UseCase_Documentation.md)
+1. Use Case Mini Tutorial: Discover the enhanced features of the application by following along with engaging use cases illustrated through various images. [Click here to get started!](https://github.com/vuvuong003/CampusJobReview/blob/shazia_testing/UseCase_Documentation.md)
 
-2. Add API Endpoints and give brief description. [Click here to get started!](https://github.com/SAT510/CampusJobReview/blob/test/API_Documentation.md)
+2. Add API Endpoints and give brief description. [Click here to get started!](https://github.com/vuvuong003/CampusJobReview/blob/test/API_Documentation.md)
   
-3. Outline of the development and specifications of the CampusJobReview project including technical details, project goals, architecture, feature implementations, and potential areas for future development. This document includes the point description of all the classes and methods of the system. [SystemSpecDoc](https://github.com/SAT510/CampusJobReview/blob/test/project_docs/CSC-510.pdf)
+3. Outline of the development and specifications of the CampusJobReview project including technical details, project goals, architecture, feature implementations, and potential areas for future development. This document includes the point description of all the classes and methods of the system. [SystemSpecDoc](https://github.com/vuvuong003/CampusJobReview/blob/test/project_docs/CSC-510.pdf)
 
 ### Team Members
 - Vu Vuong
