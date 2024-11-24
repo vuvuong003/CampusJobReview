@@ -8,6 +8,7 @@
  * Base URL for the API endpoints
  * @constant {string}
  */
+
 export let base_url = "http://localhost:8000/";
 
 export let frontend_url = "http://localhost:3000/";
@@ -43,10 +44,10 @@ export let register_url = base_url + "auth/register/";
 export let review_url = base_url + "service/reviews/";
 
 /**
- * URL endpoint for filtering services
+ * URL endpoint for reviews services
  * @constant {string}
  */
-export let filter_url = base_url + "service/filter";
+export let all_reviews_url = base_url + "service/all_reviews/";
 
 /**
  * Makes an API call that doesn't require authentication
