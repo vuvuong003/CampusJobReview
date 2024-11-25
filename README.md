@@ -119,7 +119,7 @@ We encourage any contributions, but please make sure that these steps are taken 
 ### Documentation
 Explore our methodologies in developing the Campus Job Review application through this comprehensive guide.
 
-1. Use Case Mini Tutorial: Discover the enhanced features of the application by following along with engaging use cases illustrated through various images. [Click here to get started!](https://github.com/vuvuong003/CampusJobReview/blob/shazia_testing/UseCase_Documentation.md)
+1. Use Case Mini Tutorial: Discover the enhanced features of the application by following along with engaging use cases illustrated through various images. [Click here to get started!](https://github.com/vuvuong003/CampusJobReview/blob/test/UseCase_Documentation.md)
 
 2. Add API Endpoints and give brief description. [Click here to get started!](https://github.com/vuvuong003/CampusJobReview/blob/test/API_Documentation.md)
   
