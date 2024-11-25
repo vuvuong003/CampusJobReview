@@ -52,11 +52,6 @@ Now that you have successfully signed up as a valid user, let us login to the ap
     - Once you successfully enter a valid password and confirmed it, you will see a pop up notifying you that your passsword is successfully changed and redirect you to the login page.
     ![Reset-Password](docs/images/reset_password_success.png)
 
-
-
-
-
-
 ### Add Review
 We offer the option for you to add a review to help your peers make informed decisions about the on-campus jobs. You are required to fill in various fields which include Job Title, Department, Location, Job Description, Hourly Pay, Benefits, Rating, Recommendation, and Review. 
 
@@ -74,14 +69,25 @@ The following image is an example of a valid review with all the fields filled a
 
 
 ### View Reviews 
-When you click on the View Reviews button, you should be able to see the views that were added by your peers and by you, elaborating on the experiences and details about an on-campus job. This page has various sections to give you the most detailed information about a job. These details include the job title, description, department, location, hourly pay, employee benefits, review, rating, recommendation, and a reviewed by column. 
+When you click on the View Reviews button, you should be able to see the job reviews that were added by your peers and by you. For each job review, you will be able to see the job title and the hourly pay.
 
 The page should look similar to the following: 
-    ![View_Review_Landing-Page](docs/images/view_review_landing.jpg)
+![View_Review_Landing-Page](docs/images/view_reviews_landing.png)
+
+- For each job review, you may click on the job title name or the expand button as it will expand the section elaborating on the experiences and details about an on-campus job. These details include the review along with the person reviewed it as well as the description, department, location, employee benefits and the recommendation rating. At the bottom is the comments section which allows any user to interact with the reviewer by asking questions, providing tips or simply make a comment on the job review!
+![Expand-Job-Review](docs/images/expand_job_review.png)
+
+### Discussion Forum
+To add a comment to a job review, simply type in your comment and hit the "Post Comment" button. Here is an example of what your page might look like.
+![Post-Comment](docs/images/post_comment.png)
+
+After you posted your comment, it will be visible by everyone. This is what your page might look like. To delete a comment, simply hit the trash can by the comment you want to delete and it will be removed in the comments section.
+![View-Comment](docs/images/view_comment.png)
+
 
 ### Filter Reviews
-We offer an exclusive and easy option for you to filter the reviews based on fields such as Department, Location, and Job Title. Moreover, we also allow you to set a filter on reviews based on the minimum and maximum ratings by your peers. This makes it easier for you to locate the most useful pieces of information in no time. Here is an example of filtering the reviews based on the department. 
-    ![Filter_reviews_page](docs/images/filter_reviews.jpg)
+We offer an exclusive and easy option for you to filter the reviews based on fields such as Department, Location, and Job Title. Moreover, we also allow you to set a filter on reviews based on the minimum and maximum ratings by your peers. This makes it easier for you to locate the most useful pieces of information in no time. To reset the filters, simply hit the "Reset Button" and all the filters will be resetted. Below is an example of filtering the reviews based on the department.
+    ![Filter_reviews_page](docs/images/filter_reviews.png)
 
 ### Browser Extension
 With the integration of a browser API, users will experience enhanced functionality:
@@ -89,8 +95,6 @@ With the integration of a browser API, users will experience enhanced functional
 Job Review Pop-Ups: When browsing job postings, you will receive pop-ups through our browser extension that currently show the title of the job based on the department title that is associated with the list of reviews on our website. Below are the pictures showing the browser extension functionality. 
 ![Browser_Extension_page](docs/images/browser_extension_1.jpg)
 ![Browser_Extension2_page](docs/images/browser_extension_2.jpg)
-
-
 
 
 ### Logout
