@@ -54,7 +54,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <NavBar navigation={useNavigate()}/>
+      <NavBar navigation={useNavigate()} />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
@@ -64,10 +64,14 @@ const Profile = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Username
                 </label>
                 <input
+                  id="username"
                   type="text"
                   name="username"
                   value={profile.username}
@@ -77,10 +81,14 @@ const Profile = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Email
                 </label>
                 <input
+                  id="email"
                   type="email"
                   name="email"
                   value={profile.email}
@@ -90,10 +98,14 @@ const Profile = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="first_name"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   First Name
                 </label>
                 <input
+                  id="first_name"
                   type="text"
                   name="first_name"
                   value={profile.first_name}
@@ -103,10 +115,14 @@ const Profile = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="last_name"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Last Name
                 </label>
                 <input
+                  id="last_name"
                   type="text"
                   name="last_name"
                   value={profile.last_name}
@@ -116,10 +132,14 @@ const Profile = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="bio"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Bio
                 </label>
                 <textarea
+                  id="bio"
                   name="bio"
                   value={profile.bio}
                   onChange={handleChange}
