@@ -182,12 +182,14 @@ class AddReview extends React.Component {
                   </label>
                   <input
                     id="hourly_pay"
-                    type="text"
+                    type="number"
                     name="hourly_pay"
                     value={this.state.formData.hourly_pay}
                     onChange={this.handleChange}
                     className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                     aria-required="true"
+                    step="0.01"  // This allows decimal values
+                    min="0"  // Prevents negative numbers
                   />
                 </div>
 
@@ -207,61 +209,45 @@ class AddReview extends React.Component {
                   />
                 </div>
 
-                {/* Rating Radio Buttons */}
+                {/* Rating Slider */}
                 <div className="mb-6">
-                  <fieldset>
-                    <legend className="block text-gray-700 mb-2">Rating</legend>
-                    <div className="flex space-x-4 mt-2">
-                      {[1, 2, 3, 4, 5].map((rating) => (
-                        <label
-                          key={rating}
-                          className="inline-flex items-center"
-                          htmlFor={`rating-${rating}`}
-                        >
-                          <input
-                            id={`rating-${rating}`}
-                            type="radio"
-                            name="rating"
-                            value={rating}
-                            onChange={this.handleChange}
-                            className="form-radio"
-                            aria-label={`Rating ${rating}`}
-                          />
-                          <span className="ml-2">{rating}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </fieldset>
+                  <label htmlFor="rating" className="block text-gray-700">
+                    Rating
+                  </label>
+                  <input
+                    id="rating"
+                    type="range"
+                    name="rating"
+                    value={this.state.formData.rating}
+                    onChange={this.handleChange}
+                    min="1"
+                    max="5"
+                    className="w-full mt-2"
+                    aria-required="true"
+                  />
+                  {/* Display the selected rating value */}
+                  <div className="mt-2 text-center text-gray-700">{this.state.formData.rating}</div>
                 </div>
 
-                {/* Recommendation Radio Buttons */}
+                {/* Recommendation Slider */}
                 <div className="mb-6">
-                  <fieldset>
-                    <legend className="block text-gray-700 mb-2">
-                      Recommendation
-                    </legend>
-                    <div className="flex space-x-4 mt-2">
-                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((recommendation) => (
-                        <label
-                          key={recommendation}
-                          className="inline-flex items-center"
-                          htmlFor={`recommendation-${recommendation}`}
-                        >
-                          <input
-                            id={`recommendation-${recommendation}`}
-                            type="radio"
-                            name="recommendation"
-                            value={recommendation}
-                            onChange={this.handleChange}
-                            className="form-radio"
-                            aria-label={`Recommendation ${recommendation}`}
-                          />
-                          <span className="ml-2">{recommendation}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </fieldset>
-                </div>
+                  <label htmlFor="recommendation" className="block text-gray-700">
+                    Recommendation
+                  </label>
+                  <input
+                    id="recommendation"
+                    type="range"
+                    name="recommendation"
+                    value={this.state.formData.recommendation}
+                    onChange={this.handleChange}
+                    min="1"
+                    max="10"
+                    className="w-full mt-2"
+                    aria-required="true"
+                  />
+                  {/* Display the selected recommendation value */}
+                  <div className="mt-2 text-center text-gray-700">{this.state.formData.recommendation}</div>
+                </div>                
 
                 {/* Review Text Area */}
                 <div className="mb-6">

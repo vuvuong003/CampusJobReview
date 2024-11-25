@@ -9,6 +9,8 @@ vacancy information in the database.
 # Import Djongo models to work with MongoDB
 from djongo import models  # pylint: disable=E0401
 from rest_framework.exceptions import ValidationError # Import ValidationError
+from django.conf import settings  # Import settings
+from django.db import models
 # for custom validation logic
 
 # from django.contrib.auth.models import AbstractUser
@@ -111,3 +113,28 @@ class Vacancies(models.Model):
     class Meta:
         """Meta options for the Vacancies model."""
         verbose_name_plural = "Vacancies" # Specify plural name for admin
+
+class Comment(models.Model):
+    """Model that stores comments related to reviews.
+
+    This model allows users to leave comments on reviews, which can be associated
+    with a specific review and a user. The comment includes the content of the
+    comment and the timestamp when it was created.
+
+    Attributes:
+        review (ForeignKey): A foreign key linking the comment to a specific review.
+        user (ForeignKey): A foreign key linking the comment to a specific user.
+        text (TextField): The content of the comment left by the user.
+        created_at (DateTimeField): The timestamp when the comment was created.
+    
+    Methods:
+        __str__: Returns a string representation of the comment, showing the username
+        of the commenter and the job title of the review.
+    """
+    review = models.ForeignKey(Reviews, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment by {self.user.username} on {self.review.job_title}"

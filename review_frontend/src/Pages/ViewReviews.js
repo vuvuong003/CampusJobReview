@@ -1,12 +1,13 @@
 /**
  * @fileoverview Reviews display and filtering components
- * Contains components for displaying job reviews in a table format with filtering capabilities
+ * Contains components for displaying job reviews in a collapsible table format with filtering capabilities
  */
 
 import * as React from "react";
 import NavBar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import { review_url, all_reviews_url, unprotected_api_call } from "../api/api";
+import Comments from "./Comments";
 
 /**
  * @class JobRow
@@ -26,9 +27,22 @@ import { review_url, all_reviews_url, unprotected_api_call } from "../api/api";
  * @property {string} props.reviewedBy - Username of reviewer
  */
 class JobRow extends React.Component {
+  state = {
+    isExpanded: false, // To track the expanded state of the row
+  };
+
+  /**
+   * Toggles the expanded state of the job review row
+   * @method
+   */
+  toggleExpand = () => {
+    this.setState((prevState) => ({ isExpanded: !prevState.isExpanded }));
+  };
+
   render() {
     // Destructure props for cleaner access
     const {
+      reviewId,
       jobTitle,
       jobDescription,
       department,
@@ -40,31 +54,83 @@ class JobRow extends React.Component {
       recommendation,
       reviewedBy,
     } = this.props;
+    const { isExpanded } = this.state;
 
     return (
-      <>
-        <tr>
-          <td>
-            <a href="#">{jobTitle}</a>
-          </td>
-          <td>{jobDescription}</td>
-          <td>{department}</td>
-          <td>{location}</td>
-          <td>{hourlyPay}</td>
-          <td>{benefits}</td>
-          <td>{review}</td>
-          <td>{rating}</td>
-          <td>{recommendation}</td>
-          <td>{reviewedBy}</td>
-        </tr>
-        {/* Separator line between rows */}
-        <tr>
-          <td colSpan="10">
-            <hr style={{ borderTop: "1px solid #ccc" }} />
-          </td>
-        </tr>
-      </>
-    );
+      <div className="job-row bg-white shadow-lg rounded-lg p-6 mb-6 transition-all duration-300 ease-in-out hover:shadow-xl">
+        <div className="job-summary flex justify-between items-center">
+          <h3 className="job-title text-2xl font-semibold text-gray-800">
+            <a
+              href="/"
+              onClick={this.toggleExpand}
+              className="hover:text-blue-500 focus:outline-none"
+            >
+              {jobTitle} (${hourlyPay}/hr)
+            </a>
+          </h3>
+          <div className="flex items-center space-x-2">
+            <span className="text-yellow-400 text-2xl">
+              {'★'.repeat(rating)}
+              <span className="text-gray-400">
+                {'★'.repeat(5 - rating)}
+              </span>
+            </span>
+            <span className="ml-2 text-gray-500 cursor-pointer" onClick={this.toggleExpand}>
+              {isExpanded ? "▲" : "▼"}
+            </span>
+          </div>
+        </div>
+        {isExpanded && (
+          <div className="job-details mt-4 text-gray-600">
+            <div className="job-details p-4 border border-gray-300 rounded-lg">
+                  {/* Job Review Section */}
+                  <div className="job-review mb-4">
+                    <p className="text-lg text-left font-semibold text-gray-800">
+                      <strong>Reviewed By:</strong> {reviewedBy}
+                    </p>
+                    <p className="text-lg text-left text-gray-600">{review}</p>
+                  </div>
+
+                  {/* Job Description */}
+                  <div className="job-description mb-4">
+                    <p className="text-lg text-left font-semibold text-gray-800">
+                      <strong>Job Description:</strong> {jobDescription}
+                    </p>
+                  </div>
+
+                  {/* Category Row with Circular Boxes */}
+                  <div className="categories flex flex-wrap gap-4">
+                    <div
+                      className="category bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium"
+                      style={{ display: 'inline-block' }}
+                    >
+                      Department: {department}
+                    </div>
+                    <div
+                      className="category bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium"
+                      style={{ display: 'inline-block' }}
+                    >
+                      Location: {location}
+                    </div>
+                    <div
+                      className="category bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full text-sm font-medium"
+                      style={{ display: 'inline-block' }}
+                    >
+                      Benefits: {benefits}
+                    </div>
+                    <div
+                      className="category bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-medium"
+                      style={{ display: 'inline-block' }}
+                    >
+                      Recommendation: {recommendation}
+                    </div>
+                  </div>
+                </div>
+            <Comments reviewId={reviewId}/>
+          </div>
+        )}
+      </div>
+    );    
   }
 }
 
@@ -72,12 +138,9 @@ class JobRow extends React.Component {
  * @class Reviews
  * @extends React.Component
  * @description Main component for displaying and filtering job reviews
- *
- * @property {Object} props
- * @property {Function} props.navigate - React Router navigation function
  */
 class Reviews extends React.Component {
-  /**
+   /**
    * @state
    * @property {Array<Object>} jobs - Array of job review objects
    * @property {Object} formData - Filter criteria for reviews
@@ -114,6 +177,7 @@ class Reviews extends React.Component {
       alert("Server Error");
     }
   };
+  
 
   /**
    * Handles changes to filter form inputs
@@ -161,164 +225,151 @@ class Reviews extends React.Component {
     this.setState({ jobs: updatedList })
   }
 
+  /**
+   * Handles resetting the filters
+   * @method
+   */
+  handleReset = () => {
+    // Reset the form fields
+    this.setState(
+      {
+        formData: {
+          department: "",
+          locations: "",
+          job_title: "",
+          min_rating: "",
+          max_rating: "",
+        },
+      },
+      () => {
+        // Refetch the full jobs list
+        this.componentDidMount();
+      }
+    );
+  };
+
   render() {
     // Background image styles
-    const myStyle = {
-      backgroundImage: `url(${process.env.PUBLIC_URL + "/WolfPlaza.jpg"})`,
-      height: "92.5vh",
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      zIndex: -1,
-    };
+    // const myStyle = {
+    //   backgroundImage: `url(${process.env.PUBLIC_URL + "/WolfPlaza.jpg"})`,
+    //   height: "100vh",
+    //   backgroundSize: "cover",
+    //   backgroundRepeat: "no-repeat",
+    //   backgroundPosition: "center",
+    //   position: "absolute",
+    //   top: 0,
+    //   left: 0,
+    //   width: "100%",
+    //   zIndex: -1,
+    // };
 
     return (
       <div>
         <NavBar navigation={this.props.navigate} />
-        <div className="relative h-full w-full">
-          {/* Background image with opacity */}
-          <div
-            style={myStyle}
-            className="absolute inset-0 opacity-40 bg-black"
-          ></div>
+        <div className="relative h-full w-full" style={{ backgroundColor: "#ffe5e5"}}>
+          {/* <div style={myStyle} className="absolute inset-0 opacity-40 bg-black"></div> */}
 
           {/* Main content container */}
-          <div className="fixed inset-0 flex flex-col items-center justify-center mt-20">
-            <h1 className="text-gray-500 text-xl md:text-5xl font-bold mb-4">
-              Reviews
-            </h1>
-
-            {/* Filter form section */}
-            <div className="bg-white w-[70vw] p-4 mb-6 rounded-lg shadow-md justify-">
-              <form
-                onSubmit={this.handleSubmit}
-                className="flex flex-wrap gap-4 items-center"
-              >
-                {/* Department filter */}
-                <input
-                  type="text"
-                  name="department"
-                  placeholder="Department"
-                  value={this.state.formData.department}
-                  onChange={this.handleChange}
-                  className="px-4 py-2 border rounded-md w-[18%]"
-                  aria-label="Filter by department"
-                />
-                {/* Location filter */}
-                <input
-                  type="text"
-                  name="locations"
-                  placeholder="Location"
-                  value={this.state.formData.locations}
-                  onChange={this.handleChange}
-                  className="px-4 py-2 border rounded-md w-[18%]"
-                  aria-label="Filter by location"
-                />
-                {/* Job title filter */}
-                <input
-                  type="text"
-                  name="job_title"
-                  placeholder="Job Title"
-                  value={this.state.formData.job_title}
-                  onChange={this.handleChange}
-                  className="px-4 py-2 border rounded-md w-[18%]"
-                  aria-label="Filter by job title"
-                />
-                {/* Minimum rating filter */}
-                <select
-                  name="min_rating"
-                  value={this.state.formData.min_rating}
-                  onChange={this.handleChange}
-                  className="px-4 py-2 border rounded-md w-[18%]"
-                  aria-label="Filter by minimum rating"
+          <div className="flex w-full h-full">
+            {/* Left side: Filters */}
+            <div className="w-1/4 p-6">
+              <div className="bg-white shadow-lg p-6 rounded-xl mb-6">
+                <form
+                  onSubmit={this.handleSubmit}
+                  className="flex flex-col gap-4"
                 >
-                  <option value="">Min Rating</option>
-                  {[1, 2, 3, 4, 5].map((rating) => (
-                    <option key={rating} value={rating}>
-                      {rating}
-                    </option>
-                  ))}
-                </select>
-                {/* Maximum rating filter */}
-                <select
-                  name="max_rating"
-                  value={this.state.formData.max_rating}
-                  onChange={this.handleChange}
-                  className="px-4 py-2 border rounded-md w-[18%]"
-                  aria-label="Filter by maximum rating"
-                >
-                  <option value="">Max Rating</option>
-                  {[1, 2, 3, 4, 5].map((rating) => (
-                    <option key={rating} value={rating}>
-                      {rating}
-                    </option>
-                  ))}
-                </select>
-                {/* Filter button */}
-                <div className="w-full flex justify-center mt-4">
+                  {/* Department filter */}
+                  <input
+                    type="text"
+                    name="department"
+                    placeholder="Department"
+                    value={this.state.formData.department}
+                    onChange={this.handleChange}
+                    className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  {/* Location filter */}
+                  <input
+                    type="text"
+                    name="locations"
+                    placeholder="Location"
+                    value={this.state.formData.locations}
+                    onChange={this.handleChange}
+                    className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                   {/* Job title filter */}
+                  <input
+                    type="text"
+                    name="job_title"
+                    placeholder="Job Title"
+                    value={this.state.formData.job_title}
+                    onChange={this.handleChange}
+                    className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  {/* Minimum rating filter */}
+                  <select
+                    name="min_rating"
+                    value={this.state.formData.min_rating}
+                    onChange={this.handleChange}
+                    className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Min Rating</option>
+                    {[1, 2, 3, 4, 5].map((rating) => (
+                      <option key={rating} value={rating}>
+                        {rating}
+                      </option>
+                    ))}
+                  </select>
+                  {/* Maximum rating filter */}
+                  <select
+                    name="max_rating"
+                    value={this.state.formData.max_rating}
+                    onChange={this.handleChange}
+                    className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Max Rating</option>
+                    {[1, 2, 3, 4, 5].map((rating) => (
+                      <option key={rating} value={rating}>
+                        {rating}
+                      </option>
+                    ))}
+                  </select>
+                  {/* Filter button */}
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md"
-                    onClick={this.handleSubmit}
-                    aria-label="Apply filters"
+                    className="bg-blue-500 text-white py-3 rounded-lg"
                   >
                     Filter
                   </button>
-                </div>
-              </form>
+                   {/* Reset Button */}
+                  <button
+                    type="button"
+                    onClick={this.handleReset}
+                    className="bg-red-500 text-white py-3 rounded-lg"
+                  >
+                    Reset
+                  </button>
+                </form>
+              </div>
             </div>
 
-            {/* Reviews table section */}
-            <div className="bg-white w-[70vw] h-[40vh] shadow-lg items-center justify-center p-10 overflow-y-auto">
-              <div className="overflow-x-auto">
-                <table
-                  className="min-w-full table-auto border-collapse"
-                  role="table"
-                  aria-label="Job Reviews"
-                >
-                  <thead className="bg-gray-200">
-                    <tr>
-                      <th className="px-4 py-2 w-1/5 border">Job Title</th>
-                      <th className="px-4 py-2 w-1/4 border">
-                        Job Description
-                      </th>
-                      <th className="px-4 py-2 w-1/6 border">Department</th>
-                      <th className="px-4 py-2 w-1/6 border">Location(s)</th>
-                      <th className="px-4 py-2 w-1/12 border">Hourly Pay</th>
-                      <th className="px-4 py-2 w-1/6 border">
-                        Employee Benefits
-                      </th>
-                      <th className="px-4 py-2 w-1/4 border">Review</th>
-                      <th className="px-4 py-2 w-1/12 border">Rating</th>
-                      <th className="px-4 py-2 w-1/12 border">
-                        Recommendation
-                      </th>
-                      <th className="px-4 py-2 w-1/6 border">Reviewed By</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-300">
-                    {this.state.jobs.map((job, index) => (
-                      <JobRow
-                        key={index}
-                        jobTitle={job.job_title}
-                        jobDescription={job.job_description}
-                        department={job.department}
-                        location={job.locations}
-                        hourlyPay={job.hourly_pay}
-                        benefits={job.benefits}
-                        review={job.review}
-                        rating={job.rating}
-                        recommendation={job.recommendation}
-                        reviewedBy={job.reviewed_by}
-                      />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+            {/* Right side: Job Listings */}
+            <div className="w-3/4 p-6 overflow-y-auto flex-1">
+              {this.state.jobs.map((job, index) => (
+                <JobRow
+                  key={index}
+                  reviewId = {job.id}
+                  jobTitle={job.job_title}
+                  jobDescription={job.job_description}
+                  department={job.department}
+                  location={job.locations}
+                  hourlyPay={job.hourly_pay}
+                  benefits={job.benefits}
+                  review={job.review}
+                  rating={job.rating}
+                  recommendation={job.recommendation}
+                  reviewedBy={job.reviewed_by}
+                />
+              ))}
             </div>
           </div>
         </div>

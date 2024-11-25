@@ -223,6 +223,7 @@ STATIC_URL = "static/" # Set the URL for serving static files
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField" # Use BigAutoField as
 # the default primary key field
 
+AUTH_USER_MODEL = 'auth_review.Client'
 FRONTEND_URL = os.getenv("FRONTEND_URL", 'http://localhost:3000') # Get the frontend URL from environment variable
 BACKEND_URL = os.getenv("BACKEND_URL", 'http://localhost:8000') # Get the backend URL from environment variable
 # Email configuration for sending verification emails
@@ -230,6 +231,4 @@ EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY") # Get the SendGrid API key from environment variable
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL") # Get the default email address from environment variable
-
-
 

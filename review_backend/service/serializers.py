@@ -17,7 +17,7 @@ is between 1 and 5 and that the review field is not empty.
 job title and job description are not empty and that the maximum hours allowed is greater than zero.
 """
 from rest_framework import serializers  # Import Django REST framework serializers
-from .models import Reviews, Vacancies # Import models to create serializers for
+from .models import Reviews, Vacancies, Comment # Import models to create serializers for
 
 
 
@@ -130,3 +130,54 @@ class VacanciesSerializer(serializers.ModelSerializer):
                 "Max hours allowed must be greater than 0.")
         # Add more validation as needed
         return attrs
+    
+class CommentSerializer(serializers.ModelSerializer):
+    """Serializer for the Comment model.
+
+    This serializer handles the conversion of Comment model instances to JSON format
+    and vice versa, ensuring that the comment data is validated before saving.
+
+    Meta Attributes:
+        model (Comment): Specifies the Comment model for serialization.
+        fields (str): Specifies the fields to be included in the serialization.
+        extra_kwargs (dict): Specifies additional constraints on fields, such as
+                              setting fields as read-only or required.
+
+    Functions:
+        - **validate**: Ensures that the 'text' field is not empty.
+    """
+    class Meta:
+        """
+        Meta options for the CommentSerializer.
+
+        Attributes:
+            model: The model associated with this serializer (Comment).
+            fields: A list of fields to include in the serialization.
+            extra_kwargs: Additional constraints for specific fields, such as 
+                          marking fields as read-only or enforcing them as required.
+        """
+        model = Comment
+        fields = ['id', 'review', 'user', 'text', 'created_at']
+        extra_kwargs = {
+            'text': {'required': True},
+            'review': {'read_only': True},
+            'user': {'read_only': True},
+        }
+
+    def validate(self, data):
+        """Custom validation for Comment model data.
+
+        Ensures that the 'text' field is provided before saving a comment.
+
+        Args:
+            data (dict): Attributes being validated.
+
+        Raises:
+            serializers.ValidationError: If the 'text' field is empty.
+
+        Returns:
+            dict: Validated attributes.
+        """
+        if not data.get('text'):
+            raise serializers.ValidationError("Text is required.")
+        return data
