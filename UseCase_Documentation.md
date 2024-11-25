@@ -11,18 +11,23 @@ As you enter our application, you will be greeted by a beautiful home page that 
 The first step as you start your journey of exploring the Campus Job Review web application is to sign up using a username and password. Make sure that your password includes letters and numbers which will make sure that you have the right requirements to sign up successfully. 
 
 Sign Up: The picture below shows the page that opens up when you click the SIGNUP button that is located on the top right corner of the landing page. 
-![SignUp-Landing-Page](docs/images/sign_up_landing.png)
+![SignUp-Landing-Page](docs/images/sign_up.png)
 
 Once you are here, choose a strong username and password to sign up yourself to start using the application. Then, click on the Sign Up button in blue. 
-![SignUp-Details-Page](docs/images/sign_up_details.png)
+![SignUp-Details-Page](docs/images/sign_up_fill.png)
 
-- Successful Registration: 
-Once you have met the requirements for the username and password, you will see a pop-up indicating a successful registration. 
-     ![SignUp-Success-Page](docs/images/sign_up_success.png)
+Successful Registration: 
+Once you have met the requirements for the username and password, you will see a pop-up indicating a successful registration. It will then tell you to visit the email that you entered to verify email address.
+![SignUp-Success-Page](docs/images/sign_up_success.png)
 
- - Failed Registration: 
- Given that a username already exists, you will not be able to sign up and will recieve a unsuccessful message. Other cases where you will not be able register successfully include not entering a username or leaving the password empty. An example of a failed registration can be seen in the picture below. 
-     ![SignUp-Failure-Page](docs/images/sign_up_failure.png)
+- Verify Email
+You will receive an email from the application. Click on the link provided to verify your email address and proceed to the log in process
+![Verify-Email](docs/images/verify_email.png)
+
+
+Failed Registration: 
+ Given that a username or email already exists, you will not be able to sign up and will recieve a unsuccessful message. Other cases where you will not be able register successfully include not entering a username or leaving the password empty. An example of a failed registration can be seen in the picture below. 
+![SignUp-Failure-Page](docs/images/sign_up_fail.png)
 
 Login:
 
