@@ -129,7 +129,7 @@ class Signup extends React.Component {
               Sign Up
             </h1>
             {/* Signup form container */}
-            <div className="bg-white w-[40vw] h-[40vh] shadow-lg flex items-center justify-center p-10 overflow-y-auto">
+            <div className="bg-white w-[40vw] h-[55vh] shadow-lg flex items-center justify-center p-10 overflow-y-auto">
               <form onSubmit={this.handleSubmit}>
                 {/* Username input field */}
                 <div className="mb-6">

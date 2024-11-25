@@ -119,7 +119,7 @@ class Login extends React.Component {
               Login
             </h1>
             {/* Login form container */}
-            <div className="bg-white w-[40vw] h-[40vh] shadow-lg flex items-center justify-center p-10 overflow-y-auto">
+            <div className="bg-white w-[40vw] h-[45vh] shadow-lg flex items-center justify-center p-10 overflow-y-auto">
               <form onSubmit={this.handleSubmit}>
                 {/* Username input field */}
                 <div className="mb-6">
