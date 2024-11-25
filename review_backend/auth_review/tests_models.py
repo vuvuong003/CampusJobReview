@@ -18,9 +18,10 @@ class ClientModelTests(TestCase):
     def test_create_regular_user(self):
         """Test creating a regular user and verifying default attributes"""
         user = User.objects.create_user(
-            username="regularuser", password="password123")
+            username="regularuser", email="regularuser@example.com", password="password123")
 
         self.assertEqual(user.username, "regularuser")
+        self.assertEqual(user.email, "regularuser@example.com")
         self.assertTrue(user.is_active)
         self.assertFalse(user.is_staff)
         self.assertFalse(user.is_admin)
@@ -29,9 +30,10 @@ class ClientModelTests(TestCase):
     def test_create_superuser(self):
         """Test creating a superuser and verifying superuser-specific attributes"""
         superuser = User.objects.create_superuser(
-            username="adminuser", password="adminpass123")
+            username="adminuser", email="adminuser@example.com", password="adminpass123")
 
         self.assertEqual(superuser.username, "adminuser")
+        self.assertEqual(superuser.email, "adminuser@example.com")
         self.assertTrue(superuser.is_active)
         self.assertTrue(superuser.is_staff)
         self.assertTrue(superuser.is_admin)
@@ -40,17 +42,17 @@ class ClientModelTests(TestCase):
     def test_create_user_without_username(self):
         """Test that creating a user without a username raises an error"""
         with self.assertRaises(TypeError):
-            User.objects.create_user(username=None, password="password123")
+            User.objects.create_user(username=None, email="user@example.com", password="password123")
 
     def test_create_superuser_without_password(self):
         """Test that creating a superuser without a password raises an error."""
         with self.assertRaises(TypeError):
-            User.objects.create_superuser(username="adminuser", password=None)
+            User.objects.create_superuser(username="adminuser", email="adminuser@example.com", password=None)
 
     def test_user_activation(self):
         """Test that a user can be deactivated."""
         user = User.objects.create_user(
-            username="activeuser", password="password123"
+            username="activeuser", email="activeuser@example.com", password="password123"
         )
         user.is_active = False
         user.save()
@@ -60,6 +62,6 @@ class ClientModelTests(TestCase):
     def test_user_string_representation(self):
         """Test the string representation of the user."""
         user = User.objects.create_user(
-            username="stringuser", password="password123"
+            username="stringuser", email="stringuser@example.com", password="password123"
         )
         self.assertEqual(str(user), "stringuser")

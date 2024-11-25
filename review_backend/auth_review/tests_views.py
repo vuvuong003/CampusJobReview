@@ -11,8 +11,13 @@ meets the expected behavior.
 
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
 from django.urls import reverse  # pylint: disable=E0401
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
 from rest_framework import status  # pylint: disable=E0401
-from rest_framework.test import APITestCase  # pylint: disable=E0401
+from rest_framework.test import APITestCase, APIClient  # pylint: disable=E0401
+from django.test import override_settings
+from unittest.mock import patch
 
 User = get_user_model()
 
@@ -37,8 +42,11 @@ class AuthTests(APITestCase):
         each test case.
         """
         self.test_user = User.objects.create_user(
-            username="testuser", password="securepassword"
+            username="testuser", email="testuser@example.com", password="securepassword"
         )
+        self.test_user.is_verified = True
+        self.test_user.save()
+        self.profile_url = reverse("profile")
         self.register_url = reverse("register")
         self.token_url = reverse("token_obtain_pair")
         self.token_refresh_url = reverse("token_refresh")
@@ -48,21 +56,33 @@ class AuthTests(APITestCase):
         #     password="securepassword",
         #     is_active=False
         # )
+    
+    @patch('auth_review.views.SendGridAPIClient')
 
-    def test_register_new_user_success(self):
+    def test_register_new_user_success(self, mock_sendgrid):
         """Test successful registration of a new user.
 
         This test verifies that a new user can be registered successfully
         and receives a confirmation message.
         """
+        # Mock the SendGrid send method
+        mock_sendgrid.return_value.send.return_value = True
         # Test successful registration
-        data = {"username": "newuser", "password": "newpassword123"}
+        data = {"username": "newuser", "email": "newuser@example.com", "password": "newpassword123"}
         response = self.client.post(self.register_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(response.data["data"]["val"])
         self.assertEqual(
             response.data["data"]["detail"],
-            "Registration Successful")
+            "Registration Successful. Please verify your email.")
+        
+         # Verify the user was created
+        user = User.objects.get(username="newuser")
+        self.assertFalse(user.is_verified)
+        self.assertEqual(user.email, "newuser@example.com")
+
+        # Verify SendGrid was called
+        mock_sendgrid.return_value.send.assert_called_once()
 
     def test_register_existing_user_error(self):
         """Test registration with an existing username.
@@ -71,11 +91,11 @@ class AuthTests(APITestCase):
         existing username fails and returns the appropriate error message.
         """
         # Test registration with an existing username
-        data = {"username": "testuser", "password": "newpassword123"}
+        data = {"username": "testuser", "email": "testuser@example.com", "password": "newpassword123"}
         response = self.client.post(self.register_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertFalse(response.data["data"]["val"])
-        self.assertEqual(response.data["data"]["detail"], "Username Exists")
+        self.assertEqual(response.data["data"]["detail"], "Entered username or email exists")
 
     def test_token_obtain_pair_success(self):
         """Test successful JWT token generation with valid credentials.
@@ -88,6 +108,8 @@ class AuthTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(response.data["data"]["val"])
         self.assertIn("tokens", response.data["data"])
+        self.assertIn("access", response.data["data"]["tokens"])
+        self.assertIn("refresh", response.data["data"]["tokens"])
 
     def test_token_obtain_pair_invalid_credentials(self):
         """Test token generation with invalid user credentials.
@@ -102,17 +124,18 @@ class AuthTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_token_refresh_success(self):
-        """Test successful token refresh with a valid refresh token.
-
-        This test verifies that a user can successfully refresh their JWT
-        access token using a valid refresh token.
-        """
-        # Test refreshing a valid token
-        data = {"username": "testuser", "password": "securepassword"}
-        login_response = self.client.post(self.token_url, data, format="json")
+        """Test token refresh"""
+        # First get tokens
+        login_response = self.client.post(self.token_url, {
+            "username": "testuser",
+            "password": "securepassword"
+        })
         refresh_token = login_response.data["data"]["tokens"]["refresh"]
-        response = self.client.post(
-            self.token_refresh_url, {"refresh": refresh_token}, format="json")
+        
+        # Then refresh
+        response = self.client.post(self.token_refresh_url, {
+            "refresh": refresh_token
+        })
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("access", response.data)
 
@@ -123,7 +146,7 @@ class AuthTests(APITestCase):
         fails and returns an appropriate error message.
         """
         # Test Registration with invalid password
-        data = {"username": "user_with_invalid_pass", "password": "123"}
+        data = {"username": "user_with_invalid_pass", "email": "invalid@example.com", "password": "123"}
         response = self.client.post(self.register_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertFalse(response.data["data"]["val"])
@@ -170,3 +193,48 @@ class AuthTests(APITestCase):
 
         # Check the response message content
         self.assertEqual(response.data, {"msg": "Get not allowed"})
+
+class EmailVerificationTests(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="testuser", email="testuser@example.com", password="password123"
+        )
+        self.uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+        self.token = default_token_generator.make_token(self.user)
+        self.verify_url = reverse("verify_email", kwargs={"uidb64": self.uid, "token": self.token})
+
+    def test_verify_email_success(self):
+        response = self.client.get(self.verify_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.is_verified)
+
+    def test_verify_email_invalid_token(self):
+        invalid_token_url = reverse("verify_email", kwargs={"uidb64": self.uid, "token": "invalid-token"})
+        response = self.client.get(invalid_token_url)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.user.refresh_from_db()
+        self.assertFalse(self.user.is_verified)
+
+class ProfileTests(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="testuser", email="testuser@example.com", password="password123"
+        )
+        self.client.force_authenticate(user=self.user)
+        self.profile_url = reverse("profile")
+
+    def test_get_profile(self):
+        response = self.client.get(self.profile_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["username"], self.user.username)
+        self.assertEqual(response.data["email"], self.user.email)
+
+    def test_update_profile(self):
+        data = {"first_name": "Test", "last_name": "User", "bio": "This is a test bio."}
+        response = self.client.put(self.profile_url, data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.first_name, "Test")
+        self.assertEqual(self.user.last_name, "User")
+        self.assertEqual(self.user.bio, "This is a test bio.")

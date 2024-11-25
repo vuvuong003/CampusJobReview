@@ -46,94 +46,66 @@ User = get_user_model()
 
 
 class RegisterView(APIView):
-    """
-    View for user registration.
-
-    This view allows new users to register by providing a unique username
-    and a password. It checks if the username already exists in the database
-    and validates the provided data using the RegisterSerializer. If successful,
-    it creates a new user account.
-
-    Permission:
-        AllowAny: This view can be accessed by anyone without
-        authentication.
-
-    Methods:
-        post(request, _type=None): Handles POST requests for user registration.
-    """
-    # This view can be accessed by anyone without authentication
     permission_classes = [AllowAny]
 
     def post(self, request):
-        """
-        Handle user registration requests.
-
-        This method checks if the username provided already exists in the
-        database. If it does, it returns a 400 BAD REQUEST response. If the
-        username is unique, it validates the data with the RegisterSerializer
-        and creates a new user if valid.
-
-        Args:
-            request: The HTTP request containing the registration data.
-
-
-        Returns:
-            Response: A response object containing the registration status
-            and message.
-        """
-        # checks if username provided already exists in the database then
-        # return with an 400 BAD REQUEST
-        user = User.objects.filter(
-            Q(username=request.data["username"]) | Q(email=request.data["email"])
+        try:
+            user = User.objects.filter(
+                Q(username=request.data["username"]) | 
+                Q(email=request.data["email"])
             )
-        
-        if len(user) > 0:
-            return Response(
-                {"data": {"val": False, "detail": "Entered username or email exists"}},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        # if username is unique, the serializer is instantiated with the
-        # request data.
-        serializer = RegisterSerializer(data=request.data)
-        # serializer checks if the provided data is valid
-        if serializer.is_valid():
-            try:
-                user = serializer.save()
-                token = default_token_generator.make_token(user)
-                uid = urlsafe_base64_encode(force_bytes(user.pk))
-                verification_link = f"{settings.FRONTEND_URL}/verify-email/{uid}/{token}/"
-                
-                message = Mail(
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    to_emails=user.email,
-                    subject="Verify your email",
-                    html_content=f"Click <a href='{verification_link}'>{verification_link}</a> to verify your email."
+            
+            if len(user) > 0:
+                return Response(
+                    {"data": {"val": False, "detail": "Entered username or email exists"}},
+                    status=status.HTTP_400_BAD_REQUEST,
                 )
-
+                
+            serializer = RegisterSerializer(data=request.data)
+            if serializer.is_valid():
                 try:
-                    sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-                    sg.send(message)
-                    return Response(
-                    {"data": {"val": True, "detail": "Registration Successful. Please verify your email."}},
-                    status=status.HTTP_200_OK,
+                    user = serializer.save()
+                    token = default_token_generator.make_token(user)
+                    uid = urlsafe_base64_encode(force_bytes(user.pk))
+                    verification_link = f"{settings.FRONTEND_URL}/verify-email/{uid}/{token}/"
+                    
+                    message = Mail(
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        to_emails=user.email,
+                        subject="Verify your email",
+                        html_content=f"Click <a href='{verification_link}'>{verification_link}</a> to verify your email."
                     )
+                    
+                    try:
+                        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                        sg.send(message)
+                        return Response(
+                            {"data": {"val": True, "detail": "Registration Successful. Please verify your email."}},
+                            status=status.HTTP_200_OK,
+                        )
+                    except Exception as e:
+                        # Delete the user if email sending fails
+                        user.delete()
+                        return Response(
+                            {"data": {"val": False, "detail": f"Failed to send verification email: {str(e)}"}},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                        )
                 except Exception as e:
-                    # Delete the user if email sending fails
-                    user.delete()
                     return Response(
                         {"data": {"val": False, "detail": f"Registration failed: {str(e)}"}},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR,
                     )
-            except Exception as e:
-                return Response(
-                    {"data": {"val": False, "detail": f"Registration failed: {str(e)}"}},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                )
-                
-        return Response(
-            {"data": {"val": False, "detail": serializer.errors}},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
+                    
+            return Response(
+                {"data": {"val": False, "detail": serializer.errors}},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except Exception as e:
+            return Response(
+                {"data": {"val": False, "detail": f"Server error: {str(e)}"}},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+    
 
 class VerifyEmailView(APIView):
     permission_classes = [AllowAny]

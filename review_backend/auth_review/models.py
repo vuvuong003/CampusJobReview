@@ -70,7 +70,7 @@ class ClientManager(BaseUserManager):
         """
         if password is None:
             raise TypeError("Password should not be none")
-        user = self.create_user(username, password) # Reuse create_user method
+        user = self.create_user(username, email, password) # Reuse create_user method
         user.is_active = True
         user.is_verified = True # Mark superuser as verified
         user.is_superuser = True # Grant superuser privileges
