@@ -3,7 +3,7 @@
 ## Welcome to a mini tutorial of our Campus Job Review web application. Here, you will get a detailed view about what to expect in the application, explore the various enhanced features and new functionalities, and look at real-life examples of using the application through screenshots. 
 
 ### Landing Page
-As you enter our application, you will be greeted by a beautiful home page that truly represents the wolfpack spirit of NCSU. Here you will find various tabs such as the Home, Login, and Signup. You will also see an Add Reviews and a View Reviews Button. 
+As you enter our application, you will be greeted by a beautiful home page that truly represents the wolfpack spirit of NCSU. Here you will find various tabs such as the Home, Login, and Signup. You will also see an Add Reviews, View Reviews and ProfileButton. 
 
 ![Landing-Page](docs/images/landing_page.jpeg)
 
@@ -88,6 +88,13 @@ After you posted your comment, it will be visible by everyone. This is what your
 ### Filter Reviews
 We offer an exclusive and easy option for you to filter the reviews based on fields such as Department, Location, and Job Title. Moreover, we also allow you to set a filter on reviews based on the minimum and maximum ratings by your peers. This makes it easier for you to locate the most useful pieces of information in no time. To reset the filters, simply hit the "Reset Button" and all the filters will be resetted. Below is an example of filtering the reviews based on the department.
     ![Filter_reviews_page](docs/images/filter_reviews.png)
+
+### Profile
+You may visit the Profile page by clicking on PROFILE in the navigation bar. It will direct you to this page.
+![Profile-Landing](docs/images/profile_landing.png)
+
+You may update your profile settings to include your first name, last name and a bio. Once you made changes to your profile and hit "Update Profile", you will get a message "Profile updated successfully" and your changes will be saved in the application. Here is what your page might look like.
+![Update-Profile](docs/images/update_profile.png)
 
 ### Browser Extension
 With the integration of a browser API, users will experience enhanced functionality:
