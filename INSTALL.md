@@ -157,11 +157,9 @@ pip install sendgrid
 
 ### Get the API key
 
-```
-Get the SendGrid Api key from the SendGrid website and add it to the .env file.
+### Get the SendGrid Api key from the SendGrid website and add it to the .env file.
 
-Change the DEFAULT_FROM_EMAIL to the email using which you want to send the email.
-```
+### Change the DEFAULT_FROM_EMAIL to the email using which you want to send the email.
 
 # Browser Extension
 
