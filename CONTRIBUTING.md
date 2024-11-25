@@ -33,7 +33,7 @@ Here are a few things you can do that will increase the likelihood of your pull 
 - Not fixing the static analysis errors before pushing
 - Not following the installation instructions found in [INSTALL.md](https://github.com/SAT510/CampusJobReview/blob/test/INSTALL.md) to ensure all dependencies are met 
 
-Reach out to us for any questions or concerns at smuckra@ncsu.edu, ahgada@ncsu.edu, tyasir@ncsu.edu
+Reach out to us for any questions or concerns at rkhanda3@ncsu.edu, vhvuong@ncsu.edu, hpsalway@ncsu.edu
 
 ## Credit for CONTRIBUTING file
 - [probot](https://github.com/probot/template/blob/master/CONTRIBUTING.md#issues-and-prs)
