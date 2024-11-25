@@ -76,9 +76,9 @@ function NavBar(_props) {
     } else if (page === "Add Review") {
       navigate("/add-review");
     } else if (page === "View Reviews") {
-      props.navigation("/view-reviews");
+      navigate("/view-reviews");
     } else if (page === "Profile") {
-      props.navigation("/profile");
+      navigate("/profile");
     }
   };
 
