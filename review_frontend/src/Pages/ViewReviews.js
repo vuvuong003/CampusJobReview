@@ -307,6 +307,7 @@ class Reviews extends React.Component {
                   {/* Minimum rating filter */}
                   <select
                     name="min_rating"
+                    aria-label="Min Rating"
                     value={this.state.formData.min_rating}
                     onChange={this.handleChange}
                     className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -321,6 +322,7 @@ class Reviews extends React.Component {
                   {/* Maximum rating filter */}
                   <select
                     name="max_rating"
+                    aria-label="Max Rating"
                     value={this.state.formData.max_rating}
                     onChange={this.handleChange}
                     className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
