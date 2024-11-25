@@ -5,6 +5,7 @@ Got it! Here’s the documentation in your requested format.
 ## Authentication
 
 ### 1. Obtain JWT Token
+
 - **URL**: `/auth/token/`
 - **Method**: `POST`
 - **Description**: This endpoint triggers the `MyTokenObtainPairView` to handle user authentication and returns a JWT token upon successful login.
@@ -31,6 +32,7 @@ Got it! Here’s the documentation in your requested format.
   - `400 Bad Request`: If the credentials are invalid.
 
 ### 2. Refresh JWT Token
+
 - **URL**: `/auth/token/refresh/`
 - **Method**: `POST`
 - **Description**: This endpoint uses `TokenRefreshView` to refresh the access token using the refresh token.
@@ -50,6 +52,7 @@ Got it! Here’s the documentation in your requested format.
   - `400 Bad Request`: If the refresh token is invalid or expired.
 
 ### 3. User Registration
+
 - **URL**: `/auth/register/`
 - **Method**: `POST`
 - **Description**: This endpoint triggers the `RegisterView` to handle user registration and returns a success message if registration is successful.
@@ -57,6 +60,7 @@ Got it! Here’s the documentation in your requested format.
   ```json
   {
     "username": "new_username",
+    "email": "newuser@example.com",
     "password": "password"
   }
   ```
@@ -66,7 +70,7 @@ Got it! Here’s the documentation in your requested format.
     "status": 200,
     "data": {
       "val": true,
-      "detail": "Registration Successful"
+      "detail": "Registration Successful. Please verify your email"
     }
   }
   ```
@@ -74,9 +78,77 @@ Got it! Here’s the documentation in your requested format.
 
 ---
 
+## Email verification
+
+**URL**: /auth/verify-email/<uidb64>/<token>/
+**Method**: `GET`
+**Description**: This endpoint triggers the VerifyEmailView to handle email verification.
+**Returns**:
+
+```json
+{
+  "status": 200,
+  "message": "Email verified successfully."
+}
+
+or
+
+{
+  "status": 400,
+  "message": "Invalid verification link."
+}
+```
+
+## Profile Section
+
+### 1. Get Profile
+
+**URL**: `/auth/profile/`
+**Method**: `GET`
+**Description**: This endpoint triggers the ProfileView to retrieve the authenticated user's profile information.
+**Returns**:
+
+```json
+{
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "first_name": "Test",
+  "last_name": "User",
+  "bio": "This is a test bio."
+}
+```
+
+## 2. Update Profile
+
+**URL**: `/auth/profile/`
+**Method**: `PUT`
+**Description**: This endpoint triggers the ProfileView to update the authenticated user's profile information.
+**Request body**:
+
+```json
+{
+  "first_name": "Updated",
+  "last_name": "User",
+  "bio": "Updated bio."
+}
+```
+
+**Returns**:
+
+```json
+{
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "first_name": "Updated",
+  "last_name": "User",
+  "bio": "Updated bio."
+}
+```
+
 ## Reviews
 
 ### 1. Create Review
+
 - **URL**: `/reviews/`
 - **Method**: `POST`
 - **Description**: Allows authenticated users to create a new review.
@@ -110,6 +182,7 @@ Got it! Here’s the documentation in your requested format.
   - `400 Bad Request`: If validation fails.
 
 ### 2. Filter Reviews
+
 - **URL**: `/filter/`
 - **Method**: `GET`
 - **Description**: Filters reviews based on parameters like `department`, `locations`, `job_title`, `min_rating`, and `max_rating`.
@@ -141,6 +214,7 @@ Got it! Here’s the documentation in your requested format.
 ## Vacancies
 
 ### 1. Create Vacancy
+
 - **URL**: `/vacancies/`
 - **Method**: `POST`
 - **Description**: Allows authenticated users to create a new vacancy.
@@ -167,7 +241,9 @@ Got it! Here’s the documentation in your requested format.
   - `400 Bad Request`: If validation fails.
 
 ## Comments
+
 ### 1. Create Comment
+
 - **URL**: `/comments/<review_id>/`
 - **Method**: `POST`
 - **Description**: Allows authenticated users to create a comment under a job review.
@@ -178,7 +254,7 @@ Got it! Here’s the documentation in your requested format.
     "id": 30,
     "review": 7,
     "text": "good review",
-    "user": "vhv123",
+    "user": "vhv123"
   }
   ```
 - **Returns**:
@@ -197,6 +273,7 @@ Got it! Here’s the documentation in your requested format.
   - `400 Bad Request`: If validation fails.
 
 ### 2. Delete Comment
+
 - **URL**: `/comments/<review_id>/<id>/`
 - **Method**: `DELETE`
 - **Description**: Allows authenticated users to delete a comment by its ID
@@ -204,8 +281,8 @@ Got it! Here’s the documentation in your requested format.
 - **Returns**:
   ```json
   {
-  "status": 204,
-  "message": "Comment deleted successfully."
+    "status": 204,
+    "message": "Comment deleted successfully."
   }
   ```
   - `404 Not Found`: If the comment does not exist
