@@ -96,15 +96,6 @@ python manage.py migrate
 ```bash
 python manage.py runserver
 ```
-
-- Install ngrok in your system and then pipe the network events on port 8000 to ngrok
-```
-ngrok http 8000
-```
-- Copy the link and replace the link at the top of review_frontend/src/api/api.js
-
-#### ========================================================================================================================================================
-
 # Frontend
 
 ## Enter the frontend directory
@@ -121,8 +112,6 @@ npm install
 ```
 npm start
 ```
-#### ==========================================================================================================================================================
-
 
 # Browser Extension
 
