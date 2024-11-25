@@ -136,7 +136,7 @@ const ForgotPassword = () => {
 
                             <div className="flex justify-center">
                                 {isLoading ? (
-                                    <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                                    <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" data-testid="loading_spinner"></div>
                                 ) : (
                                     <button
                                         type="button"
