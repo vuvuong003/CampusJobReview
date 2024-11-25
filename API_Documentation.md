@@ -1,7 +1,3 @@
-Got it! Here’s the documentation in your requested format.
-
----
-
 ## Authentication
 
 ### 1. Obtain JWT Token
