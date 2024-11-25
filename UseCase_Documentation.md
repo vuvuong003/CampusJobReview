@@ -10,36 +10,52 @@ As you enter our application, you will be greeted by a beautiful home page that 
 ### Authentication 
 The first step as you start your journey of exploring the Campus Job Review web application is to sign up using a username and password. Make sure that your password includes letters and numbers which will make sure that you have the right requirements to sign up successfully. 
 
-Sign Up: The picture below shows the page that opens up when you click the SIGNUP button that is located on the top right corner of the landing page. 
+#### Sign Up
+The picture below shows the page that opens up when you click the SIGNUP button that is located on the top right corner of the landing page. 
 ![SignUp-Landing-Page](docs/images/sign_up.png)
 
 Once you are here, choose a strong username and password to sign up yourself to start using the application. Then, click on the Sign Up button in blue. 
 ![SignUp-Details-Page](docs/images/sign_up_fill.png)
 
-Successful Registration: 
+**Successful Registration**: 
 Once you have met the requirements for the username and password, you will see a pop-up indicating a successful registration. It will then tell you to visit the email that you entered to verify email address.
 ![SignUp-Success-Page](docs/images/sign_up_success.png)
 
-- Verify Email
+- **Verify Email**:
 You will receive an email from the application. Click on the link provided to verify your email address and proceed to the log in process
 ![Verify-Email](docs/images/verify_email.png)
 
-
-Failed Registration: 
+**Failed Registration**: 
  Given that a username or email already exists, you will not be able to sign up and will recieve a unsuccessful message. Other cases where you will not be able register successfully include not entering a username or leaving the password empty. An example of a failed registration can be seen in the picture below. 
 ![SignUp-Failure-Page](docs/images/sign_up_fail.png)
 
-Login:
-
+#### Login
 Now that you have successfully signed up as a valid user, let us login to the application. You can click on the LOGIN button located at the top right corner which sits in between the HOME and the SIGNUP buttons. Once you click LOGIN, you will be greeted with the following page: 
 ![Login-landing-Page](docs/images/login_landing.png)
 
    It is time to login with the same credentials that you used to sign up. Enter the details and your page will look similar to the image below. 
     ![Login-details-Page](docs/images/login_details.png)
-- Successful Login: Given that you have entered a valid username and password based on the details that you used to signup, you will be directed to a new page with new buttoms. The new options available can be seen at the top right corner as "Add Review", "View Reviews", and "LOGOOUT".
-     ![Login-success-Page](docs/images/login_success.png)
-- Failed Login: Given that you have entered the incorrect username or password, you will see a pop-up explaining that you have entered the invalid credentials. Time to try again!
-     ![Login-failure-Page](docs/images/login_failure.png)
+**Successful Login**: Given that you have entered a valid username and password based on the details that you used to signup, you will be directed to a new page with new buttoms. The new options available can be seen at the top right corner as "ADD REVIEW", "VIEW REVIEWS", "PROFILE", and "LOGOUT".
+![Login-success-Page](docs/images/login_success.png)
+**Failed Login**: Given that you have entered the incorrect username or password, you will see a pop-up explaining that you have entered the invalid credentials. Time to try again!
+![Login-failure-Page](docs/images/login_fail.png)
+    - **Reset Password**: In case you cannot login and do not remember your password, you may click on the "Reset Password?" button at the bottom and it will redirect you to this page. You will need to enter your email address and click on "Send OTP"
+    ![Forgot-Password](docs/images/forgot_pass.png)
+    - Once successfully enter a valid email address, you will be directed to a new page requesting a one-time password with a time limit of 10 minutes.
+    ![Enter-OPT](docs/images/enter_otp.png)
+    - You will need to check your email for the OTP. You will a 6 digit number in bold. That will be the one-time password you need to reset the password. This is what the email should look like.
+    ![Reset-Password-Email](docs/images/reset_pass_email.png)
+    - You will enter the 6 digit number into the text field. If you incorrectly enter the OTP, you will see a pop up explaining that your OTP is incorrect. You will need to try again
+    ![Wrong-OTP](docs/images/wrong_otp.png)
+    - Once you correctly entered the OTP, you will be directed to the reset password page, where you will enter a new password and confirm it.
+    ![Reset-Password](docs/images/reset_password.png)
+    - Once you successfully enter a valid password and confirmed it, you will see a pop up notifying you that your passsword is successfully changed and redirect you to the login page.
+    ![Reset-Password](docs/images/reset_password_success.png)
+
+
+
+
+
 
 ### Add Review
 We offer the option for you to add a review to help your peers make informed decisions about the on-campus jobs. You are required to fill in various fields which include Job Title, Department, Location, Job Description, Hourly Pay, Benefits, Rating, Recommendation, and Review. 
