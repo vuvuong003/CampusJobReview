@@ -230,6 +230,7 @@ class Reviews extends React.Component {
    * @method
    */
   handleReset = () => {
+    const allJobs = this.state.allJobs;
     // Reset the form fields
     this.setState(
       {
@@ -240,11 +241,9 @@ class Reviews extends React.Component {
           min_rating: "",
           max_rating: "",
         },
+
+        jobs:allJobs,
       },
-      () => {
-        // Refetch the full jobs list
-        this.componentDidMount();
-      }
     );
   };
 
