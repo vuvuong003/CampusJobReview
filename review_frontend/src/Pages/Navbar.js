@@ -83,7 +83,7 @@ function NavBar(_props) {
   };
 
   return (
-    <AppBar position="static" color="black">
+    <AppBar position="static" color="black" data-testid="AppBar">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Desktop Title */}
