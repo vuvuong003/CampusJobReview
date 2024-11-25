@@ -5,7 +5,7 @@
 
 import * as React from "react";
 import NavBar from "./Navbar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { login_url, unprotected_api_call } from "../api/api";
 
 /**
@@ -56,15 +56,25 @@ class Login extends React.Component {
    */
   handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(this.state.formData);
-    let response = await unprotected_api_call(login_url, this.state.formData);
-    if (response.status === 200) {
-      let data = await response.json();
-      localStorage.setItem("user_data", JSON.stringify(data));
-      localStorage.setItem("login", "true");
-      this.props.navigate("/");
-    } else {
-      alert("Invalid Credentials");
+    try {
+      let response = await unprotected_api_call(login_url, this.state.formData);
+
+      if (response.ok) {
+        let data = await response.json();
+        if (data.data && data.data.val) {
+          localStorage.setItem("user_data", JSON.stringify(data));
+          localStorage.setItem("login", "true");
+          this.props.navigate("/");
+        } else {
+          alert("Login failed. Please verify your email first.");
+        }
+      } else {
+        const errorData = await response.json();
+        alert(errorData.detail || "Invalid Credentials");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Server Error. Please try again later.");
     }
   };
 
@@ -154,6 +164,11 @@ class Login extends React.Component {
                   >
                     Login
                   </button>
+                </div>
+                <div className="flex justify-center">
+                  <Link to="/forgot-password" className="w-full px-4 py-2 mt-2">
+                    Forgot Password?
+                  </Link>
                 </div>
               </form>
             </div>

@@ -71,45 +71,22 @@ class ReviewsViewSet(viewsets.ModelViewSet):
             status=status.HTTP_400_BAD_REQUEST)  # Return error response if data is invalid
 
 
-class FilterReviewsView(generics.ListAPIView):
+class ReviewsView(generics.ListAPIView):
     """
-    A view for filtering Reviews.
-
-    This view provides the ability to filter reviews based on various
-    query parameters such as department, locations, job title, and rating.
+    A view for fetching all Reviews.
     """
     # permission_classes = (IsAuthenticated)
     serializer_class = ReviewsSerializer # Use the Reviews serializer for data representation
 
     def get_queryset(self):
         """
-        Retrieve a filtered list of Review instances.
-
-        This method applies filters based on query parameters provided 
-        in the request.
+        Retrieve a list of all Review instances.
 
         Returns:
-            QuerySet: A queryset of filtered Review instances.
+            QuerySet: A queryset of all Review instances.
         """
         # pylint: disable=E1101
-        queryset = Reviews.objects.all() # Start with all reviews
-        department = self.request.query_params.get('department', None) # Get 'department' param
-        locations = self.request.query_params.get('locations', None) # Get 'locations' param
-        job_title = self.request.query_params.get('job_title', None) # Get 'job_title' param
-        min_rating = self.request.query_params.get('min_rating', None) # Get 'min_rating' param
-        max_rating = self.request.query_params.get('max_rating', None) # Get 'max_rating' param
-        # Apply filters if parameters are provided
-        if department:
-            queryset = queryset.filter(department__icontains=department)
-        if locations:
-            queryset = queryset.filter(locations__icontains=locations)
-        if job_title:
-            queryset = queryset.filter(job_title__icontains=job_title)
-        if min_rating:
-            queryset = queryset.filter(rating__gte=min_rating)
-        if max_rating:
-            queryset = queryset.filter(rating__lte=max_rating)
-        print(list(queryset)[0].reviewed_by)
+        queryset = Reviews.objects.all() # get all reviews
         return queryset
 
 
