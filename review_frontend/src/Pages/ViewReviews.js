@@ -61,9 +61,9 @@ class JobRow extends React.Component {
         <div className="job-summary flex justify-between items-center">
           <h3 className="job-title text-2xl font-semibold text-gray-800">
             <a
-              href="/"
               onClick={this.toggleExpand}
               className="hover:text-blue-500 focus:outline-none"
+              style={{ cursor: "pointer" }}
             >
               {jobTitle} (${hourlyPay}/hr)
             </a>

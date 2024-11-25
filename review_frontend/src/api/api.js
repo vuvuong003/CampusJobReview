@@ -47,7 +47,7 @@ export let review_url = base_url + "service/reviews/";
 export let all_reviews_url = base_url + "service/all_reviews/";
 
 /**
- * URL endpoint for filtering services
+ * URL endpoint for comments services
  * @constant {string}
  */
 export let comment_url = base_url + "service/comments/";
