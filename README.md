@@ -62,7 +62,7 @@ Explore our platform and take the first step towards finding the right on-campus
 
 
 ### Demo Video 
-Explore a demo of our application [here!](https://drive.google.com/file/d/1u1iyAw3LeA0d42yTTJDXIi-HXPxxlzvG/view?usp=sharing)
+Explore a demo of our application [here!](https://www.youtube.com/watch?v=qI8pp37t69g)
 
 ### New Features!
 Our newly enhanced features will take Campus Job Review to the next level as they significantly elevate the platform by enhancing user engagement, improving usability, and strengthening security, making it a more robust and appealing tool for students. Our enhancements include:
