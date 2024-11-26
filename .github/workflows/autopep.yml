@@ -25,13 +25,4 @@ jobs:
 
     - name: Run Autopep8
       run: |
-        autopep8 --in-place --aggressive --aggressive --recursive . 
-
-    - name: Commit changes made by autopep8
-      run: |
-       git config user.name 'github-actions[bot]'
-       git config user.email 'github-actions[bot]@users.noreply.github.com'
-       git add .
-       git commit -m "Apply autopep8, populate log files for pylint, autopep and bandit " || echo "No autopep8 changes"
-       git push
-       
+        autopep8 --in-place --aggressive --aggressive --recursive .
