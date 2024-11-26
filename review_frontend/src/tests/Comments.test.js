@@ -16,10 +16,10 @@ const mockAlert = jest.fn();
 window.alert = mockAlert;
 
 // Test setup helper
-const renderComments = (reviewId = 1) => {
+const renderComments = (reviewId = 1, currentUser="User1") => {
   return render(
     <BrowserRouter>
-      <Comments reviewId={reviewId} />
+      <Comments reviewId={reviewId} currentUser={currentUser}/>
     </BrowserRouter>
   );
 };

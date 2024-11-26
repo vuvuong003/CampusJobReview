@@ -14,7 +14,7 @@ import { formatDistanceToNow } from "date-fns";
  * @param {string} props.reviewId - The ID of the review for which comments are being managed.
  * @returns {JSX.Element} The rendered Comments component.
  */
-const Comments = ({ reviewId}) => {
+const Comments = ({ reviewId, currentUser }) => {
   /**
    * State to hold the list of comments fetched from the API.
    * @type {Array}
@@ -40,7 +40,7 @@ const Comments = ({ reviewId}) => {
     } else {
       alert("Failed to load comments");
     }
-    
+
   }, [reviewId]);
 
   /**
@@ -133,19 +133,24 @@ const Comments = ({ reviewId}) => {
               </p>
             </div>
             {/* Trash icon */}
-            <button
-              type="submit"
-              onClick={() => handleDeleteComment(comment.id)}
-              className="text-red-500 hover:text-red-700"
-              style={{
-                marginLeft: "1rem",
-                fontSize: "2rem",
-                alignSelf: "flex-between",
-              }}
-              aria-label={`Delete comment`}
-            >
-              🗑️
-            </button>
+            {
+              (comment.user === currentUser) &&
+
+              <button
+                type="submit"
+                onClick={() => handleDeleteComment(comment.id)}
+                className="text-red-500 hover:text-red-700"
+                style={{
+                  marginLeft: "1rem",
+                  fontSize: "2rem",
+                  alignSelf: "flex-between",
+                }}
+                aria-label={`Delete comment`}
+              >
+                🗑️
+              </button>
+            }
+
           </div>
         ))}
       </div>
