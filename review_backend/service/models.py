@@ -10,7 +10,6 @@ vacancy information in the database.
 from djongo import models  # pylint: disable=E0401
 from rest_framework.exceptions import ValidationError # Import ValidationError
 from django.conf import settings  # Import settings
-from django.db import models
 # for custom validation logic
 
 # from django.contrib.auth.models import AbstractUser

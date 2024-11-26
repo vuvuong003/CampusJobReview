@@ -130,7 +130,7 @@ class VacanciesSerializer(serializers.ModelSerializer):
                 "Max hours allowed must be greater than 0.")
         # Add more validation as needed
         return attrs
-    
+
 class CommentSerializer(serializers.ModelSerializer):
     """Serializer for the Comment model.
 

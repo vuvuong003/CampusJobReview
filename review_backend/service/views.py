@@ -10,10 +10,9 @@ logic and provide the appropriate responses to the client.
 from rest_framework import viewsets # Import viewsets for creating API views
 from rest_framework import generics # Import generics for generic API views
 from rest_framework.response import Response # Import Response for HTTP responses
-#from rest_framework.exceptions import PermissionDenied # Import Response for HTTP responses
 from rest_framework import status # Import status codes for HTTP responses
-from django.shortcuts import get_object_or_404 # Helper function for fetching objects safely
 from rest_framework.permissions import IsAuthenticated # Import authentication permissions
+from django.shortcuts import get_object_or_404 # Helper function for fetching objects safely
 from .models import Reviews # Import Reviews model for review-related views
 from .serializers import ReviewsSerializer # Import serializer for Reviews
 
@@ -140,7 +139,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated] # Restrict access to authenticated users only
     queryset = Comment.objects.all() # Get all Comment objects from the database
     serializer_class = CommentSerializer # Specify the serializer for data conversion
-    
+
     def get_queryset(self):
         """
         Retrieve comments related to a specific review.
@@ -156,7 +155,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         """
         review_id = self.kwargs.get('id')  # Get review ID from URL
         return Comment.objects.filter(review_id=review_id)  # Filter comments by review_id
-    
+
     def perform_create(self, serializer):
         """
         Create a new Comment instance.
@@ -174,7 +173,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         review = get_object_or_404(Reviews, id=review_id)  # Get the review object
         user = self.request.user #Get the current user
         serializer.save(review=review, user=user)  # Assign the review to the comment
-    
+
     def destroy(self, request, *args, **kwargs):
         """
         Delete a specific comment.
@@ -190,18 +189,18 @@ class CommentViewSet(viewsets.ModelViewSet):
         Returns:
             Response: A response confirming the deletion of the comment.
         """
-        id = kwargs.get('id')  # Extract the review ID from the URL
+        review_id = kwargs.get('id')  # Extract the review ID from the URL
         comment_id = kwargs.get('comment_id')  # Extract the comment ID from the URL
-        
+
         try:
             # Ensure the comment exists with the given review ID
-            comment = Comment.objects.get(id=comment_id, review_id=id)
+            comment = Comment.objects.get(id=comment_id, review_id=review_id)
         except Comment.DoesNotExist:
             return Response({'detail': 'Comment not found.'}, status=status.HTTP_404_NOT_FOUND)
-        
+
         # Check if the user is authorized to delete the comment
         # if comment.user != request.user:
         #     raise PermissionDenied("You are not allowed to delete this comment.")
-        
+
         comment.delete()
         return Response({'detail': 'Comment deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)

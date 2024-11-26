@@ -23,7 +23,15 @@ router.register(r'vacancies', VacanciesViewSet) # Register 'vacancies' endpoint 
 # Define URL patterns for the service application
 urlpatterns = [
     path('', include(router.urls)), # Include router-generated URLs for registered viewsets
-    path('comments/<int:id>/', CommentViewSet.as_view({'get': 'list', 'post': 'create'}), name='comments'),
-    path('comments/<int:id>/<int:comment_id>/', CommentViewSet.as_view({'delete': 'destroy'}), name='delete-comment'),
+    path(
+        'comments/<int:id>/', 
+         CommentViewSet.as_view({'get': 'list', 'post': 'create'}), 
+         name='comments'
+    ),
+    path(
+        'comments/<int:id>/<int:comment_id>/', 
+        CommentViewSet.as_view({'delete': 'destroy'}), 
+        name='delete-comment'
+    ),
     path('all_reviews/', ReviewsView.as_view(), name='get-reviews')
 ]

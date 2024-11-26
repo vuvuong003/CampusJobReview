@@ -42,12 +42,20 @@ class ClientModelTests(TestCase):
     def test_create_user_without_username(self):
         """Test that creating a user without a username raises an error"""
         with self.assertRaises(TypeError):
-            User.objects.create_user(username=None, email="user@example.com", password="password123")
+            User.objects.create_user(
+                username=None, 
+                email="user@example.com", 
+                password="password123"
+            )
 
     def test_create_superuser_without_password(self):
         """Test that creating a superuser without a password raises an error."""
         with self.assertRaises(TypeError):
-            User.objects.create_superuser(username="adminuser", email="adminuser@example.com", password=None)
+            User.objects.create_superuser(
+                username="adminuser", 
+                email="adminuser@example.com", 
+                password=None
+            )
 
     def test_user_activation(self):
         """Test that a user can be deactivated."""
