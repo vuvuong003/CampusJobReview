@@ -94,65 +94,71 @@ const Comments = ({ reviewId, currentUser }) => {
     <div className="comments-section mt-4">
       <h4 className="text-xl font-semibold mb-2">Comments</h4>
       <div className="comments-list">
-        {comments.map((comment) => (
-          <div
-            key={comment.id}
-            className="comment bg-gray-100 rounded-lg mb-2"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-              padding: "1rem",
-            }}
-          >
-            {/* Comment text container */}
+        {!comments.length ?
+          (<div className="flex justify-center items-center h-16">
+            <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" data-testid="loading_spinner"></div>
+          </div>          
+          )
+          :
+          comments.map((comment) => (
             <div
-              className="comment-text"
+              key={comment.id}
+              className="comment bg-gray-100 rounded-lg mb-2"
               style={{
-                textAlign: "left", // Explicit left alignment
-                flex: 1, // Take up all available space
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                padding: "1rem",
               }}
             >
-              <p
-                className="text-sm text-gray-600"
+              {/* Comment text container */}
+              <div
+                className="comment-text"
                 style={{
-                  margin: 0,
-                  marginBottom: "0.5rem", // Consistent spacing between user and text
+                  textAlign: "left", // Explicit left alignment
+                  flex: 1, // Take up all available space
                 }}
               >
-                <strong>{comment.user}</strong> • {formatDistanceToNow(new Date(comment.created_at))} ago
-              </p>
-              <p
-                className="text-gray-800"
-                style={{
-                  margin: 0,
-                  whiteSpace: "pre-line", // Preserve formatting for multi-line comments
-                }}
-              >
-                {comment.text}
-              </p>
+                <p
+                  className="text-sm text-gray-600"
+                  style={{
+                    margin: 0,
+                    marginBottom: "0.5rem", // Consistent spacing between user and text
+                  }}
+                >
+                  <strong>{comment.user}</strong> • {formatDistanceToNow(new Date(comment.created_at))} ago
+                </p>
+                <p
+                  className="text-gray-800"
+                  style={{
+                    margin: 0,
+                    whiteSpace: "pre-line", // Preserve formatting for multi-line comments
+                  }}
+                >
+                  {comment.text}
+                </p>
+              </div>
+              {/* Trash icon */}
+              {
+                (comment.user === currentUser) &&
+
+                <button
+                  type="submit"
+                  onClick={() => handleDeleteComment(comment.id)}
+                  className="text-red-500 hover:text-red-700"
+                  style={{
+                    marginLeft: "1rem",
+                    fontSize: "2rem",
+                    alignSelf: "flex-between",
+                  }}
+                  aria-label={`Delete comment`}
+                >
+                  🗑️
+                </button>
+              }
+
             </div>
-            {/* Trash icon */}
-            {
-              (comment.user === currentUser) &&
-
-              <button
-                type="submit"
-                onClick={() => handleDeleteComment(comment.id)}
-                className="text-red-500 hover:text-red-700"
-                style={{
-                  marginLeft: "1rem",
-                  fontSize: "2rem",
-                  alignSelf: "flex-between",
-                }}
-                aria-label={`Delete comment`}
-              >
-                🗑️
-              </button>
-            }
-
-          </div>
-        ))}
+          ))}
       </div>
       <div className="comment-input mb-4">
         <textarea
