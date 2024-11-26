@@ -53,6 +53,7 @@ class JobRow extends React.Component {
       rating,
       recommendation,
       reviewedBy,
+      currentUser
     } = this.props;
     const { isExpanded } = this.state;
 
@@ -126,7 +127,7 @@ class JobRow extends React.Component {
                     </div>
                   </div>
                 </div>
-            <Comments reviewId={reviewId}/>
+            <Comments reviewId={reviewId} currentUser={currentUser}/>
           </div>
         )}
       </div>
@@ -248,19 +249,7 @@ class Reviews extends React.Component {
   };
 
   render() {
-    // Background image styles
-    // const myStyle = {
-    //   backgroundImage: `url(${process.env.PUBLIC_URL + "/WolfPlaza.jpg"})`,
-    //   height: "100vh",
-    //   backgroundSize: "cover",
-    //   backgroundRepeat: "no-repeat",
-    //   backgroundPosition: "center",
-    //   position: "absolute",
-    //   top: 0,
-    //   left: 0,
-    //   width: "100%",
-    //   zIndex: -1,
-    // };
+    const currentUser = localStorage.getItem("current_user");
 
     return (
       <div>
@@ -369,6 +358,7 @@ class Reviews extends React.Component {
                   rating={job.rating}
                   recommendation={job.recommendation}
                   reviewedBy={job.reviewed_by}
+                  currentUser={currentUser}
                 />
               ))}
             </div>

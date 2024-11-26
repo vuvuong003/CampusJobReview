@@ -59,6 +59,8 @@ class Login extends React.Component {
     try {
       let response = await unprotected_api_call(login_url, this.state.formData);
 
+      localStorage.setItem("current_user", this.state.formData.username);
+
       if (response.ok) {
         let data = await response.json();
         if (data.data && data.data.val) {
