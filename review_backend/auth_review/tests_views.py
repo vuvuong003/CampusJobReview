@@ -9,6 +9,7 @@ of the authentication process, ensuring that the implementation
 meets the expected behavior.
 """
 
+from unittest.mock import patch
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
 from django.urls import reverse  # pylint: disable=E0401
 from django.utils.http import urlsafe_base64_encode
@@ -16,7 +17,6 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from rest_framework import status  # pylint: disable=E0401
 from rest_framework.test import APITestCase  # pylint: disable=E0401
-from unittest.mock import patch
 
 User = get_user_model()
 
@@ -90,10 +90,10 @@ class AuthTests(APITestCase):
         existing username fails and returns the appropriate error message.
         """
         # Test registration with an existing username
-        data = {"username": "testuser", 
-                "email": "testuser@example.com", 
+        data = {"username": "testuser",
+                "email": "testuser@example.com",
                 "password": "newpassword123"}
-        
+
         response = self.client.post(self.register_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertFalse(response.data["data"]["val"])
@@ -148,8 +148,8 @@ class AuthTests(APITestCase):
         fails and returns an appropriate error message.
         """
         # Test Registration with invalid password
-        data = {"username": "user_with_invalid_pass", 
-                "email": "invalid@example.com", 
+        data = {"username": "user_with_invalid_pass",
+                "email": "invalid@example.com",
                 "password": "123"}
 
         response = self.client.post(self.register_url, data, format="json")
@@ -203,6 +203,7 @@ class EmailVerificationTests(APITestCase):
     """
     Tests for the user's email verification feature.
     """
+    # pylint: disable=C0103
     def setUp(self):
         """
         Setup the test enviornment before each test case.
@@ -231,7 +232,7 @@ class EmailVerificationTests(APITestCase):
         """
         Test to verify when the token is invalid
         """
-        invalid_token_url = reverse("verify_email", 
+        invalid_token_url = reverse("verify_email",
                                     kwargs={"uidb64": self.uid, "token": "invalid-token"})
 
         response = self.client.get(invalid_token_url)
@@ -243,6 +244,7 @@ class ProfileTests(APITestCase):
     """
     Tests for the user's profile feature.
     """
+    # pylint: disable=C0103
     def setUp(self):
         """
         Setup the test enviornment before each test case.

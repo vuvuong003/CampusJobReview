@@ -17,7 +17,6 @@ from rest_framework.exceptions import MethodNotAllowed
 from rest_framework import status  # pylint: disable=E0401
 from rest_framework_simplejwt.views import TokenObtainPairView  # pylint: disable=E0401
 from rest_framework.permissions import IsAuthenticated
-# from django.shortcuts import render
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
 from django.conf import settings
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -53,6 +52,7 @@ class RegisterView(APIView):
     """
     permission_classes = [AllowAny]
 
+    # pylint: disable=W0718
     def post(self, request):
         """
         This method handles the post request made to 'auth/register'
@@ -84,8 +84,8 @@ class RegisterView(APIView):
                     uid = urlsafe_base64_encode(force_bytes(user.pk))
                     verification_link = f"{settings.FRONTEND_URL}/verify-email/{uid}/{token}/"
 
-                    html_content = f"Click <a href='{verification_link}'>"
-                    + f"{verification_link}</a> to verify your email."
+                    html_content = f"Click <a href='{verification_link}'> " \
+                    f"{verification_link}</a> to verify your email."
 
                     message = Mail(
                         from_email=settings.DEFAULT_FROM_EMAIL,
@@ -143,9 +143,11 @@ class VerifyEmailView(APIView):
     """
     permission_classes = [AllowAny]
 
+    # pylint: disable=W0613
     def get(self, request, uidb64, token):
         """
-        This method is called when get request is called at verify-email/<str:uidb64>/<str:token>/ endpoint.
+        This method is called when get request is called at 
+        verify-email/<str:uidb64>/<str:token>/ endpoint.
 
         Args:
             self: the class object itself
@@ -309,15 +311,13 @@ class SendOtpView(APIView):
 
             user = User.objects.get(email=email)
 
-            html_content = f"""
-                Hi {user.username},<br/><br/> Your OTP for resetting your password is <b>{generated_otp}
-                </b>.<br/>Please use it within the next 10 minutes.
-                """
+            html_content = f"Hi {user.username},<br/><br/> Your OTP for resetting your password " \
+                f"is <b>{generated_otp} </b>.<br/>Please use it within the next 10 minutes."
 
             if user is None:
                 response_data = {'message' : 'Entered email id does not exist'}
                 return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
-            
+
             # metadata of mail (sender, recipient, subject and content)
             message = Mail(
                 from_email=settings.DEFAULT_FROM_EMAIL,
@@ -341,7 +341,7 @@ class UpdatePasswordView(APIView):
     This view handles updating password for an existing user.
 
     Methods:
-        post(request): this method is called when http post request is made to '/auth/update-password' endpoint.
+        post(request): called when http post request is made to '/auth/update-password' endpoint.
     
     """
     def post(self, request):
@@ -367,7 +367,7 @@ class UpdatePasswordView(APIView):
             user.set_password(password)
             user.save()
 
-            return Response({"message": "Password updated successfully!"}, 
+            return Response({"message": "Password updated successfully!"},
                             status=status.HTTP_200_OK)
 
         except Exception as e:

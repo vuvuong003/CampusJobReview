@@ -50,7 +50,7 @@ class ClientManager(BaseUserManager):
             raise TypeError("User should have a username")
         if email is None:
             raise TypeError("User should have an email")
-        
+
         # Instantiate user with username
         user = self.model(username=username, email=self.normalize_email(email))
         user.set_password(password) # Encrypt and set password
@@ -119,8 +119,8 @@ class Client(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email'] # Required fields for user creation
     objects = ClientManager() # Assign custom manager for user creation
     groups = models.ManyToManyField(Group, related_name="client_set", blank=True)
-    user_permissions = models.ManyToManyField(Permission, 
-                                              related_name="client_permissions", 
+    user_permissions = models.ManyToManyField(Permission,
+                                              related_name="client_permissions",
                                               blank=True)
 
 

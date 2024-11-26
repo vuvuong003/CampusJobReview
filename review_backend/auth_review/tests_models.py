@@ -43,8 +43,8 @@ class ClientModelTests(TestCase):
         """Test that creating a user without a username raises an error"""
         with self.assertRaises(TypeError):
             User.objects.create_user(
-                username=None, 
-                email="user@example.com", 
+                username=None,
+                email="user@example.com",
                 password="password123"
             )
 
@@ -52,8 +52,8 @@ class ClientModelTests(TestCase):
         """Test that creating a superuser without a password raises an error."""
         with self.assertRaises(TypeError):
             User.objects.create_superuser(
-                username="adminuser", 
-                email="adminuser@example.com", 
+                username="adminuser",
+                email="adminuser@example.com",
                 password=None
             )
 

@@ -15,10 +15,10 @@ class Command(BaseCommand):
     Command class to populate for existing users with a default email address
     and delete user with username 'username'
     """
-    help = '''Populate email field for existing users with a 
+    help = '''Populate email field for existing users with a
     default email address and delete user with username "username"'''
-    
-    # pylint: disable=W0718
+
+    # pylint: disable=W0718,W0613
     def handle(self, *args, **kwargs):
         """
         This method deletes the user with username 'username' and
@@ -44,6 +44,8 @@ class Command(BaseCommand):
                         self.style.SUCCESS(f'Successfully updated email for user: {user.username}')
                     )
             except Exception as e:
-                self.stdout.write(self.style.ERROR(f'Failed to update email for user {user.username}: {e}'))
+                self.stdout.write(
+                    self.style.ERROR(f'Failed to update email for user {user.username}: {e}')
+                )
 
         self.stdout.write(self.style.SUCCESS('All users have been updated.'))

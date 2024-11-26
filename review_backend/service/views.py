@@ -174,6 +174,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         user = self.request.user #Get the current user
         serializer.save(review=review, user=user)  # Assign the review to the comment
 
+    # pylint: disable=W0613
     def destroy(self, request, *args, **kwargs):
         """
         Delete a specific comment.
@@ -203,4 +204,5 @@ class CommentViewSet(viewsets.ModelViewSet):
         #     raise PermissionDenied("You are not allowed to delete this comment.")
 
         comment.delete()
-        return Response({'detail': 'Comment deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'detail': 'Comment deleted successfully.'},
+                        status=status.HTTP_204_NO_CONTENT)
