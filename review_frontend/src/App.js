@@ -12,7 +12,7 @@ import AddReview from "./Pages/AddReview";
 import Reviews from "./Pages/ViewReviews";
 import VerifyEmail from "./Pages/VerifyEmail";
 import Profile from "./Pages/Profile";
-import ForgotPassword from "./Pages/ForgotPassword"
+import ForgotPassword from "./Pages/ForgotPassword";
 import UpdatePassword from "./Pages/UpdatePassword";
 
 /**

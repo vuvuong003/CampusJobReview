@@ -9,15 +9,14 @@ of the authentication process, ensuring that the implementation
 meets the expected behavior.
 """
 
+from unittest.mock import patch
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
 from django.urls import reverse  # pylint: disable=E0401
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from rest_framework import status  # pylint: disable=E0401
-from rest_framework.test import APITestCase, APIClient  # pylint: disable=E0401
-from django.test import override_settings
-from unittest.mock import patch
+from rest_framework.test import APITestCase  # pylint: disable=E0401
 
 User = get_user_model()
 
@@ -56,7 +55,7 @@ class AuthTests(APITestCase):
         #     password="securepassword",
         #     is_active=False
         # )
-    
+
     @patch('auth_review.views.SendGridAPIClient')
 
     def test_register_new_user_success(self, mock_sendgrid):
@@ -75,7 +74,7 @@ class AuthTests(APITestCase):
         self.assertEqual(
             response.data["data"]["detail"],
             "Registration Successful. Please verify your email.")
-        
+
          # Verify the user was created
         user = User.objects.get(username="newuser")
         self.assertFalse(user.is_verified)
@@ -91,7 +90,10 @@ class AuthTests(APITestCase):
         existing username fails and returns the appropriate error message.
         """
         # Test registration with an existing username
-        data = {"username": "testuser", "email": "testuser@example.com", "password": "newpassword123"}
+        data = {"username": "testuser",
+                "email": "testuser@example.com",
+                "password": "newpassword123"}
+
         response = self.client.post(self.register_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertFalse(response.data["data"]["val"])
@@ -131,7 +133,7 @@ class AuthTests(APITestCase):
             "password": "securepassword"
         })
         refresh_token = login_response.data["data"]["tokens"]["refresh"]
-        
+
         # Then refresh
         response = self.client.post(self.token_refresh_url, {
             "refresh": refresh_token
@@ -146,7 +148,10 @@ class AuthTests(APITestCase):
         fails and returns an appropriate error message.
         """
         # Test Registration with invalid password
-        data = {"username": "user_with_invalid_pass", "email": "invalid@example.com", "password": "123"}
+        data = {"username": "user_with_invalid_pass",
+                "email": "invalid@example.com",
+                "password": "123"}
+
         response = self.client.post(self.register_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertFalse(response.data["data"]["val"])
@@ -195,7 +200,18 @@ class AuthTests(APITestCase):
         self.assertEqual(response.data, {"msg": "Get not allowed"})
 
 class EmailVerificationTests(APITestCase):
+    """
+    Tests for the user's email verification feature.
+    """
+    # pylint: disable=C0103
     def setUp(self):
+        """
+        Setup the test enviornment before each test case.
+
+        This method creates a test user and sets up the URLs for the
+        email verification endpoint, ensuring a clean slate for
+        each test case.
+        """
         self.user = User.objects.create_user(
             username="testuser", email="testuser@example.com", password="password123"
         )
@@ -204,20 +220,38 @@ class EmailVerificationTests(APITestCase):
         self.verify_url = reverse("verify_email", kwargs={"uidb64": self.uid, "token": self.token})
 
     def test_verify_email_success(self):
+        """
+        Test to verify the email verification success case
+        """
         response = self.client.get(self.verify_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.user.refresh_from_db()
         self.assertTrue(self.user.is_verified)
 
     def test_verify_email_invalid_token(self):
-        invalid_token_url = reverse("verify_email", kwargs={"uidb64": self.uid, "token": "invalid-token"})
+        """
+        Test to verify when the token is invalid
+        """
+        invalid_token_url = reverse("verify_email",
+                                    kwargs={"uidb64": self.uid, "token": "invalid-token"})
+
         response = self.client.get(invalid_token_url)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.user.refresh_from_db()
         self.assertFalse(self.user.is_verified)
 
 class ProfileTests(APITestCase):
+    """
+    Tests for the user's profile feature.
+    """
+    # pylint: disable=C0103
     def setUp(self):
+        """
+        Setup the test enviornment before each test case.
+
+        This method creates a test user and sets up the URLs for the
+        profile endpoint, ensuring a clean slate for each test case.
+        """
         self.user = User.objects.create_user(
             username="testuser", email="testuser@example.com", password="password123"
         )
@@ -225,12 +259,18 @@ class ProfileTests(APITestCase):
         self.profile_url = reverse("profile")
 
     def test_get_profile(self):
+        """
+        Test to verify the fetching of user's profile information.
+        """
         response = self.client.get(self.profile_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["username"], self.user.username)
         self.assertEqual(response.data["email"], self.user.email)
 
     def test_update_profile(self):
+        """
+        Test to ensure the user's profile information is successfully updated.
+        """
         data = {"first_name": "Test", "last_name": "User", "bio": "This is a test bio."}
         response = self.client.put(self.profile_url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

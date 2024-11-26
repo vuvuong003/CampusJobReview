@@ -13,7 +13,8 @@ from rest_framework_simplejwt.views import TokenRefreshView  # pylint: disable=E
 # Import path function to define URL patterns
 from django.urls import path  # pylint: disable=E0401
 # Import custom views for obtaining JWT tokens and registering users
-from .views import MyTokenObtainPairView, RegisterView, VerifyEmailView, SendOtpView, UpdatePasswordView
+from .views import MyTokenObtainPairView, RegisterView
+from .views import  VerifyEmailView, SendOtpView, UpdatePasswordView
 from .views import ProfileView
 
 

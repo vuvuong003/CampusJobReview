@@ -14,11 +14,10 @@ from rest_framework.views import APIView  # pylint: disable=E0401
 from rest_framework.permissions import AllowAny  # pylint: disable=E0401
 from rest_framework.response import Response  # pylint: disable=E0401
 from rest_framework.exceptions import MethodNotAllowed
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status  # pylint: disable=E0401
 from rest_framework_simplejwt.views import TokenObtainPairView  # pylint: disable=E0401
-# from django.shortcuts import render
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
-from .serializers import MyTokenObtainPairSerializer, RegisterSerializer
 from django.conf import settings
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
@@ -28,9 +27,9 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from rest_framework.permissions import IsAuthenticated
+from .serializers import MyTokenObtainPairSerializer, RegisterSerializer
 from .serializers import ProfileSerializer
-from rest_framework import status
+
 # This class is responsible for handling essential functionality for user
 # registration and authentication.
 
@@ -46,21 +45,37 @@ User = get_user_model()
 
 
 class RegisterView(APIView):
+    """
+    This view handles the registration of a new user.
+
+    Validates the password and stores the user in the dataset.
+    """
     permission_classes = [AllowAny]
 
+    # pylint: disable=W0718
     def post(self, request):
+        """
+        This method handles the post request made to 'auth/register'
+
+        Args:
+            self: The class object itself
+            request: The http request object which contains the username, email and password.
+
+        Returns:
+            Response: The http response of the object with status and response data. 
+        """
         try:
             user = User.objects.filter(
-                Q(username=request.data["username"]) | 
+                Q(username=request.data["username"]) |
                 Q(email=request.data["email"])
             )
-            
+
             if len(user) > 0:
                 return Response(
                     {"data": {"val": False, "detail": "Entered username or email exists"}},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-                
+
             serializer = RegisterSerializer(data=request.data)
             if serializer.is_valid():
                 try:
@@ -68,26 +83,39 @@ class RegisterView(APIView):
                     token = default_token_generator.make_token(user)
                     uid = urlsafe_base64_encode(force_bytes(user.pk))
                     verification_link = f"{settings.FRONTEND_URL}/verify-email/{uid}/{token}/"
-                    
+
+                    html_content = f"Click <a href='{verification_link}'> " \
+                    f"{verification_link}</a> to verify your email."
+
                     message = Mail(
                         from_email=settings.DEFAULT_FROM_EMAIL,
                         to_emails=user.email,
                         subject="Verify your email",
-                        html_content=f"Click <a href='{verification_link}'>{verification_link}</a> to verify your email."
+                        html_content=html_content
                     )
-                    
+
                     try:
                         sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
                         sg.send(message)
                         return Response(
-                            {"data": {"val": True, "detail": "Registration Successful. Please verify your email."}},
+                            {
+                                "data": {
+                                    "val": True, 
+                                    "detail": "Registration Successful. Please verify your email."
+                                }
+                            },
                             status=status.HTTP_200_OK,
                         )
                     except Exception as e:
                         # Delete the user if email sending fails
                         user.delete()
                         return Response(
-                            {"data": {"val": False, "detail": f"Failed to send verification email: {str(e)}"}},
+                            {
+                                "data": {
+                                    "val": False, 
+                                    "detail": f"Failed to send verification email: {str(e)}"
+                                }
+                            },
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
                         )
                 except Exception as e:
@@ -95,7 +123,7 @@ class RegisterView(APIView):
                         {"data": {"val": False, "detail": f"Registration failed: {str(e)}"}},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR,
                     )
-                    
+
             return Response(
                 {"data": {"val": False, "detail": serializer.errors}},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -105,31 +133,51 @@ class RegisterView(APIView):
                 {"data": {"val": False, "detail": f"Server error: {str(e)}"}},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-    
+
 
 class VerifyEmailView(APIView):
+    """
+    This class deals with verify a new user's email address.
+
+    Called when clicked on the verification link send via mail.
+    """
     permission_classes = [AllowAny]
 
+    # pylint: disable=W0613
     def get(self, request, uidb64, token):
+        """
+        This method is called when get request is called at 
+        verify-email/<str:uidb64>/<str:token>/ endpoint.
+
+        Args:
+            self: the class object itself
+            request: the HTTP request object
+            uidb64: It is a base64 encoded string that represents the user's ID.
+            token: a logged in user's session token
+
+        Returns:
+            An HTTP Response object
+        """
+
         try:
             uid = force_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uid)
-            
+
             if user is not None and default_token_generator.check_token(user, token):
                 user.is_verified = True
                 user.save()
                 return Response(
-                    {"message": "Email verified successfully."}, 
+                    {"message": "Email verified successfully."},
                     status=status.HTTP_200_OK
                 )
             return Response(
-                {"message": "Invalid verification link."}, 
+                {"message": "Invalid verification link."},
                 status=status.HTTP_400_BAD_REQUEST
             )
         except (TypeError, ValueError, OverflowError, User.DoesNotExist) as e:
             print(f"Verification error: {str(e)}")  # Add debugging
             return Response(
-                {"message": f"Invalid user ID: {str(e)}"}, 
+                {"message": f"Invalid user ID: {str(e)}"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -173,10 +221,20 @@ class MyTokenObtainPairView(TokenObtainPairView):
         """
         raise MethodNotAllowed("GET", detail={"msg": "Get not allowed"})
 
-
-
     # pylint: disable=W0221,W0237
     def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests to the token endpoint.
+
+        This methods verifies whether the user's email is verified or not.
+        Also generates a token if the user is verified.
+
+        Args:
+            request: HTTP Request object containing the username of the user's account.
+
+        Returns:
+            Response: An HTTP response object with status and data containing token.
+        """
         try:
             user = User.objects.get(username=request.data.get('username'))
             if not user.is_verified:
@@ -199,8 +257,17 @@ class MyTokenObtainPairView(TokenObtainPairView):
                 status=status.HTTP_200_OK,
             )
         return response
-    
+
 class ProfileView(APIView):
+    """
+    View for handling user's profile operations.
+
+    This view allows users to fetch their profile information or insert/update information.
+
+    Method:
+        get(request): handles fetching user's information
+        put(request): handles updating existing information or inserting new information.
+    """
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -215,48 +282,79 @@ class ProfileView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 class SendOtpView(APIView):
+    """
+    This view handles the post request made to 'auth/send-otp' endpoint.
+
+    This allows users to mail the generated otp to the user's email address.
+
+    Methods:
+        post(request): This method deals with sending a generated otp via mail.
+    """
     def post(self, request):
+        """
+            This method sends the generated otp via mail. 
+
+            It checks whether the request email id exists in the database or not.
+            If it does, then send otp to the email using sendgrid.
+
+            Args:
+                request: An HTTP request object containing the genreated otp and entered email.
+
+            Returns:
+                Http Response object containing the status and any response data.
+        """
         try:
             email = request.data.get("email")
-            generatedOtp = request.data.get("generated_otp")
+            generated_otp = request.data.get("generated_otp")
 
             user = User.objects.get(email=email)
+
+            html_content = f"Hi {user.username},<br/><br/> Your OTP for resetting your password " \
+                f"is <b>{generated_otp} </b>.<br/>Please use it within the next 10 minutes."
 
             if user is None:
                 response_data = {'message' : 'Entered email id does not exist'}
                 return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
-            else:
-                # metadata of mail (sender, recipient, subject and content)
-                message = Mail(
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    to_emails=user.email,
-                    subject="Reset your password",
-                    html_content=f"Hi {user.username}, <br/><br/>Your OTP for resetting your password is <b>{generatedOtp}</b>. Please use it within the next 10 minutes."
-                )
 
-                # sending mail
-                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-                sg.send(message)
+            # metadata of mail (sender, recipient, subject and content)
+            message = Mail(
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to_emails=user.email,
+                subject="Reset your password",
+                html_content=html_content
+            )
 
-                return Response(data={"otp": generatedOtp}, status=status.HTTP_200_OK)
+            # sending mail
+            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+            sg.send(message)
+
+            return Response(data={"otp": generated_otp}, status=status.HTTP_200_OK)
 
         except User.DoesNotExist:
             response_data = {'message' : 'Entered email id does not exist'}
             return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
-        
+
 class UpdatePasswordView(APIView):
     """
-    Handles updating password for an existing user
+    This view handles updating password for an existing user.
 
-    Args:
-        request: The HTTP request.
-
-    Returns:
-        Response: A response object containing an error message.  
+    Methods:
+        post(request): called when http post request is made to '/auth/update-password' endpoint.
+    
     """
+    # pylint: disable=W0718
     def post(self, request):
+        """
+        This method deals with the post request made to '/auth/update-password' endpoint.
+
+        Args:
+            request: The HTTP request containing the email id of the user's account.
+
+        Returns:
+            Response: A response object containing an error message.      
+        """
         try:
             user = User.objects.get(email=request.data.get("email"))
 
@@ -270,8 +368,8 @@ class UpdatePasswordView(APIView):
             user.set_password(password)
             user.save()
 
-            return Response({"message": "Password updated successfully!"}, status=status.HTTP_200_OK)
+            return Response({"message": "Password updated successfully!"},
+                            status=status.HTTP_200_OK)
 
         except Exception as e:
             return Response(data={'message': f'{e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-

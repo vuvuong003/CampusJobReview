@@ -70,7 +70,14 @@ class RegisterSerializerTest(TestCase):
         self.assertIn('password', serializer.errors)
 
 class MyTokenObtainPairSerializerTest(TestCase):
+    """
+    Tests to verify token generation
+    """
+    # pylint: disable=C0103
     def setUp(self):
+        """
+        Sets up the test environment with mock data before each test.
+        """
         self.user = User.objects.create_user(
             username="testuser",
             email="testuser@example.com",
@@ -90,19 +97,7 @@ class MyTokenObtainPairSerializerTest(TestCase):
         """Test token generation for unverified user"""
         self.user.is_verified = False
         self.user.save()
-        
+
         serializer = MyTokenObtainPairSerializer()
         with self.assertRaises(ValidationError):
             serializer.get_token(self.user)
-
-
-    # def test_get_token_for_nonexistent_user(self):
-    #     """Test that an error is raised when attempting to get a token for a nonexistent user."""
-    #     serializer = MyTokenObtainPairSerializer()
-
-    #     # Attempt to get a token for a nonexistent user (None)
-    #     with self.assertRaises(ValidationError) as context:
-    #         serializer.get_token(None)
-
-    #     # Check that the error message is as expected
-    #     self.assertEqual(str(context.exception), "User does not exist.")

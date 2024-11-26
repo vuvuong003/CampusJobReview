@@ -9,7 +9,6 @@ from rest_framework import serializers  # pylint: disable=E0401
 from rest_framework.validators import UniqueValidator  # pylint: disable=E0401
 from rest_framework.exceptions import ValidationError  # Use this for consistency
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer  # pylint: disable=E0401
-from .models import Client  # Import the Client model
 
 # Import for enforcing strong passwords
 from django.contrib.auth.password_validation import validate_password  # pylint: disable=E0401
@@ -89,7 +88,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         write_only=True, # Password will not be returned in serialized output
         # password is required field
         required=True, # Field is required for user creation
-        validators=[validate_password], 
+        validators=[validate_password],
         style={'input_type': 'password'}# Enforce strong password requirements
     )
 
@@ -105,7 +104,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         Returns:
             User: The created user instance.
         """
-        user = User.objects.create(username=validated_data["username"], email=validated_data['email'], is_verified=False) # Create user with username
+        # Create user with username
+        user = User.objects.create(username=validated_data["username"],
+                                   email=validated_data['email'],
+                                   is_verified=False)
         user.is_active = True # Set user to active state
         user.is_admin = True # Grant admin privileges
         user.set_password(validated_data["password"]) # Securely hash the password
@@ -126,7 +128,18 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ["username", "password", "email"] # Specify fields to include in output
 
 class ProfileSerializer(serializers.ModelSerializer):
+    """
+        Serializer for user's profile info.
+    """
     class Meta:
+        """
+        Metadata for the ProfileSerializer, defining how it interacts with the User model.
+
+        Attributes:
+            model (Model): The mnodel associated with the Serializer.
+            fields (list): Fields included in the serialized output.
+            read_only_fields (list): Fields which cannot be modified.
+        """
         model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'bio']
         read_only_fields = ['username', 'email']
