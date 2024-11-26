@@ -14,9 +14,9 @@ from rest_framework.views import APIView  # pylint: disable=E0401
 from rest_framework.permissions import AllowAny  # pylint: disable=E0401
 from rest_framework.response import Response  # pylint: disable=E0401
 from rest_framework.exceptions import MethodNotAllowed
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status  # pylint: disable=E0401
 from rest_framework_simplejwt.views import TokenObtainPairView  # pylint: disable=E0401
-from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model  # pylint: disable=E0401
 from django.conf import settings
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -344,6 +344,7 @@ class UpdatePasswordView(APIView):
         post(request): called when http post request is made to '/auth/update-password' endpoint.
     
     """
+    # pylint: disable=W0718
     def post(self, request):
         """
         This method deals with the post request made to '/auth/update-password' endpoint.
