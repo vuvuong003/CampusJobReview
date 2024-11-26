@@ -20,6 +20,12 @@ const Comments = ({ reviewId, currentUser }) => {
    * @type {Array}
    */
   const [comments, setComments] = useState([]);
+
+  /**
+   * State to hold a boolean indicating whether loadding spinner should be displayed or not.
+   * @type {Boolean}
+   */
+  const [isLoadingSpinner, setIsLoadingSpinner] = useState(true);
   /**
    * State to hold the new comment text input by the user.
    * @type {string}
@@ -37,8 +43,10 @@ const Comments = ({ reviewId, currentUser }) => {
     if (response && response.status === 200) {
       const data = await response.json();
       setComments(data);
+      setIsLoadingSpinner(false);
     } else {
       alert("Failed to load comments");
+      setIsLoadingSpinner(false);
     }
 
   }, [reviewId]);
@@ -94,7 +102,7 @@ const Comments = ({ reviewId, currentUser }) => {
     <div className="comments-section mt-4">
       <h4 className="text-xl font-semibold mb-2">Comments</h4>
       <div className="comments-list">
-        {!comments.length ?
+        {isLoadingSpinner ?
           (<div className="flex justify-center items-center h-16">
             <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" data-testid="loading_spinner"></div>
           </div>          
