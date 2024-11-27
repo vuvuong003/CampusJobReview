@@ -58,7 +58,7 @@ Explore our platform and take the first step towards finding the right on-campus
 <p align="center"><img width="700" src="./resources/Intro_to_CampusJobReview.gif"></p>
 
 ### Animation Video About Project 
-[Click Here to Watch the Video!](https://drive.google.com/file/d/1cmAgHYnGPp1LA3F_dimup3XeC6HHNplY/view?usp=sharing)
+[Click Here to Watch the Video!](https://www.youtube.com/watch?v=a9yZ_JOHfBs)
 
 
 ### Demo Video 
