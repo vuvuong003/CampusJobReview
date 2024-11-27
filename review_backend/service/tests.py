@@ -156,7 +156,7 @@ class ReviewsModelTests(TestCase):
     def test_filter_reviews_by_department(self):
         """Test filtering reviews by 'department'."""
         # Create two review instances with different departments
-        review1 = Reviews.objects.create(**self.valid_data)
+        review1 = Reviews.objects.create(**{**self.valid_data, "department": "IT"})
         review2 = Reviews.objects.create(**{**self.valid_data, "department": "HR"})
         # Filter reviews by department and check presence of each review
         it_reviews = Reviews.objects.filter(department="IT")
