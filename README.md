@@ -53,7 +53,7 @@ Explore our platform and take the first step towards finding the right on-campus
 
 [![Django Tests](https://github.com/vuvuong003/CampusJobReview/actions/workflows/django-tests.yml/badge.svg)](https://github.com/vuvuong003/CampusJobReview/actions/workflows/django-tests.yml)  [![Jest Tests](https://github.com/vuvuong003/CampusJobReview/actions/workflows/jest_tests.yml/badge.svg)](https://github.com/vuvuong003/CampusJobReview/actions/workflows/jest_tests.yml)   
 
-[![codecov](https://codecov.io/gh/vuvuong003/CampusJobReview/graph/badge.svg?token=3U8KLQ8AA4)](https://codecov.io/gh/vuvuong003/CampusJobReview)
+[![codecov](https://codecov.io/gh/vuvuong003/CampusJobReview/graph/badge.svg?token=JJVIVC4TBH)](https://codecov.io/gh/vuvuong003/CampusJobReview)
 
 <p align="center"><img width="700" src="./resources/Intro_to_CampusJobReview.gif"></p>
 
